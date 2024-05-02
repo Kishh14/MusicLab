@@ -5,7 +5,7 @@ export default function Filters() {
             <div className="border-b border-gray-600 -mx-3 mb-2">
                 <div className="flex flex-row gap-2 mb-3 ">
                     <div className="mt-1 px-2">
-                        <IoFilter size={24} />
+                        <IoFilter size={22} />
                     </div>
                     <div className="relative">
                         <span className="absolute inset-y-0 left-0 flex items-center pl-3">

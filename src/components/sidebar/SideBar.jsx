@@ -1,5 +1,5 @@
-import Rooms from "./Rooms";
-import avatar from '../assets/avatar.jpg'
+import RoomsList from "./RoomsList";
+import avatar from '../../assets/avatar.jpg'
 import { GrMicrophone } from "react-icons/gr";
 import { useState } from "react";
 import { TbMicrophoneOff } from "react-icons/tb";
@@ -60,7 +60,7 @@ export default function SideBar() {
                 </div>
 
                 {/* rooms */}
-                <Rooms />
+                <RoomsList />
             </aside>
         </>
     )
