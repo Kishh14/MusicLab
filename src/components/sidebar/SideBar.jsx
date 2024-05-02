@@ -4,16 +4,24 @@ import { GrMicrophone } from "react-icons/gr";
 import { useState } from "react";
 import { TbMicrophoneOff } from "react-icons/tb";
 import { BsChatLeftText } from "react-icons/bs";
+import { IoExitOutline } from "react-icons/io5";
+
 export default function SideBar() {
-    const [ismice, setIsMice] = useState(false)
+    const [ismice, setIsMice] = useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const toggleMice = () => {
-        setIsMice(!ismice)
+        setIsMice(!ismice);
     }
+
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    }
+
     return (
         <>
-            <aside className="flex">
-                <div className="flex flex-col items-center w-16 h-screen py-8 bg-white dark:bg-gray-900 dark:border-gray-300">
+            <aside className="flex ">
+                <div className="flex flex-col items-center w-16 h-screen py-8 bg-white dark:bg-gray-900 dark:border-gray-300 relative">
                     <nav className="flex flex-col items-center flex-1 space-y-6 ">
 
                         {/* avatar */}
@@ -30,14 +38,12 @@ export default function SideBar() {
                         </div>
 
                         {/* microphone icons */}
-
                         <a
                             className="flex items-center px-3 py-3  text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
-                            href="#" onClick={toggleMice}
+                            href="#"
+                            onClick={toggleMice}
                         >
                             {ismice ? <GrMicrophone size={26} /> : <TbMicrophoneOff size={26} />}
-
-
                         </a>
 
                         {/* Chat icon */}
@@ -45,18 +51,33 @@ export default function SideBar() {
                             className="flex items-center px-3 py-3  text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
                             href="#"
                         >
-                            {/* <svg xmlns="http://www.w3.org/2000/svg"
-                                width="28" height="28" viewBox="0 0 24 24"
-                                fill="none" stroke="#dfdfdf"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round">
-                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> */}
                             <BsChatLeftText size={26} />
-
                         </a>
-
                     </nav>
+
+                    {/* Exit icon */}
+                    <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+                        <button
+                            type="button"
+                            className="text-sm"
+                            onClick={toggleDropdown}
+                        >
+                            <IoExitOutline size={28} />
+                        </button>
+                        {/* Dropdown menu */}
+                        {isDropdownOpen && (
+                            <div
+                                className="absolute left-14 z-50 bg-gray-900 shadow-md border  rounded-md"
+                            >
+                                <div className="px-4 py-3">
+                                    <a className="text-sm cursor-pointer text-white font-bold ">
+                                        Logout
+                                    </a>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
                 </div>
 
                 {/* rooms */}

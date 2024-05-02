@@ -1,11 +1,52 @@
+import { useState } from 'react';
 import { IoFilter } from "react-icons/io5";
+
 export default function Filters() {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const handleFilterClick = () => {
+        setIsOpen(!isOpen);
+    };
+
     return (
         <>
             <div className="border-b border-gray-600 -mx-3 mb-2">
                 <div className="flex flex-row gap-2 mb-3 ">
-                    <div className="mt-1 px-2">
-                        <IoFilter size={22} />
+                    <div className="mt-1 px-2 relative">
+                        <div className="cursor-pointer" onClick={handleFilterClick}>
+                            <IoFilter size={22} />
+                        </div>
+                        {/* Dropdown with checkboxes */}
+                        {isOpen && (
+                            <div className="absolute z-10 top-full py-2 left-0 mt-1 w-[200px] bg-gray-900 text-white border rounded-md shadow-lg">
+                                <div>
+                                    <label className="flex items-center space-x-2 px-4 py-2">
+                                        <input
+                                            type="checkbox"
+                                        />
+                                        <span>Filter name</span>
+                                    </label>
+                                    <label className="flex items-center space-x-2 px-4 py-2">
+                                        <input
+                                            type="checkbox"
+                                        />
+                                        <span>Filter</span>
+                                    </label>
+                                    <label className="flex items-center space-x-2 px-4 py-2">
+                                        <input
+                                            type="checkbox"
+                                        />
+                                        <span>Filter</span>
+                                    </label>
+                                    <label className="flex items-center space-x-2 px-4 py-2">
+                                        <input
+                                            type="checkbox"
+                                        />
+                                        <span>Filter</span>
+                                    </label>
+                                </div>
+                            </div>
+                        )}
                     </div>
                     <div className="relative">
                         <span className="absolute inset-y-0 left-0 flex items-center pl-3">

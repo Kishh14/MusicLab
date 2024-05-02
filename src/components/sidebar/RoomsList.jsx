@@ -7,16 +7,30 @@ export default function RoomsList() {
 
     return (
         <>
-            <div className="h-screen px-5 py-8 bg-white border-l border-r sm:w-64 w-60 dark:bg-gray-900 dark:border-gray-700 relative" style={{ overflow: "scroll" }}>
+            <style>
+                {`
+                        /* Hide scrollbar */
+                        #container-main::-webkit-scrollbar {
+                            display: none;
+                        }
+
+                        /* Apply smooth scroll */
+                        #container-main {
+                            scroll-behavior: smooth;
+                        }
+                    `}
+            </style>
+
+            <div id="container-main" className=" h-screen px-5 py-8 bg-white border-l border-r sm:w-64 w-60 dark:bg-gray-900 dark:border-gray-700 relative" style={{ overflow: "scroll" }}>
                 {/* filter and search  */}
                 <Filters />
 
                 {/* Rooms */}
                 <Room />
-                <RoomOthers/>
-                <RoomOthers/>
-                <RoomOthers/>
-                <RoomOthers/>
+                <RoomOthers />
+                <RoomOthers />
+                <RoomOthers />
+                <RoomOthers />
             </div>
         </>
     );

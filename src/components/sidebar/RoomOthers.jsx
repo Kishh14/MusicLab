@@ -3,6 +3,7 @@ import memberData from '../../data.json';
 export default function RoomOthers() {
     return (
         <>
+
             {/* Room */}
             <div className="mt-4 -mx-3 space-y-6 rounded-lg h-[172px] border-2 border-gray-600 relative">
                 <div className="flex mx-2 my-1 flex-row justify-between items-center gap-1 border rounded-md border-gray-600">
