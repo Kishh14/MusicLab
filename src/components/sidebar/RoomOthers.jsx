@@ -1,37 +1,19 @@
-import { IoSettingsOutline } from "react-icons/io5";
 import memberData from '../../data.json';
-// import AllRooms from "./AllRooms";
-// import Filters from "./Filters";
 
-export default function RoomMembers() {
+export default function RoomOthers() {
     return (
         <>
-            {/* hide scrollbar */}
-            <style>
-                {`
-                        /* Hide scrollbar */
-                        #memberContainer::-webkit-scrollbar {
-                            display: none;
-                        }
-
-                        /* Apply smooth scroll */
-                        #memberContainer {
-                            scroll-behavior: smooth;
-                        }
-                    `}
-            </style>
-
             {/* Room */}
             <div className="mt-4 -mx-3 space-y-6 rounded-lg h-[172px] border-2 border-gray-600 relative">
-                <div className="flex mx-2 my-1 flex-row justify-between gap-1 border rounded-md border-gray-600">
+                <div className="flex mx-2 my-1 flex-row justify-between items-center gap-1 border rounded-md border-gray-600">
                     <div className="py-1 px-2">
                         {/* room name */}
-                        <h1 className="font-semibold ">Rahul</h1>
+                        <h4 className="font-semibold text-sm">Arshad's Room</h4>
                     </div>
                     <div className="p-2 mx-1">
                         {/* settings */}
-                        <a href="">
-                            <IoSettingsOutline size={20} />
+                        <a className='bg-blue-800 px-4 py-1 rounded-md cursor-pointer'>
+                            Join
                         </a>
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 import Filters from "./Filters";
-import Room from "./Room";
+import RoomOthers from "./RoomOthers";
+import Room from "./RoomOwner";
 
 export default function RoomsList() {
 
@@ -12,10 +13,10 @@ export default function RoomsList() {
 
                 {/* Rooms */}
                 <Room />
-                <Room />
-                <Room />
-                <Room />
-                <Room />
+                <RoomOthers/>
+                <RoomOthers/>
+                <RoomOthers/>
+                <RoomOthers/>
             </div>
         </>
     );
