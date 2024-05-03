@@ -6,10 +6,11 @@ import { IoLockOpenOutline, IoLockClosedOutline } from "react-icons/io5";
 export default function RoomMembers() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [roomLimit, setRoomLimit] = useState('');
-    const [roomName, setRoomName] = useState("Rahul");
+    const [roomName, setRoomName] = useState("Rahul's Room");
     const [isChangingRoomName, setIsChangingRoomName] = useState(false);
     const [newRoomName, setNewRoomName] = useState('');
     const [isRoomLocked, setIsRoomLocked] = useState(false); // State to manage room lock status
+    const [roomBorderColor, setRoomBorderColor] = useState('border-gray-600');
 
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
@@ -37,6 +38,7 @@ export default function RoomMembers() {
 
     const handleToggleRoomLock = () => {
         setIsRoomLocked(!isRoomLocked); // Toggle room lock status
+        setRoomBorderColor(roomBorderColor === 'border-gray-600' ? 'border-red-500' : 'border-gray-600')
     };
 
     return (
@@ -57,23 +59,22 @@ export default function RoomMembers() {
             </style>
 
             {/* Room */}
-            <div className="mt-4 -mx-3 space-y-6 cursor cursor-pointer rounded-lg h-[172px] border-2 border-gray-600 relative">
+            <div className={`mt-4 -mx-3 space-y-6 cursor cursor-pointer rounded-lg h-[172px] border-2 ${roomBorderColor} relative`}>
                 <div className="flex mx-2 my-1 flex-row justify-between items-center gap-1 border rounded-md border-gray-600">
                     <div className="py-1 px-2">
                         {/* room name */}
                         <h4 className="font-semibold text-sm">
-                            {roomName}'s Room
+                            {roomName}
                         </h4>
                     </div>
                     <div className="p-2 mx-1 relative">
                         {/* settings */}
                         <div className="relative">
-                            <div className="flex flex-row">
+                            <div className="flex flex-row items-center gap-2">
+                                {isRoomLocked && <IoLockClosedOutline size={20} onClick={handleToggleRoomLock} />}
                                 <a className="cursor-pointer" onClick={toggleDropdown}>
                                     <IoSettingsOutline size={22} />
                                 </a>
-                                {isRoomLocked && <IoLockClosedOutline size={14} />}
-
                             </div>
                             {/* Dropdown menu */}
                             {isDropdownOpen && (
@@ -84,7 +85,7 @@ export default function RoomMembers() {
                                                 className="flex gap-4 px-5 py-2 text-sm hover:text-gray-900 hover:bg-gray-300 "
                                                 onClick={handleToggleRoomLock} //  onClick handler to toggle room lock
                                             >
-                                                {isRoomLocked ? "Room locked" : "Room unlocked"}
+                                                {isRoomLocked ? "Room Locked" : "Room Unlocked"}
                                                 {isRoomLocked ? <IoLockClosedOutline size={18} /> : <IoLockOpenOutline size={18} />}
                                             </a>
                                         </li>
