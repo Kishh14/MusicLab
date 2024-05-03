@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import axios from "axios";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { useAuth } from "../context/AuthContext";
+
+const initialFormData = {
+  email: "",
+  password: "",
+};
 
 const Login = () => {
-    const initialFormData ={
-        email: '',
-        password: '',
-    }
   const [formData, setFormData] = useState(initialFormData);
+  const { login } = useAuth();
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -15,13 +22,25 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData); 
-    setFormData(initialFormData);
+
+    axios
+      .post("/auth/login", formData)
+      .then((res) => {
+        login(res.data);
+        navigate("/home");
+        toast.success("Login Successful");
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-800">
-      <form onSubmit={handleSubmit} className="bg-white p-8 m-10 md:m-0 rounded-lg shadow-md backdrop-blur-lg backdrop-filter bg-opacity-50">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white p-8 m-10 md:m-0 rounded-lg shadow-md backdrop-blur-lg backdrop-filter bg-opacity-50"
+      >
         <h2 className="text-2xl mb-4 text-center font-bold">Login</h2>
         <input
           type="email"
@@ -45,14 +64,21 @@ const Login = () => {
         >
           Login
         </button>
-        <div className='flex flex-wrap justify-between mt-3'>
-      
-            <p>New User? <Link className='font-bold text-gray-600 hover:text-gray-800' to="/" >Sign Up </Link></p>
-  
-            <p className='font-bold text-gray-600 hover:text-gray-800'>Forgot password?</p>
-       
+        <div className="flex flex-wrap justify-between mt-3">
+          <p>
+            New User?{" "}
+            <Link
+              className="font-bold text-gray-600 hover:text-gray-800"
+              to="/"
+            >
+              Sign Up{" "}
+            </Link>
+          </p>
+
+          <p className="font-bold text-gray-600 hover:text-gray-800">
+            Forgot password?
+          </p>
         </div>
-      
       </form>
     </div>
   );
