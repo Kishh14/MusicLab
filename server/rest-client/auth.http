@@ -1,0 +1,24 @@
+GET http://localhost:3000/auth/verify
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV4YW1wbGVAZ21haWwuY29tIiwidXNlcklkIjoiNjYzNGYyNGZlZmI2ZWVjMDFmMmYxNzg4IiwiaWF0IjoxNzE0NzQ2MTgyLCJleHAiOjE3MTczMzgxODJ9.VDxxCZQxBgN8TXicMTMqzYVdLbol6ztBwwkkYTMeVjE
+
+### Register
+
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "username": "John Doe",
+  "email": "example@gmail.com",
+  "password": "123456"
+}
+
+
+### Login
+
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "example@gmail.com",
+  "password": "123456"
+}
