@@ -52,7 +52,7 @@ export default function SideBar() {
 
                         {/* Chat icon */}
                         <div
-                            className="flex items-center px-3 py-3  text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+                            className="flex items-center px-3 py-3 cursor-pointer text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
                             onClick={toggleChat}
                         >
                             <BsChatLeftText size={26} />
