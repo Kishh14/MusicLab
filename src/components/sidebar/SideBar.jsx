@@ -9,6 +9,7 @@ import { IoExitOutline } from "react-icons/io5";
 export default function SideBar() {
     const [ismice, setIsMice] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isChatOpen, setIsChatOpen] = useState(false);
 
     const toggleMice = () => {
         setIsMice(!ismice);
@@ -18,6 +19,9 @@ export default function SideBar() {
         setIsDropdownOpen(!isDropdownOpen);
     }
 
+    const toggleChat = () => {
+        setIsChatOpen(!isChatOpen)
+    }
     return (
         <>
             <aside className="flex ">
@@ -47,12 +51,12 @@ export default function SideBar() {
                         </a>
 
                         {/* Chat icon */}
-                        <a
+                        <div
                             className="flex items-center px-3 py-3  text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
-                            href="#"
+                            onClick={toggleChat}
                         >
                             <BsChatLeftText size={26} />
-                        </a>
+                        </div>
                     </nav>
 
                     {/* Exit icon */}
@@ -81,7 +85,7 @@ export default function SideBar() {
                 </div>
 
                 {/* rooms */}
-                <RoomsList />
+                <RoomsList isChatOpen={isChatOpen} />
             </aside>
         </>
     )

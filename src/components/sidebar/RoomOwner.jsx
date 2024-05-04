@@ -59,7 +59,7 @@ export default function RoomMembers() {
             </style>
 
             {/* Room */}
-            <div className={`mt-4 -mx-3 space-y-6 cursor cursor-pointer rounded-lg h-[172px] border-2 ${roomBorderColor} relative`}>
+            <div className={`mt-4 -mx-3 space-y-6  cursor-pointer rounded-lg h-[172px] border-2 ${roomBorderColor} relative`}>
                 <div className="flex mx-2 my-1 flex-row justify-between items-center gap-1 border rounded-md border-gray-600">
                     <div className="py-1 px-2">
                         {/* room name */}
