@@ -1,5 +1,6 @@
 import RoomsList from "./RoomsList";
 import avatar from "../../assets/avatar.jpg";
+
 import { useRef, useState } from "react";
 import { TbMicrophone, TbMicrophoneOff } from "react-icons/tb";
 import { BsChatLeftText } from "react-icons/bs";
@@ -10,6 +11,7 @@ import { useSocket } from "../../context/SocketContext";
 export default function SideBar() {
   const [isMicOn, setIsMice] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   /**
    * @type {React.MutableRefObject<MediaRecorder>}
@@ -89,6 +91,9 @@ export default function SideBar() {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  const toggleChat = () => {
+    setIsChatOpen(!isChatOpen);
+  };
   return (
     <>
       <aside className="flex ">
@@ -121,14 +126,15 @@ export default function SideBar() {
                 <TbMicrophoneOff size={26} />
               )}
             </button>
-
+          </nav>
+          <nav>
             {/* Chat icon */}
-            <a
-              className="flex items-center px-3 py-3  text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
-              href="#"
+            <div
+              className="flex items-center px-3 py-3 cursor-pointer text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+              onClick={toggleChat}
             >
               <BsChatLeftText size={26} />
-            </a>
+            </div>
           </nav>
 
           {/* Exit icon */}
@@ -153,7 +159,7 @@ export default function SideBar() {
         </div>
 
         {/* rooms */}
-        <RoomsList />
+        <RoomsList isChatOpen={isChatOpen} />
       </aside>
     </>
   );

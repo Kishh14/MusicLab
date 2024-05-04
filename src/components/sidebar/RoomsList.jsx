@@ -1,37 +1,48 @@
+import PropTypes from "prop-types";
+import Chat from "./Chat";
 import Filters from "./Filters";
 import RoomOthers from "./RoomOthers";
-import Room from "./RoomOwner";
+import Room from "./Room";
 
-export default function RoomsList() {
+const RoomsList = ({ isChatOpen }) => {
+  return (
+    <>
+      <style>
+        {`
+            /* Hide scrollbar */
+            #container-main::-webkit-scrollbar {
+                display: none;
+            }
+        `}
+      </style>
 
+      <div
+        id="container-main"
+        className=" h-screen px-5 py-8 border-l border-r sm:w-80 w-60 bg-gray-900 border-gray-700 relative scroll-smooth"
+        style={{ overflow: "scroll" }}
+      >
+        {/* filter and search  */}
+        <Filters />
 
-    return (
-        <>
-            <style>
-                {`
-                        /* Hide scrollbar */
-                        #container-main::-webkit-scrollbar {
-                            display: none;
-                        }
+        {/* Rooms */}
+        <Room />
+        {isChatOpen ? (
+          <Chat />
+        ) : (
+          <>
+            <RoomOthers />
+            <RoomOthers />
+            <RoomOthers />
+            <RoomOthers />
+          </>
+        )}
+      </div>
+    </>
+  );
+};
 
-                        /* Apply smooth scroll */
-                        #container-main {
-                            scroll-behavior: smooth;
-                        }
-                    `}
-            </style>
+RoomsList.propTypes = {
+  isChatOpen: PropTypes.bool.isRequired,
+};
 
-            <div id="container-main" className=" h-screen px-5 py-8 bg-white border-l border-r sm:w-64 w-60 dark:bg-gray-900 dark:border-gray-700 relative" style={{ overflow: "scroll" }}>
-                {/* filter and search  */}
-                <Filters />
-
-                {/* Rooms */}
-                <Room />
-                <RoomOthers />
-                <RoomOthers />
-                <RoomOthers />
-                <RoomOthers />
-            </div>
-        </>
-    );
-}
+export default RoomsList;
