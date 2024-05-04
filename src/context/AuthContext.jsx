@@ -54,6 +54,8 @@ export const AuthProvider = ({ children }) => {
   }
 
   useEffect(() => {
+    if (!isAuthenticated) return;
+
     const token = localStorage.getItem("token");
     axios.defaults.headers.common["Authorization"] = token;
 

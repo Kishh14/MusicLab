@@ -13,7 +13,7 @@ export function authMiddleware(req, res, next) {
       return res.status(403).send({ error: true, message: "Invalid token" });
     }
 
-    req.username = user.username;
+    req.email = user.email;
     req.userId = user.userId;
     next();
   });

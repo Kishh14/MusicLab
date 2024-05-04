@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { useAuth } from "../context/AuthContext";
 
 const initialFormData = {
   username: "",
@@ -11,7 +12,18 @@ const initialFormData = {
 
 const Signup = () => {
   const [formData, setFormData] = useState(initialFormData);
-  const navigator = useNavigate();
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      setTimeout(() => {
+        // toast is not initialized yet
+        toast.info("You are already logged in");
+      }, 100);
+      navigate("/home");
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,7 +38,7 @@ const Signup = () => {
       .post("/auth/register", formData)
       .then((res) => {
         toast.success(res.data.message);
-        navigator("/login");
+        navigate("/login");
       })
       .catch((err) => {
         toast.error(err.response.data.message);
