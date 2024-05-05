@@ -2,9 +2,9 @@ import PropTypes from "prop-types";
 import Chat from "./Chat";
 import Filters from "./Filters";
 import RoomOthers from "./RoomOthers";
-import Room from "./Room";
+import Room from "./RoomOwner";
 
-const RoomsList = ({ isChatOpen }) => {
+const RoomsList = ({ isChatOpen, isRoomCreated }) => {
   return (
     <>
       <style>
@@ -25,15 +25,18 @@ const RoomsList = ({ isChatOpen }) => {
         <Filters />
 
         {/* Rooms */}
-        <Room />
+        {/* this is room or Room Owner  show when user create a room using add button */}
+        {/* show only when room created  */}
+        {isRoomCreated && <Room />}
+
+
         {isChatOpen ? (
           <Chat />
         ) : (
           <>
+            {/* display other rooms which are craeted by users  */}
             <RoomOthers />
-            <RoomOthers />
-            <RoomOthers />
-            <RoomOthers />
+
           </>
         )}
       </div>
@@ -43,6 +46,7 @@ const RoomsList = ({ isChatOpen }) => {
 
 RoomsList.propTypes = {
   isChatOpen: PropTypes.bool.isRequired,
+  isRoomCreated: PropTypes.bool.isRequired,
 };
 
 export default RoomsList;

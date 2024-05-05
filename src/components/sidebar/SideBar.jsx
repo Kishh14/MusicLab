@@ -1,6 +1,6 @@
 import RoomsList from "./RoomsList";
 import avatar from "../../assets/avatar.jpg";
-
+import { IoAddSharp } from "react-icons/io5";
 import { useRef, useState } from "react";
 import { TbMicrophone, TbMicrophoneOff } from "react-icons/tb";
 import { BsChatLeftText } from "react-icons/bs";
@@ -12,6 +12,8 @@ export default function SideBar() {
   const [isMicOn, setIsMice] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isRoomCreated, setIsRoomCreated] = useState(false);
+
 
   /**
    * @type {React.MutableRefObject<MediaRecorder>}
@@ -94,13 +96,18 @@ export default function SideBar() {
   const toggleChat = () => {
     setIsChatOpen(!isChatOpen);
   };
+
+  const toggleAdd = () => { // add room prompt
+    prompt("Enter Room Name")
+    setIsRoomCreated(!isRoomCreated)
+  }
   return (
     <>
       <aside className="flex ">
         <div className="flex flex-col items-center w-16 h-screen py-8 bg-white dark:bg-gray-900 dark:border-gray-300 relative">
           <nav className="flex flex-col items-center flex-1 space-y-6 ">
             {/* avatar */}
-            <div className="relative mt-3">
+            <div className="relative mt-3" title="Profile">
               <a href="/">
                 <img
                   className="object-cover w-10 h-10 rounded-full ring ring-gray-300 dark:ring-gray-600"
@@ -112,6 +119,15 @@ export default function SideBar() {
               </a>
             </div>
 
+            {/* create room  button*/}
+            <div
+              className="flex items-center px-3 py-3 cursor-pointer text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+              onClick={toggleAdd}
+              title="Create Room"
+            >
+              <IoAddSharp size={26} />
+            </div>
+
             {/* microphone icons */}
             <button
               className={
@@ -119,6 +135,7 @@ export default function SideBar() {
                 (isMicOn && "bg-gray-800")
               }
               onClick={toggleMic}
+              title={isMicOn ? "Turn Microphone Off" : "Turn Microphone On"}
             >
               {isMicOn ? (
                 <TbMicrophone className="text-red-600" size={26} />
@@ -126,20 +143,22 @@ export default function SideBar() {
                 <TbMicrophoneOff size={26} />
               )}
             </button>
-          </nav>
-          <nav>
+
             {/* Chat icon */}
             <div
               className="flex items-center px-3 py-3 cursor-pointer text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
               onClick={toggleChat}
+              title="Chat"
             >
               <BsChatLeftText size={26} />
             </div>
+
           </nav>
+          <nav></nav>
 
           {/* Exit icon */}
           <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-            <button type="button" className="text-sm" onClick={toggleDropdown}>
+            <button type="button" className="text-sm" onClick={toggleDropdown} title="logout">
               <IoExitOutline size={28} />
             </button>
             {/* Dropdown menu */}
@@ -159,7 +178,7 @@ export default function SideBar() {
         </div>
 
         {/* rooms */}
-        <RoomsList isChatOpen={isChatOpen} />
+        <RoomsList isChatOpen={isChatOpen} isRoomCreated={isRoomCreated} />
       </aside>
     </>
   );

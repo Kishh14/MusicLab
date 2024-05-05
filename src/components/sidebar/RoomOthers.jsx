@@ -5,7 +5,13 @@ export default function RoomOthers() {
         <>
 
             {/* Room */}
-            <div className="mt-4 -mx-3 space-y-6 rounded-lg h-[172px] border-2 border-gray-600 relative">
+            <div className=" mt-4 -mx-3 space-y-6 rounded-lg h-[172px] border-2 border-gray-600 relative">
+                <style hidden>
+                    {`/* Hide scrollbar */
+                        #memberContainer::-webkit-scrollbar {
+                            display: none;
+                        }`}
+                </style>
                 <div className="flex mx-2 my-1 flex-row justify-between items-center gap-1 border rounded-md border-gray-600">
                     <div className="py-1 px-2">
                         {/* room name */}
