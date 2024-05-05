@@ -7,6 +7,7 @@ import { BsChatLeftText } from "react-icons/bs";
 import { IoExitOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
+import axios from "axios";
 
 export default function SideBar() {
   const [isMicOn, setIsMice] = useState(false);
@@ -97,10 +98,21 @@ export default function SideBar() {
     setIsChatOpen(!isChatOpen);
   };
 
-  const toggleAdd = () => { // add room prompt
-    prompt("Enter Room Name")
-    setIsRoomCreated(!isRoomCreated)
-  }
+  const toggleAdd = async () => {
+    const roomName = prompt("Enter Room Name");
+    console.log(roomName);
+    if (roomName) {
+      try {
+        const response = await axios.post("/auth/createroom", { roomName }); // Send roomName in the request body
+        if (response.status === 201) {
+          setIsRoomCreated(true);
+        } 
+      } catch (error) {
+        console.error("Error adding room:", error);
+      }
+    }
+  };
+  
   return (
     <>
       <aside className="flex ">

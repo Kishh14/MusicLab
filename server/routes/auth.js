@@ -62,4 +62,17 @@ router.post("/login", async (req, res) => {
   });
 });
 
+router.post("/createroom", async (req, res) => {
+  const { roomName } = req.body;
+
+  try {
+    const room = new Room({ name: roomName }); // Using 'name' field here
+    await room.save();
+   return res.status(201).send({ message: "Room created successfully" });
+  } catch (error) {
+    console.error("Error creating room:", error);
+   return res.status(500).send({ error: "Failed to create rooms" });
+  }
+});
+
 export default router;
