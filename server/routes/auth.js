@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-
+import Room from "../models/Room.js"
 import { Router } from "express";
 import { authMiddleware } from "../lib/utils.js";
 
@@ -62,17 +62,17 @@ router.post("/login", async (req, res) => {
   });
 });
 
-router.post("/createroom", async (req, res) => {
+router.post("/createroom", async (req, res) => { //receive roomName and create a new room with that name
   const { roomName } = req.body;
 
   try {
-    const room = new Room({ name: roomName }); // Using 'name' field here
-    await room.save();
-   return res.status(201).send({ message: "Room created successfully" });
+    const newRoom = await Room.create({ roomName: roomName });
+    return res.status(201).send({ message: "Room created successfully" });
   } catch (error) {
     console.error("Error creating room:", error);
-   return res.status(500).send({ error: "Failed to create rooms" });
+    return res.status(500).send({ error: "Failed to create room" });
   }
 });
+
 
 export default router;

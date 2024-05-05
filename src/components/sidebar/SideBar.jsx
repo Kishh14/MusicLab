@@ -98,21 +98,25 @@ export default function SideBar() {
     setIsChatOpen(!isChatOpen);
   };
 
-  const toggleAdd = async () => {
+  const toggleAdd = async () => { // Add async keyword
     const roomName = prompt("Enter Room Name");
     console.log(roomName);
     if (roomName) {
       try {
-        const response = await axios.post("/auth/createroom", { roomName }); // Send roomName in the request body
+        // Send a POST request to the backend with roomName in the request body
+        const response = await axios.post("/auth/createroom", { roomName }); // Await the response
         if (response.status === 201) {
+          // If the room is successfully created (status code 201), update state accordingly
           setIsRoomCreated(true);
-        } 
+        }
       } catch (error) {
+        // If an error occurs during the request, log the error
         console.error("Error adding room:", error);
       }
     }
   };
-  
+
+
   return (
     <>
       <aside className="flex ">
