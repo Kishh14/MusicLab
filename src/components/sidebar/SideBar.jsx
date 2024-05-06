@@ -8,6 +8,7 @@ import { IoExitOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
 import axios from "axios";
+import { useAuth } from "../../context/AuthContext";
 
 export default function SideBar() {
   const [isMicOn, setIsMice] = useState(false);
@@ -15,6 +16,7 @@ export default function SideBar() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isRoomCreated, setIsRoomCreated] = useState(false);
 
+  const { user } = useAuth();
 
   /**
    * @type {React.MutableRefObject<MediaRecorder>}
@@ -98,23 +100,21 @@ export default function SideBar() {
     setIsChatOpen(!isChatOpen);
   };
 
-  const toggleAdd = async () => { // Add async keyword
-    const roomName = prompt("Enter Room Name");
-    console.log(roomName);
-    if (roomName) {
+  const toggleAdd = async () => {
+    const roomName = prompt("Enter Login User name ");
+    const ownerName = user.username; // check username in login model
+    if (roomName === ownerName) {
       try {
-        // Send a POST request to the backend with roomName in the request body
-        const response = await axios.post("/auth/createroom", { roomName }); // Await the response
+        const response = await axios.post("/auth/createroom", { roomName, ownerName });
         if (response.status === 201) {
-          // If the room is successfully created (status code 201), update state accordingly
           setIsRoomCreated(true);
         }
       } catch (error) {
-        // If an error occurs during the request, log the error
-        console.error("Error adding room:", error);
+        console.error("Error creating room:", error);
       }
     }
   };
+
 
 
   return (
@@ -194,7 +194,7 @@ export default function SideBar() {
         </div>
 
         {/* rooms */}
-        <RoomsList isChatOpen={isChatOpen} isRoomCreated={isRoomCreated} />
+        <RoomsList isChatOpen={isChatOpen} isRoomCreated={isRoomCreated} user={user} />
       </aside>
     </>
   );

@@ -1,13 +1,10 @@
 import jwt from "jsonwebtoken";
-import Room from "../models/Room.js"
 import { Router } from "express";
 import { authMiddleware } from "../lib/utils.js";
-
-// Models
+import Room from "../models/Room.js";
 import User from "../models/User.js";
 import { JWT_EXPIRES_IN, JWT_SECRET } from "../constants.js";
 
-// Auth Router
 const router = Router();
 
 // Verify the user
@@ -28,8 +25,8 @@ router.post("/register", async (req, res) => {
       .send({ error: true, message: "User already exists" });
   }
 
-  const newuser = new User({ email, username, password });
-  await newuser.save();
+  const newUser = new User({ email, username, password });
+  await newUser.save();
   res.status(201).send({ message: "User registered successfully" });
 });
 
@@ -62,17 +59,70 @@ router.post("/login", async (req, res) => {
   });
 });
 
-router.post("/createroom", async (req, res) => { //receive roomName and create a new room with that name
-  const { roomName } = req.body;
+// routes.js
+router.post("/createroom", async (req, res) => {
+  const { roomName, ownerName } = req.body;
 
   try {
-    const newRoom = await Room.create({ roomName: roomName });
-    return res.status(201).send({ message: "Room created successfully" });
+    const newRoom = await Room.create({ roomName, ownerName, members: [ownerName] });
+    return res.status(201).json(newRoom);
   } catch (error) {
     console.error("Error creating room:", error);
-    return res.status(500).send({ error: "Failed to create room" });
+    return res.status(500).json({ error: "Failed to create room" });
   }
 });
 
+router.post("/rooms/:id/join", async (req, res) => {
+  const { id } = req.params;
+  const { username } = req.body;
+
+  try {
+    const room = await Room.findById(id);
+    if (!room) {
+      return res.status(404).send({ error: "Room not found" });
+    }
+
+    if (!room.members.includes(username)) {
+      room.members.push(username);
+      await room.save();
+    }
+    return res.send({ message: "Joined the room successfully" });
+  } catch (error) {
+    console.error("Error joining room:", error);
+    return res.status(500).send({ error: "Failed to join room" });
+  }
+});
+
+
+
+// Get all rooms
+router.get("/rooms", async (req, res) => {
+  try {
+    const rooms = await Room.find();
+    return res.status(200).json(rooms);
+  } catch (error) {
+    console.error("Error fetching rooms:", error);
+    return res.status(500).json({ error: "Failed to fetch rooms" });
+  }
+});
+
+router.get("/auth/joinedmembers", async (req, res) => {
+  try {
+    const room = await Room.findOne({ ownerName: req.user.username });
+    if (!room) {
+      return res.status(404).json({ error: "Room not found" });
+    }
+
+    const joinedMembers = room.members.map((member) => ({
+      username: member,
+      profile_img: "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg",
+    }));
+
+    return res.status(200).json(joinedMembers);
+  } catch (error) {
+    console.error("Error fetching joined members:", error);
+    return res.status(500).json({ error: "Failed to fetch joined members" });
+  }
+});
 
 export default router;
