@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-
 const roomSchema = new mongoose.Schema({
   roomName: {
     type: String,
@@ -14,6 +13,12 @@ const roomSchema = new mongoose.Schema({
     type: [String],
     default: [],
   },
+  isLocked: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-export default mongoose.model('Room', roomSchema);
+const Room = mongoose.model('Room', roomSchema);
+
+export default Room;

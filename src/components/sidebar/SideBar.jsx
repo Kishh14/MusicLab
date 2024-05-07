@@ -1,7 +1,7 @@
 import RoomsList from "./RoomsList";
 import avatar from "../../assets/avatar.jpg";
 import { IoAddSharp } from "react-icons/io5";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { TbMicrophone, TbMicrophoneOff } from "react-icons/tb";
 import { BsChatLeftText } from "react-icons/bs";
 import { IoExitOutline } from "react-icons/io5";
@@ -18,17 +18,21 @@ export default function SideBar() {
 
   const { user } = useAuth();
 
-  /**
-   * @type {React.MutableRefObject<MediaRecorder>}
-   */
   const mediaRecorderRef = useRef(null);
-
-  /**
-   * @type {React.MutableRefObject<boolean>}
-   */
   const isMicOnRef = useRef(false);
 
   const { socket } = useSocket();
+
+  useEffect(() => {
+    const storedIsRoomCreated = localStorage.getItem("isRoomCreated");
+    if (storedIsRoomCreated !== null) {
+      setIsRoomCreated(JSON.parse(storedIsRoomCreated));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("isRoomCreated", JSON.stringify(isRoomCreated));
+  }, [isRoomCreated]);
 
   const startVoiceChat = () => {
     let handleData, handleStop;
@@ -108,13 +112,13 @@ export default function SideBar() {
         const response = await axios.post("/auth/createroom", { roomName, ownerName });
         if (response.status === 201) {
           setIsRoomCreated(true);
+
         }
       } catch (error) {
         console.error("Error creating room:", error);
       }
     }
   };
-
 
 
   return (
@@ -135,14 +139,16 @@ export default function SideBar() {
               </a>
             </div>
 
-            {/* create room  button*/}
-            <div
-              className="flex items-center px-3 py-3 cursor-pointer text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
-              onClick={toggleAdd}
-              title="Create Room"
-            >
-              <IoAddSharp size={26} />
-            </div>
+            {/* Conditionally render create room button */}
+            {!isRoomCreated && (
+              <div
+                className="flex items-center px-3 py-3 cursor-pointer text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+                onClick={toggleAdd}
+                title="Create Room"
+              >
+                <IoAddSharp size={26} />
+              </div>
+            )}
 
             {/* microphone icons */}
             <button

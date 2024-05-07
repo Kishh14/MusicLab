@@ -106,23 +106,52 @@ router.get("/rooms", async (req, res) => {
   }
 });
 
-router.get("/auth/joinedmembers", async (req, res) => {
-  try {
-    const room = await Room.findOne({ ownerName: req.user.username });
-    if (!room) {
-      return res.status(404).json({ error: "Room not found" });
-    }
 
-    const joinedMembers = room.members.map((member) => ({
-      username: member,
-      profile_img: "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg",
-    }));
+// Update Room Name
+// router.put("/rooms/:id", async (req, res) => {
+//   const { id } = req.params;
+//   const { newRoomName } = req.body;
 
-    return res.status(200).json(joinedMembers);
-  } catch (error) {
-    console.error("Error fetching joined members:", error);
-    return res.status(500).json({ error: "Failed to fetch joined members" });
-  }
-});
+//   try {
+//     const room = await Room.findById(id);
+//     if (!room) {
+//       return res.status(404).json({ error: "Room not found" });
+//     }
+
+//     room.roomName = newRoomName;
+//     await room.save();
+
+//     return res.status(200).json({ message: "Room name updated successfully" });
+//   } catch (error) {
+//     console.error("Error updating room name:", error);
+//     return res.status(500).json({ error: "Failed to update room name" });
+//   }
+// });
+
+
+// to display the username of member who joined 
+// router.get("/joinedmembers", async (req, res) => {
+//   try {
+//     // Find the room where the current user is the owner
+//     const room = await Room.findOne({ ownerName: req.user.username });
+    
+//     if (!room) {
+//       return res.status(404).json({ error: "Room not found" });
+//     }
+
+//     // Extract joined members from the room and prepare the response
+//     const joinedMembers = room.members.map((mem) => ({
+//       username: mem, 
+      
+//     }));
+
+//     // Send the response with the joined members
+//     return res.status(200).json(joinedMembers);
+//   } catch (error) {
+//     console.error("Error fetching joined members:", error);
+//     return res.status(500).json({ error: "Failed to fetch joined members" });
+//   }
+// });
+
 
 export default router;
