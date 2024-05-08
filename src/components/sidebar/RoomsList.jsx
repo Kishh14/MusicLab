@@ -25,7 +25,8 @@ const RoomsList = ({ isChatOpen, isRoomCreated, setIsRoomCreated }) => {
 
   const ownerRooms = rooms.filter((room) => room.owner === user.id);
   const otherRooms = rooms.filter((room) => room.owner !== user.id);
-
+  console.log(ownerRooms)
+  console.log(otherRooms)
   useEffect(() => {
     setIsRoomCreated(ownerRooms.length > 0);
   }, [setIsRoomCreated, ownerRooms]);
@@ -48,7 +49,15 @@ const RoomsList = ({ isChatOpen, isRoomCreated, setIsRoomCreated }) => {
         {ownerRooms.length > 0 && <RoomOwner {...ownerRooms[0]} />}
 
         {isChatOpen ? (
-          <Chat />
+          <>
+
+            {ownerRooms.length > 0(
+              <Chat roomId={ownerRooms[0]?._id} />
+            )}
+          </>
+          //owner room iam getting undefined tried consolelog its array is empty even tried othersroom
+          // <Chat {...ownerRooms[0]._id} />
+          // <Chat roomId={ownerRooms[0]._id} />
         ) : (
           <>
             {otherRooms.map((room, index) => (

@@ -1,81 +1,66 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 
-const Chat = () => {
+const Chat = ({ roomId }) => {
+    const [messages, setMessages] = useState([]);
+    const [newMessage, setNewMessage] = useState('');
     const chatContainerRef = useRef(null);
 
     useEffect(() => {
+        // Fetch messages for the current room
+        axios.get("/chat/messages/" + { roomId })
+            .then(res => {
+                setMessages(res.data);
+                scrollToBottom();
+            })
+            .catch(console.error);
+    }, [roomId]);
+
+    useEffect(() => {
         // Scroll to the bottom of the chat container whenever messages change
+        scrollToBottom();
+    }, [messages]);
+
+    const scrollToBottom = () => {
         if (chatContainerRef.current) {
             chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
         }
-    }, []); // Add message state for rerender
+    };
+
+    const handleMessageSend = () => {
+        // Send new message to the server
+        axios.post("/chat/messages/" + { roomId, content: newMessage })
+            .then(res => {
+                setNewMessage('');
+                // Add the new message to the state
+                setMessages(prevMessages => [...prevMessages, res.data]);
+                scrollToBottom();
+            })
+            .catch(console.error);
+    };
 
     return (
-        <div className=" mt-4 -mx-3 space-y-6  cursor-pointer h-[450px] rounded-lg border-gray-500  border">
-            <div className="overflow-hidden ">
+        <div className="mt-4 -mx-3 space-y-6 cursor-pointer h-[450px] rounded-lg border-gray-500 border">
+            <div className="overflow-hidden">
                 <div className="overflow-y-auto h-full px-4 py-4" ref={chatContainerRef}>
-                    {/* chat messages */}
-                    <div className="flex flex-col space-y-4">
-                        {/* chat message */}
-                        <div className="flex items-center flex-row-reverse">
-                            <div className="flex flex-col items-center space-y-1 ml-4">
-                                <img
-                                    className="rounded-full w-10 h-10"
-                                    src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                    alt="User Avatar"
-                                />
-                                <a href="#" className="block text-xs hover:underline">
-                                    arshad
-                                </a>
-                            </div>
-                            <div className="flex-1 bg-indigo-100 text-gray-800 p-2 rounded-lg relative">
-                                <div>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum
-                                    dolor sit amet, consectetur adipisicing elit.
-                                </div>
-                                {/* arrow */}
-                                <div className="absolute right-0 top-1/2 transform translate-x-1/2 rotate-45 w-2 h-2 bg-indigo-100" />
-                                {/* end arrow */}
-                            </div>
-                        </div>
-                        {/* chat message */}
-                        <div className="flex items-center">
+                    {/* Display messages */}
+                    {messages.map(message => (
+                        <div key={message._id} className="flex items-center">
+                            {/* Display sender info */}
                             <div className="flex flex-col items-center space-y-1 mr-4">
                                 <img
                                     className="rounded-full w-10 h-10"
-                                    src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                    alt="User Avatar"
+                                    src={message.sender.avatar}
+                                    alt={message.sender.username}
                                 />
-                                <p className="block text-xs">rahul</p>
+                                <p className="block text-xs">{message.sender.username}</p>
                             </div>
+                            {/* Display message content */}
                             <div className="flex-1 bg-indigo-400 text-white p-2 rounded-lg relative">
-                                <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div>
-                                <div className="absolute left-0 top-1/2 transform -translate-x-1/2 rotate-45 w-2 h-2 bg-indigo-400" />
+                                <div>{message.content}</div>
                             </div>
                         </div>
-                        {/* chat message */}
-                        <div className="flex items-center flex-row-reverse">
-                            <div className="flex flex-col items-center space-y-1 ml-4">
-                                <img
-                                    className="rounded-full w-10 h-10"
-                                    src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                    alt="User Avatar"
-                                />
-                                <a href="#" className="block text-xs hover:underline">
-                                    arshad
-                                </a>
-                            </div>
-                            <div className="flex-1 bg-indigo-100 text-gray-800 p-2 rounded-lg relative">
-                                <div>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum
-                                    dolor sit amet, consectetur adipisicing elit.
-                                </div>
-                                {/* arrow */}
-                                <div className="absolute right-0 top-1/2 transform translate-x-1/2 rotate-45 w-2 h-2 bg-indigo-100" />
-                                {/* end arrow */}
-                            </div>
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </div>
             {/* Chat input and button */}
@@ -84,9 +69,13 @@ const Chat = () => {
                     <input
                         className="flex-1 rounded-full border border-gray-200 py-2 px-4 mr-2"
                         type="text"
+                        value={setNewMessage}
                         placeholder="Type here"
+                        onChange={(e) => setNewMessage(e.target.value)}
                     />
-                    <button className="px-4 py-2 bg-indigo-600 rounded-full shadow text-white">
+                    <button className="px-4 py-2 bg-indigo-600 rounded-full shadow text-white"
+                        onClick={handleMessageSend}
+                    >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width={16}
@@ -107,6 +96,7 @@ const Chat = () => {
                     </button>
                 </div>
             </div>
+
         </div>
     );
 };
