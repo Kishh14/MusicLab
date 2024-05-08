@@ -1,0 +1,23 @@
+@token_user1 = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5paGFsQGZhbGNvbnMuY29tIiwidXNlcklkIjoiNjYzNTFmYWQ5YzliOGQ5MTdkMzQyZWRjIiwiaWF0IjoxNzE0Nzk5MTU5LCJleHAiOjE3MTczOTExNTl9.aVhwTL4liYxmRp5h4b_w-P_WTV8tggJPct0L5apDoas
+
+@token_user2 = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InByaXlhbnNodTk5NDNAZ21haWwuY29tIiwidXNlcklkIjoiNjYzNTI3YjQxMmNlN2ViMzY0ZGFjMjFhIiwiaWF0IjoxNzE1MTAyOTU4LCJleHAiOjE3MTc2OTQ5NTh9.wqgDiHEUCb1je7scDaacr2OLL0nteK8G2xACMp4mR4w
+
+### Create Room
+
+POST http://localhost:3000/room/create
+Content-Type: application/json
+Authorization: {{token_user1}}
+
+{
+  "roomName": "Room 1"
+}
+
+### Join Room
+
+POST http://localhost:3000/room/663a64c0ac9555398ffa9fb5/join
+Authorization: {{token_user2}}
+
+### Get All Rooms
+
+GET http://localhost:3000/room/all
+Authorization: {{token_user1}}

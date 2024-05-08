@@ -4,3 +4,11 @@ export interface User {
   email: string;
   profile_img: string;
 }
+
+export type RoomType = {
+  _id: string;
+  name: string;
+  owner: string;
+  members: User[];
+  isLocked: boolean;
+};

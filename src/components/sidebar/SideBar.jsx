@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
+import { toast } from "sonner";
 
 export default function SideBar() {
   const [isMicOn, setIsMice] = useState(false);
@@ -22,17 +23,6 @@ export default function SideBar() {
   const isMicOnRef = useRef(false);
 
   const { socket } = useSocket();
-
-  useEffect(() => {
-    const storedIsRoomCreated = localStorage.getItem("isRoomCreated");
-    if (storedIsRoomCreated !== null) {
-      setIsRoomCreated(JSON.parse(storedIsRoomCreated));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("isRoomCreated", JSON.stringify(isRoomCreated));
-  }, [isRoomCreated]);
 
   const startVoiceChat = () => {
     let handleData, handleStop;
@@ -105,21 +95,17 @@ export default function SideBar() {
   };
 
   const toggleAdd = async () => {
-    const roomName = prompt("Enter Login User name ");
-    const ownerName = user.username; // check username in login model
-    if (roomName === ownerName) {
-      try {
-        const response = await axios.post("/auth/createroom", { roomName, ownerName });
-        if (response.status === 201) {
-          setIsRoomCreated(true);
-
-        }
-      } catch (error) {
-        console.error("Error creating room:", error);
-      }
+    const roomName = prompt("Enter Room Name");
+    if (!isRoomCreated && roomName) {
+      axios
+        .post("/room/create", { roomName })
+        .then(() => setIsRoomCreated(true))
+        .catch((err) => {
+          console.error(err);
+          toast.error("Failed to create room");
+        });
     }
   };
-
 
   return (
     <>
@@ -174,13 +160,16 @@ export default function SideBar() {
             >
               <BsChatLeftText size={26} />
             </div>
-
           </nav>
-          <nav></nav>
 
           {/* Exit icon */}
           <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-            <button type="button" className="text-sm" onClick={toggleDropdown} title="logout">
+            <button
+              type="button"
+              className="text-sm"
+              onClick={toggleDropdown}
+              title="logout"
+            >
               <IoExitOutline size={28} />
             </button>
             {/* Dropdown menu */}
@@ -200,7 +189,11 @@ export default function SideBar() {
         </div>
 
         {/* rooms */}
-        <RoomsList isChatOpen={isChatOpen} isRoomCreated={isRoomCreated} user={user} />
+        <RoomsList
+          isChatOpen={isChatOpen}
+          isRoomCreated={isRoomCreated}
+          setIsRoomCreated={setIsRoomCreated}
+        />
       </aside>
     </>
   );

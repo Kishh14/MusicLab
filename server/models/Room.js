@@ -1,24 +1,32 @@
 import mongoose from "mongoose";
 
-const roomSchema = new mongoose.Schema({
-  roomName: {
-    type: String,
-    required: true,
+const roomSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      minlength: 3,
+      maxlength: 36,
+    },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    members: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    isLocked: {
+      type: Boolean,
+      default: false,
+    },
   },
-  ownerName: {
-    type: String,
-    required: true,
-  },
-  members: {
-    type: [String],
-    default: [],
-  },
-  isLocked: {
-    type: Boolean,
-    default: false,
-  },
-});
+  { timestamps: true }
+);
 
-const Room = mongoose.model('Room', roomSchema);
+const Room = mongoose.model("Room", roomSchema);
 
 export default Room;

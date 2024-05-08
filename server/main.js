@@ -4,6 +4,8 @@ import cors from "cors";
 import http from "http";
 
 import authRouter from "./routes/auth.js";
+import roomsRouter from "./routes/rooms.js";
+
 import { MONGO_URI, PORT } from "./constants.js";
 import { Server } from "socket.io";
 
@@ -30,6 +32,7 @@ const io = new Server(server, {
 
 // Routes
 app.use("/auth", authRouter);
+app.use("/room", roomsRouter);
 
 // Start the server
 server.listen(PORT, () => {
@@ -38,4 +41,5 @@ server.listen(PORT, () => {
 
 export { io };
 
+// Import after exporting io
 import("./socket.io/index.js");

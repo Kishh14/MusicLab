@@ -8,6 +8,7 @@ export const AuthContext = createContext({
   isAuthenticated: false,
   token: "",
   user: {
+    id: "",
     email: "",
     username: "",
   },
