@@ -21,7 +21,8 @@ const Login = () => {
         // toast is not initialized yet
         toast.info("You are already logged in");
       }, 100);
-      navigate("/home");
+      // The page need to reload to get the user data
+      window.location.href = "/home";
     }
   }, []);
 

@@ -1,23 +1,26 @@
-import RoomsList from "./RoomsList";
+import axios from "axios";
+
 import avatar from "../../assets/avatar.jpg";
+import RoomList from "./room/RoomList";
+
+import { toast } from "sonner";
+import { Link } from "react-router-dom";
+import { useRef, useState } from "react";
 import { IoAddSharp } from "react-icons/io5";
-import { useRef, useState, useEffect } from "react";
 import { TbMicrophone, TbMicrophoneOff } from "react-icons/tb";
 import { BsChatLeftText } from "react-icons/bs";
 import { IoExitOutline } from "react-icons/io5";
-import { Link } from "react-router-dom";
+
 import { useSocket } from "../../context/SocketContext";
-import axios from "axios";
-import { useAuth } from "../../context/AuthContext";
-import { toast } from "sonner";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { toggleChat } from "../../features/room/roomSlice";
 
 export default function SideBar() {
   const [isMicOn, setIsMice] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isChatOpen, setIsChatOpen] = useState(false);
-  const [isRoomCreated, setIsRoomCreated] = useState(false);
 
-  const { user } = useAuth();
+  const isRoomCreated = useAppSelector((state) => state.room.rooms.length > 0);
+  const dispatch = useAppDispatch();
 
   const mediaRecorderRef = useRef(null);
   const isMicOnRef = useRef(false);
@@ -90,20 +93,17 @@ export default function SideBar() {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const toggleChat = () => {
-    setIsChatOpen(!isChatOpen);
+  const toggleChatHandler = () => {
+    dispatch(toggleChat());
   };
 
   const toggleAdd = async () => {
     const roomName = prompt("Enter Room Name");
     if (!isRoomCreated && roomName) {
-      axios
-        .post("/room/create", { roomName })
-        .then(() => setIsRoomCreated(true))
-        .catch((err) => {
-          console.error(err);
-          toast.error("Failed to create room");
-        });
+      axios.post("/room/create", { roomName }).catch((err) => {
+        console.error(err);
+        toast.error("Failed to create room");
+      });
     }
   };
 
@@ -155,7 +155,7 @@ export default function SideBar() {
             {/* Chat icon */}
             <div
               className="flex items-center px-3 py-3 cursor-pointer text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
-              onClick={toggleChat}
+              onClick={toggleChatHandler}
               title="Chat"
             >
               <BsChatLeftText size={26} />
@@ -189,11 +189,13 @@ export default function SideBar() {
         </div>
 
         {/* rooms */}
-        <RoomsList
+        {/* <RoomsList
           isChatOpen={isChatOpen}
           isRoomCreated={isRoomCreated}
           setIsRoomCreated={setIsRoomCreated}
-        />
+        /> */}
+
+        <RoomList />
       </aside>
     </>
   );

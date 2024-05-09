@@ -1,55 +1,15 @@
-import jwt from 'jsonwebtoken'
-import User from '../models/User.js'
-
-import { JWT_SECRET } from '../constants.js'
 import { io } from '../main.js'
+import Room from '../models/Room.js'
+import authenticateSocket from './auth.js'
 
 io.on('connection', async (socket) => {
   console.log('Socket connected:', socket.id)
 
-  socket.auth = false
+  const isAuthenticated = await authenticateSocket(socket)
 
-  // Authenticate user
-  await new Promise((resolve) => {
-    socket.once('authenticate', ({ token }) => {
-      if (!token) {
-        return resolve(
-          socket.emit('error', { status: 401, message: 'Token not recieved' })
-        )
-      }
-
-      jwt.verify(token, JWT_SECRET, async (err, payload) => {
-        if (err) {
-          return resolve(
-            socket.emit('error', { status: 403, message: 'Invalid token' })
-          )
-        }
-
-        const user = await User.findById(payload.userId).select('-password')
-
-        if (!user) {
-          return resolve(
-            socket.emit('error', { status: 404, message: 'User not found' })
-          )
-        }
-
-        socket.auth = true
-        socket.user = user
-        resolve()
-      })
-    })
-
-    // Auth timeout
-    setTimeout(() => {
-      if (!socket.auth) {
-        resolve()
-      }
-    }, 10_000)
-  })
-
-  if (!socket.auth) {
+  if (!isAuthenticated) {
     console.log('Unauthorized: Disconnecting socket', socket.id)
-    return socket.disconnect('unauthorized')
+    return socket.disconnect('Socket not authenticated')
   }
 
   console.log('🔥 User Socket Authenticated:', socket.id)
@@ -58,7 +18,7 @@ io.on('connection', async (socket) => {
   // Enabling all the other events
 
   // Join Voice Room
-  socket.on('room:join', (roomId) => {
+  socket.on('room:join', async (roomId) => {
     console.log(
       `🔔 ${socket.user.username} (${socket.id}) joined room ${roomId}`
     )

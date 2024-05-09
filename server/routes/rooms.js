@@ -1,7 +1,8 @@
 import Room from "../models/Room.js";
 import { Router } from "express";
-import User from "../models/User.js";
 import { authMiddleware } from "../lib/utils.js";
+import User from "../models/User.js";
+import { io } from "../main.js";
 
 const router = Router();
 
@@ -18,9 +19,11 @@ router.post("/create", authMiddleware, async (req, res) => {
     });
 
     newRoom.members.push(req.userId);
+    const room = await newRoom.populate("members", "-password");
+    io.emit("room:new", room);
 
     await newRoom.save();
-    return res.status(201).json(await newRoom.populate("members", "-password"));
+    return res.status(201).json(room);
   } catch (error) {
     console.error("❌ Error creating room:", error);
     return res
@@ -33,7 +36,7 @@ router.post("/:id/join", authMiddleware, async (req, res) => {
   const { id } = req.params;
 
   try {
-    const room = await Room.findById(id);
+    let room = await Room.findById(id);
     if (!room) {
       return res //
         .status(404)
@@ -45,12 +48,42 @@ router.post("/:id/join", authMiddleware, async (req, res) => {
       await room.save();
     }
 
-    return res.json(await room.populate("members", "-password"));
+    room = await room.populate("members", "-password");
+    io.emit("room:updated", room);
+    return res.json(room);
   } catch (error) {
     console.error("❌ Error joining room:", error);
     return res
       .status(500)
       .send({ error: true, message: "Failed to join room" });
+  }
+});
+
+// Leave a room
+router.post("/:id/leave", authMiddleware, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    let room = await Room.findById(id);
+    if (!room) {
+      return res //
+        .status(404)
+        .send({ error: true, message: "Room not found" });
+    }
+
+    if (room.members.includes(req.userId)) {
+      room.members = room.members.filter((m) => m != req.userId);
+      await room.save();
+    }
+
+    room = await room.populate("members", "-password");
+    io.emit("room:updated", room);
+    return res.json(room);
+  } catch (error) {
+    console.error("❌ Error leaving room:", error);
+    return res
+      .status(500)
+      .send({ error: true, message: "Failed to leave room" });
   }
 });
 

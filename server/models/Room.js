@@ -23,15 +23,6 @@ const roomSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    sender: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User', 
-      required: true
-    },
-     content: {
-      type: String,
-      required: true
-  }
   },
   { timestamps: true }
 );
