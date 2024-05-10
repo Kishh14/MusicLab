@@ -14,18 +14,24 @@ import { IoExitOutline } from "react-icons/io5";
 import { useSocket } from "../../context/SocketContext";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { toggleChat } from "../../features/room/roomSlice";
+import { useAuth } from "../../context/AuthContext";
 
 export default function SideBar() {
+  const { socket } = useSocket();
+  const { user } = useAuth();
+
   const [isMicOn, setIsMice] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const isRoomCreated = useAppSelector((state) => state.room.rooms.length > 0);
+  // Check if user has already created a room
+  const isRoomCreated = useAppSelector(
+    (state) =>
+      state.room.rooms.filter((room) => room.owner === user.id).length > 0
+  );
   const dispatch = useAppDispatch();
 
   const mediaRecorderRef = useRef(null);
   const isMicOnRef = useRef(false);
-
-  const { socket } = useSocket();
 
   const startVoiceChat = () => {
     let handleData, handleStop;
@@ -187,13 +193,6 @@ export default function SideBar() {
             )}
           </div>
         </div>
-
-        {/* rooms */}
-        {/* <RoomsList
-          isChatOpen={isChatOpen}
-          isRoomCreated={isRoomCreated}
-          setIsRoomCreated={setIsRoomCreated}
-        /> */}
 
         <RoomList />
       </aside>

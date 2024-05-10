@@ -10,7 +10,7 @@ import { toast } from "sonner";
 
 const SocketContext = createContext({
   socket: null,
-  setSocket: () => {},
+  isSocketConnected: false,
 });
 
 /**
@@ -26,6 +26,7 @@ const SocketProvider = ({ children }) => {
    * @type {[Socket | null, (socket: Socket) => void]}
    */
   const [socket, setSocket] = useState(null);
+  const [isSocketConnected, setIsSocketConnected] = useState(false);
   const { token, isAuthenticated } = useAuth();
 
   useEffect(() => {
@@ -52,11 +53,13 @@ const SocketProvider = ({ children }) => {
       toast.success("User Socket Authenticated");
       console.log("🔥 User Socket Authenticated");
       newSocket.off("error", handleError);
+      setIsSocketConnected(true);
     });
 
     newSocket.on("disconnect", () => {
       toast.error("Socket disconnected");
       console.log("Disconnected from the socket server");
+      setIsSocketConnected(false);
     });
 
     // Cleanup the socket connection when the component is unmounted
@@ -65,7 +68,7 @@ const SocketProvider = ({ children }) => {
 
   return (
     // Provide the socket instance through context to its children
-    <SocketContext.Provider value={{ socket }}>
+    <SocketContext.Provider value={{ socket, isSocketConnected }}>
       {children}
     </SocketContext.Provider>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Room from "./Room";
 import axios from "axios";
 
@@ -8,7 +8,9 @@ import {
   removeRoom,
   setRooms,
   updateRoom,
+  setCurrentRoom,
 } from "../../../features/room/roomSlice";
+
 import { useSocket } from "../../../context/SocketContext";
 import { useAuth } from "../../../context/AuthContext";
 import Filters from "../Filters";
@@ -17,15 +19,27 @@ import Chat from "../Chat";
 const RoomList = () => {
   const rooms = useAppSelector((state) => state.room.rooms);
   const isChatOpen = useAppSelector((state) => state.room.isChatOpen);
+
+  const currentRoom = useAppSelector((state) => state.room.currentRoom);
   const dispatch = useAppDispatch();
 
   const { user } = useAuth();
-  const { socket } = useSocket();
+  const { socket, isSocketConnected } = useSocket();
 
   React.useEffect(() => {
     axios
       .get("/room/all")
-      .then((res) => dispatch(setRooms(res.data)))
+      .then((res) => {
+        dispatch(setRooms(res.data));
+        // get current room
+        const currentRoom = res.data.find((room) =>
+          room.members.find((member) => member._id === user.id)
+        );
+
+        if (currentRoom) {
+          dispatch(setCurrentRoom(currentRoom));
+        }
+      })
       .catch(console.error);
   }, []);
 
@@ -37,7 +51,6 @@ const RoomList = () => {
     });
 
     socket.on("room:updated", (room) => {
-      console.log(room);
       dispatch(updateRoom(room));
     });
 
@@ -52,6 +65,22 @@ const RoomList = () => {
     };
   }, [socket]);
 
+  useEffect(() => {
+    if (!currentRoom || !socket || !isSocketConnected) return;
+
+    console.log(currentRoom);
+
+    // Join the current room when socket is ready
+    console.log(socket);
+
+    const roomId = currentRoom._id;
+    socket.emit("room:join", roomId);
+
+    return () => {
+      socket.emit("room:leave", roomId);
+    };
+  }, [socket, isSocketConnected, currentRoom]);
+
   return (
     <div
       id="container-main"
@@ -65,7 +94,15 @@ const RoomList = () => {
         <Chat roomId={rooms[0]._id} />
       ) : (
         rooms.map((room) => (
-          <Room key={room._id} {...room} isAdmin={user.id == room.owner} />
+          <Room
+            key={room._id}
+            {...room}
+            isAdmin={
+              user.id == room.owner &&
+              currentRoom &&
+              currentRoom._id == room._id
+            }
+          />
         ))
       )}
     </div>

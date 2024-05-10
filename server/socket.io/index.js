@@ -1,5 +1,4 @@
 import { io } from '../main.js'
-import Room from '../models/Room.js'
 import authenticateSocket from './auth.js'
 
 io.on('connection', async (socket) => {
@@ -17,18 +16,27 @@ io.on('connection', async (socket) => {
 
   // Enabling all the other events
 
+  let roomId = null
+
   // Join Voice Room
-  socket.on('room:join', async (roomId) => {
-    console.log(
-      `🔔 ${socket.user.username} (${socket.id}) joined room ${roomId}`
-    )
-    socket.to(roomId).emit('user:new', socket.user)
-    socket.join(roomId)
+  socket.on('room:join', async (id) => {
+    console.log(`🔔 ${socket.user.username} (${socket.id}) joined room ${id}`)
+    roomId = id
+    socket.to(id).emit('user:new', socket.user)
+    socket.join(id)
+  })
+
+  // Leave Voice Room
+  socket.on('room:leave', async (id) => {
+    console.log(`🔔 ${socket.user.username} (${socket.id}) left room ${id}`)
+    socket.to(id).emit('user:leave', socket.user)
+    socket.leave(id)
+    roomId = null
   })
 
   // Handle incoming audio stream
   socket.on('audioStream', (audioData) => {
-    socket.to('project').emit('audioStream', audioData)
+    socket.to(roomId).emit('audioStream', audioData)
   })
 
   socket.on('disconnect', (reason) => {
