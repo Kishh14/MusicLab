@@ -11,3 +11,12 @@
 aside ::-webkit-scrollbar {
   display: none;
 }
+
+/* Media Queries */
+@media screen and (max-width: 1023px) {
+
+  .sidebar,
+  .instruments {
+    display: none !important;
+  }
+}

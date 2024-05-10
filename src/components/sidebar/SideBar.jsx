@@ -109,7 +109,7 @@ export default function SideBar() {
 
   return (
     <>
-      <aside className="flex ">
+      <aside className="flex sidebar">
         <div className="flex flex-col items-center w-16 h-screen py-8 bg-white dark:bg-gray-900 dark:border-gray-300 relative">
           <nav className="flex flex-col items-center flex-1 space-y-6 ">
             {/* avatar */}
