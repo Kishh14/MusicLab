@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import SideBar from "./components/sidebar/SideBar";
 import { useSocket } from "./context/SocketContext";
+import SmallDevicesError from './components/ui/SmallDevicesError';
+import Instruments from './components/Instruments/Instruments';
 
 export default function Home() {
   const { socket } = useSocket();
@@ -27,8 +29,16 @@ export default function Home() {
 
   return (
     <>
-      {/* sideBar */}
-      <SideBar />
+      {/* Small Devices Error */}
+      <SmallDevicesError />
+
+      <main className="flex">
+        {/* sideBar */}
+        <SideBar />
+
+        {/* Instruments */}
+        <Instruments />
+      </main>
     </>
   );
 }
