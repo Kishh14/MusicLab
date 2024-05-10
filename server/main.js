@@ -1,4 +1,6 @@
 import express from "express";
+import ViteExpress from "vite-express";
+
 import mongoose from "mongoose";
 import cors from "cors";
 import http from "http";
@@ -6,7 +8,7 @@ import http from "http";
 import authRouter from "./routes/auth.js";
 import roomsRouter from "./routes/rooms.js";
 
-import { MONGO_URI, PORT } from "./constants.js";
+import { MONGO_URI, PORT, isDev } from "./constants.js";
 import { Server } from "socket.io";
 
 const app = express();
@@ -35,9 +37,11 @@ app.use("/auth", authRouter);
 app.use("/room", roomsRouter);
 
 // Start the server
-server.listen(PORT, () => {
-  console.log(`Running on port ${PORT}`);
-});
+if (!isDev) {
+  ViteExpress.bind(app, server);
+}
+
+server.listen(PORT, () => console.log(`Running on port ${PORT}`));
 
 export { io };
 

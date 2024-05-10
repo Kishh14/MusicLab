@@ -9,12 +9,12 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext.jsx";
 
 import { Toaster } from "sonner";
-import { store } from './app/store'
-import { Provider } from 'react-redux'
-
+import { store } from "./app/store";
+import { Provider } from "react-redux";
+import { BACKEND_SERVER_URL } from "./constants.js";
 
 axios.defaults.headers.common["Authorization"] = localStorage.getItem("token");
-axios.defaults.baseURL = import.meta.env.VITE_SERVER_URL;
+axios.defaults.baseURL = BACKEND_SERVER_URL;
 
 // prettier-ignore
 ReactDOM 

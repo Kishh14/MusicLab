@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useAuth } from "../context/AuthContext";
@@ -22,7 +22,7 @@ const Login = () => {
         toast.info("You are already logged in");
       }, 100);
       // The page need to reload to get the user data
-      window.location.href = "/home";
+      navigate("/home");
     }
   }, []);
 
@@ -38,8 +38,7 @@ const Login = () => {
       .post("/auth/login", formData)
       .then((res) => {
         login(res.data);
-        navigate("/home");
-        toast.success("Login Successful");
+        window.location.href = "/home";
       })
       .catch((err) => {
         toast.error(err.response.data.message);

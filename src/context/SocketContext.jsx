@@ -1,7 +1,8 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import { useAuth } from "./AuthContext";
 import { toast } from "sonner";
+import { SOCKET_URL } from "../constants";
 
 /**
  * Create a context to hold the socket instance
@@ -33,7 +34,7 @@ const SocketProvider = ({ children }) => {
     if (!isAuthenticated) return;
 
     // Create a new socket instance
-    const newSocket = io(import.meta.env.VITE_SOCKET_URL);
+    const newSocket = io(SOCKET_URL);
 
     // Set the socket instance in the state
     setSocket(newSocket);
