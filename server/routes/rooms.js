@@ -19,10 +19,24 @@ router.post("/create", authMiddleware, async (req, res) => {
     });
 
     newRoom.members.push(req.userId);
+    await newRoom.save();
+
     const room = await newRoom.populate("members", "-password");
+
+    // Check if the user is already in the other rooms
+    // if yes, remove them from the other rooms
+    const existingRooms = await Room.find({ members: req.userId });
+
+    for (let i = 0; i < existingRooms.length; i++) {
+      existingRooms[i].members = existingRooms[i].members.filter(
+        (m) => m != req.userId
+      );
+      await existingRooms[i].save();
+      io.emit("room:updated", await room.populate("members", "-password"));
+    }
+
     io.emit("room:new", room);
 
-    await newRoom.save();
     return res.status(201).json(room);
   } catch (error) {
     console.error("❌ Error creating room:", error);
@@ -53,6 +67,7 @@ router.post("/:id/join", authMiddleware, async (req, res) => {
     return res.json(room);
   } catch (error) {
     console.error("❌ Error joining room:", error);
+
     return res
       .status(500)
       .send({ error: true, message: "Failed to join room" });
@@ -81,6 +96,7 @@ router.post("/:id/leave", authMiddleware, async (req, res) => {
     return res.json(room);
   } catch (error) {
     console.error("❌ Error leaving room:", error);
+
     return res
       .status(500)
       .send({ error: true, message: "Failed to leave room" });

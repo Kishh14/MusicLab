@@ -20,6 +20,11 @@ io.on('connection', async (socket) => {
 
   // Join Voice Room
   socket.on('room:join', async (id) => {
+    if (roomId) {
+      socket.leave(roomId)
+      socket.to(roomId).emit('user:leave', socket.user)
+    }
+
     console.log(`🔔 ${socket.user.username} (${socket.id}) joined room ${id}`)
     roomId = id
     socket.to(id).emit('user:new', socket.user)
@@ -36,7 +41,7 @@ io.on('connection', async (socket) => {
 
   // Handle incoming audio stream
   socket.on('audioStream', (audioData) => {
-    socket.to(roomId).emit('audioStream', audioData)
+    socket.to(roomId).emit('audioStream', audioData, socket.user._id)
   })
 
   socket.on('disconnect', (reason) => {

@@ -18,7 +18,13 @@ const SocketContext = createContext({
  * Custom hook to access the socket instance from the context
  * @returns {import('../types/Socket').SocketContextType}
  */
-const useSocket = () => useContext(SocketContext);
+const useSocket = () => {
+  if (!useContext(SocketContext)) {
+    throw new Error("useSocket must be used within SocketProvider");
+  }
+
+  return useContext(SocketContext);
+};
 
 // SocketProvider component to manage the socket instance and provide it through context
 const SocketProvider = ({ children }) => {

@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { SocketProvider } from "../context/SocketContext";
-import Home from "../Home";
 import { useAuth } from "../context/AuthContext";
+
+import Home from "../pages/Home";
 
 const SocketRoute = () => {
   const { isAuthenticated } = useAuth();

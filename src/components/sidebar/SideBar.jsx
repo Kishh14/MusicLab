@@ -13,7 +13,7 @@ import { IoExitOutline } from "react-icons/io5";
 
 import { useSocket } from "../../context/SocketContext";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { toggleChat } from "../../features/room/roomSlice";
+import { setCurrentRoom, toggleChat } from "../../features/room/roomSlice";
 import { useAuth } from "../../context/AuthContext";
 
 export default function SideBar() {
@@ -52,12 +52,12 @@ export default function SideBar() {
         handleStop = function () {
           const audioBlob = new Blob(audioChunks);
           audioChunks = [];
-          const fileReader = new FileReader();
-          fileReader.readAsDataURL(audioBlob);
-          fileReader.onloadend = function () {
-            const base64String = fileReader.result;
-            socket.emit("audioStream", base64String);
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            const arrayBuffer = reader.result;
+            socket.emit("audioStream", arrayBuffer);
           };
+          reader.readAsArrayBuffer(audioBlob);
 
           console.log("voice chat inprogress...");
 
@@ -106,10 +106,13 @@ export default function SideBar() {
   const toggleAdd = async () => {
     const roomName = prompt("Enter Room Name");
     if (!isRoomCreated && roomName) {
-      axios.post("/room/create", { roomName }).catch((err) => {
-        console.error(err);
-        toast.error("Failed to create room");
-      });
+      axios
+        .post("/room/create", { roomName })
+        .then((res) => dispatch(setCurrentRoom(res.data)))
+        .catch((err) => {
+          console.error(err);
+          toast.error("Failed to create room");
+        });
     }
   };
 
@@ -120,7 +123,7 @@ export default function SideBar() {
           <nav className="flex flex-col items-center flex-1 space-y-6 ">
             {/* avatar */}
             <div className="relative mt-3" title="Profile">
-              <a href="/">
+              <Link to="/">
                 <img
                   className="object-cover w-10 h-10 rounded-full ring ring-gray-300 dark:ring-gray-600"
                   src={avatar}
@@ -128,7 +131,7 @@ export default function SideBar() {
                 />
                 {/* onlinedot */}
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 absolute right-0 ring-1 ring-white -bottom-0.5" />
-              </a>
+              </Link>
             </div>
 
             {/* Conditionally render create room button */}

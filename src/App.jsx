@@ -1,21 +1,19 @@
-import Logout from "./pages/Logout";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
+import { RouterProvider } from "react-router-dom";
+import router from "./routes";
 
-import { Route, Routes } from "react-router";
-import SocketRoute from "./components/SocketRoute";
+// Context
+import { Provider as ReduxProvider } from "react-redux";
 
-function App() {
+import { Toaster } from "sonner";
+import { store } from "./app/store";
+
+const App = () => {
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/logout" element={<Logout />} />
-        <Route path="/home" element={<SocketRoute />} />
-      </Routes>
-    </>
+    <ReduxProvider store={store}>
+      <RouterProvider router={router} />
+      <Toaster richColors />
+    </ReduxProvider>
   );
-}
+};
 
 export default App;
