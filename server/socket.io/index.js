@@ -49,4 +49,12 @@ io.on('connection', async (socket) => {
       `disconnect ${socket.user.username} (${socket.id}) due to ${reason}`
     )
   })
+
+
+  socket.on('message', (message) => {
+    // Broadcast the received message to all connected clients in the same room
+    io.to(roomId).emit('message', message);
+  });
 })
+
+

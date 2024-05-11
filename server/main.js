@@ -7,6 +7,7 @@ import http from "http";
 
 import authRouter from "./routes/auth.js";
 import roomsRouter from "./routes/rooms.js";
+import chatRouter from "./routes/chat.js"
 
 import { MONGO_URI, PORT, isDev } from "./constants.js";
 import { Server } from "socket.io";
@@ -35,6 +36,7 @@ const io = new Server(server, {
 // Routes
 app.use("/auth", authRouter);
 app.use("/room", roomsRouter);
+app.use("/chat", chatRouter);
 
 // Start the server
 if (!isDev) {

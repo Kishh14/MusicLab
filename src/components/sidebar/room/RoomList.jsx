@@ -70,7 +70,7 @@ const RoomList = () => {
     if (!currentRoom || !socket || !isSocketConnected) return;
 
     // Join the current room when socket is ready
-
+    console.log(currentRoom);
     const roomId = currentRoom._id;
     socket.emit("room:join", roomId);
 
@@ -88,7 +88,7 @@ const RoomList = () => {
       <Filters />
 
       {isChatOpen && currentRoom ? (
-        <Chat roomId={currentRoom._id} />
+        <Chat currentRoom={currentRoom} />
       ) : (
         rooms.map((room) => (
           <Room
