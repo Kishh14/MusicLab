@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useSocket } from "../context/SocketContext";
 
-const AudioChat = () => {
+const AudioTunnel = () => {
   const { socket } = useSocket();
 
   const audioContextRef = useRef();
@@ -58,4 +58,4 @@ const AudioChat = () => {
   return <></>;
 };
 
-export default AudioChat;
+export default AudioTunnel;

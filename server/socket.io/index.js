@@ -50,11 +50,12 @@ io.on('connection', async (socket) => {
     )
   })
 
-
   socket.on('message', (message) => {
     // Broadcast the received message to all connected clients in the same room
-    io.to(roomId).emit('message', message);
-  });
+    io.to(roomId).emit('message', message)
+  })
+
+  socket.on('music', (instrument, key) => {
+    socket.to(roomId).emit('music', instrument, key)
+  })
 })
-
-

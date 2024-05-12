@@ -1,273 +1,262 @@
 .piano-container {
-    width: 100%;
-    height: 340px;
+  width: 100%;
+  height: 340px;
 
-    background-color: black;
-    padding: 15px;
-    border-radius: 10px;
+  background-color: black;
+  padding: 15px;
+  border-radius: 10px;
 
-    /* display: flex;
+  /* display: flex;
     flex-direction: column;
     align-items: center; */
 }
 
 .piano {
-    display: flex;
-    justify-content: center;
-    position: relative;
-    margin-left: 4px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  margin-left: 4px;
 }
 
 .white-key {
-    width: 85px;
-    height: 210px;
-    background-color: #FFF;
-    color: black;
-    border: 4px solid black;
-    border-radius: 0 0 6px 6px;
-    margin-left: -4px;
-    outline: none;
-    cursor: pointer;
-    display: flex;
-    align-items: end;
-    justify-content: center;
-    padding-bottom: 7px;
+  width: 85px;
+  height: 210px;
+  background-color: #fff;
+  color: black;
+  border: 4px solid black;
+  border-radius: 0 0 6px 6px;
+  margin-left: -4px;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  padding-bottom: 7px;
 }
 
 .white-key.active {
-    background-color: #C0C0C0;
+  background-color: #c0c0c0;
 }
 
 .black-key {
-    position: absolute;
-    width: 60px;
-    height: 150px;
-    background-image: linear-gradient(#000000, #303030);
-    border: 3px solid black;
-    border-radius: 0 0 2px 2px;
-    outline: none;
-    cursor: pointer;
+  position: absolute;
+  width: 60px;
+  height: 150px;
+  background-image: linear-gradient(#000000, #303030);
+  border: 3px solid black;
+  border-radius: 0 0 2px 2px;
+  outline: none;
+  cursor: pointer;
 }
 
 .black-key.active {
-    background-image: linear-gradient(#000000, #101010);
+  background-image: linear-gradient(#000000, #101010);
 }
 
 .Db4-key {
-    left: 144px;
+  left: 6%;
 }
 
 .Eb4-key {
-    left: 225px;
+  left: 16.2%;
 }
 
 .Gb4-key {
-    left: 386px;
+  left: 36%;
 }
 
 .Ab4-key {
-    left: 469px;
+  left: 46%;
 }
 
 .Bb4-key {
-    right: 392px;
+  right: 36.5%;
 }
 
 .Db5-key {
-    right: 230px;
+  right: 16.5%;
 }
 
 .Eb5-key {
-    right: 150px;
+  right: 6.5%;
 }
 
-
-
-
-
-
-
-
 .voltage-button {
-    position: relative;
-    width: 110px;
+  position: relative;
+  width: 110px;
 
-    margin: 0px 0 15px 0;
+  margin: 0px 0 15px 0;
 }
 
 .voltage-button button {
-    width: 110px;
-    color: white;
-    background: #0D1127;
-    padding: .5rem .7rem;
-    border-radius: 5rem;
-    border: 1px solid #ffffff;
-    font-size: .9rem;
-    line-height: 1em;
-    letter-spacing: 0.075em;
-    transition: background 0.3s;
+  width: 110px;
+  color: white;
+  background: #0d1127;
+  padding: 0.5rem 0.7rem;
+  border-radius: 5rem;
+  border: 1px solid #ffffff;
+  font-size: 0.9rem;
+  line-height: 1em;
+  letter-spacing: 0.075em;
+  transition: background 0.3s;
 }
 
 .voltage-button button:hover {
-    cursor: pointer;
-    background: #0F1C53;
+  cursor: pointer;
+  background: #0f1c53;
 }
 
-.voltage-button button:hover+svg,
-.voltage-button button:hover+svg+.dots {
-    opacity: 1;
+.voltage-button button:hover + svg,
+.voltage-button button:hover + svg + .dots {
+  opacity: 1;
 }
 
 .voltage-button svg {
-    display: block;
-    position: absolute;
-    top: -0.75em;
-    left: -0.25em;
-    width: calc(100% + 0.5em);
-    height: calc(100% + 1.5em);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.4s;
-    transition-delay: 0.1s;
+  display: block;
+  position: absolute;
+  top: -0.75em;
+  left: -0.25em;
+  width: calc(100% + 0.5em);
+  height: calc(100% + 1.5em);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+  transition-delay: 0.1s;
 }
 
 .voltage-button svg path {
-    stroke-dasharray: 100;
-    filter: url("#glow");
+  stroke-dasharray: 100;
+  filter: url("#glow");
 }
 
 .voltage-button svg path.line-1 {
-    stroke: #f6de8d;
-    stroke-dashoffset: 0;
-    animation: spark-1 3s linear infinite;
+  stroke: #f6de8d;
+  stroke-dashoffset: 0;
+  animation: spark-1 3s linear infinite;
 }
 
 .voltage-button svg path.line-2 {
-    stroke: #6bfeff;
-    stroke-dashoffset: 500;
-    animation: spark-2 3s linear infinite;
+  stroke: #6bfeff;
+  stroke-dashoffset: 500;
+  animation: spark-2 3s linear infinite;
 }
 
 .voltage-button .dots {
-    opacity: 0;
-    transition: opacity 0.3s;
-    transition-delay: 0.4s;
+  opacity: 0;
+  transition: opacity 0.3s;
+  transition-delay: 0.4s;
 }
 
 .voltage-button .dots .dot {
-    width: .8rem;
-    height: .8rem;
-    background: white;
-    border-radius: 100%;
-    position: absolute;
-    opacity: 0;
+  width: 0.8rem;
+  height: 0.8rem;
+  background: white;
+  border-radius: 100%;
+  position: absolute;
+  opacity: 0;
 }
 
 .voltage-button .dots .dot-1 {
-    top: 0;
-    left: 20%;
-    animation: fly-up 3s linear infinite;
+  top: 0;
+  left: 20%;
+  animation: fly-up 3s linear infinite;
 }
 
 .voltage-button .dots .dot-2 {
-    top: 0;
-    left: 55%;
-    animation: fly-up 3s linear infinite;
-    animation-delay: 0.5s;
+  top: 0;
+  left: 55%;
+  animation: fly-up 3s linear infinite;
+  animation-delay: 0.5s;
 }
 
 .voltage-button .dots .dot-3 {
-    top: 0;
-    left: 80%;
-    animation: fly-up 3s linear infinite;
-    animation-delay: 1s;
+  top: 0;
+  left: 80%;
+  animation: fly-up 3s linear infinite;
+  animation-delay: 1s;
 }
 
 .voltage-button .dots .dot-4 {
-    bottom: 0;
-    left: 30%;
-    animation: fly-down 3s linear infinite;
-    animation-delay: 2.5s;
+  bottom: 0;
+  left: 30%;
+  animation: fly-down 3s linear infinite;
+  animation-delay: 2.5s;
 }
 
 .voltage-button .dots .dot-5 {
-    bottom: 0;
-    left: 65%;
-    animation: fly-down 3s linear infinite;
-    animation-delay: 1.5s;
+  bottom: 0;
+  left: 65%;
+  animation: fly-down 3s linear infinite;
+  animation-delay: 1.5s;
 }
 
 @keyframes spark-1 {
-    to {
-        stroke-dashoffset: -1000;
-    }
+  to {
+    stroke-dashoffset: -1000;
+  }
 }
 
 @keyframes spark-2 {
-    to {
-        stroke-dashoffset: -500;
-    }
+  to {
+    stroke-dashoffset: -500;
+  }
 }
 
 @keyframes fly-up {
-    0% {
-        opacity: 0;
-        transform: translateY(0) scale(0.2);
-    }
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.2);
+  }
 
-    5% {
-        opacity: 1;
-        transform: translateY(-1.5rem) scale(0.4);
-    }
+  5% {
+    opacity: 1;
+    transform: translateY(-1.5rem) scale(0.4);
+  }
 
-    10%,
-    100% {
-        opacity: 0;
-        transform: translateY(-3rem) scale(0.2);
-    }
+  10%,
+  100% {
+    opacity: 0;
+    transform: translateY(-3rem) scale(0.2);
+  }
 }
 
 @keyframes fly-down {
-    0% {
-        opacity: 0;
-        transform: translateY(0) scale(0.2);
-    }
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.2);
+  }
 
-    5% {
-        opacity: 1;
-        transform: translateY(1.5rem) scale(0.4);
-    }
+  5% {
+    opacity: 1;
+    transform: translateY(1.5rem) scale(0.4);
+  }
 
-    10%,
-    100% {
-        opacity: 0;
-        transform: translateY(3rem) scale(0.2);
-    }
-}
-
-
-
-.shadow__btn {
-    padding: 6px 11px;
-    border: none;
-    font-size: 13px;
-    color: #fff;
-    border-radius: 7px;
-    letter-spacing: 1px;
-    font-weight: 700;
-    text-transform: uppercase;
-    transition: 0.5s;
-    transition-property: box-shadow;
+  10%,
+  100% {
+    opacity: 0;
+    transform: translateY(3rem) scale(0.2);
+  }
 }
 
 .shadow__btn {
-    background: rgb(0, 140, 255);
-    box-shadow: 0 0 25px rgb(0, 140, 255);
+  padding: 6px 11px;
+  border: none;
+  font-size: 13px;
+  color: #fff;
+  border-radius: 7px;
+  letter-spacing: 1px;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: 0.5s;
+  transition-property: box-shadow;
+}
+
+.shadow__btn {
+  background: rgb(0, 140, 255);
+  box-shadow: 0 0 25px rgb(0, 140, 255);
 }
 
 .shadow__btn:hover {
-    box-shadow: 0 0 5px rgb(0, 140, 255),
-        0 0 25px rgb(0, 140, 255),
-        0 0 40px rgb(0, 140, 255),
-        0 0 90px rgb(0, 140, 255);
+  box-shadow: 0 0 5px rgb(0, 140, 255), 0 0 25px rgb(0, 140, 255),
+    0 0 40px rgb(0, 140, 255), 0 0 90px rgb(0, 140, 255);
 }

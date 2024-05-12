@@ -12,7 +12,6 @@ aside ::-webkit-scrollbar {
   display: none;
 }
 
-
 /* === removing default button style ===*/
 .button {
   margin: 0;
@@ -27,7 +26,7 @@ aside ::-webkit-scrollbar {
 .button {
   --border-right: 6px;
   --text-stroke-color: rgba(255, 255, 255, 0.6);
-  --animation-color: #37FF8B;
+  --animation-color: #37ff8b;
   --fs-size: 2em;
   letter-spacing: 3px;
   text-decoration: none;
@@ -57,7 +56,7 @@ aside ::-webkit-scrollbar {
 /* hover */
 .button:hover .hover-text {
   width: 100%;
-  filter: drop-shadow(0 0 23px var(--animation-color))
+  filter: drop-shadow(0 0 23px var(--animation-color));
 }
 
 /* Record, Play, Download Button */
@@ -72,14 +71,14 @@ aside ::-webkit-scrollbar {
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  transition-duration: .3s;
+  transition-duration: 0.3s;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
   background-color: black;
 }
 
 .sign {
   width: 100%;
-  transition-duration: .3s;
+  transition-duration: 0.3s;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -101,25 +100,25 @@ aside ::-webkit-scrollbar {
   color: white;
   font-size: 1em;
   font-weight: 600;
-  transition-duration: .3s;
+  transition-duration: 0.3s;
 }
 
 .Btn:hover {
   width: 125px;
   border-radius: 40px;
-  transition-duration: .3s;
+  transition-duration: 0.3s;
 }
 
 .Btn:hover .sign {
   width: 30%;
-  transition-duration: .3s;
+  transition-duration: 0.3s;
   padding-left: 20px;
 }
 
 .Btn:hover .text {
   opacity: 1;
   width: 70%;
-  transition-duration: .3s;
+  transition-duration: 0.3s;
   padding-right: 10px;
 }
 
@@ -171,7 +170,7 @@ aside ::-webkit-scrollbar {
 }
 
 .download-text {
-  top: 0
+  top: 0;
 }
 
 .download-text,
@@ -218,12 +217,25 @@ aside ::-webkit-scrollbar {
   bottom: calc(var(--height) + var(--gap-between-tooltip-to-button));
 }
 
-
 /* Media Queries */
 @media screen and (max-width: 1023px) {
-
   .sidebar,
   .instruments {
     display: none !important;
   }
+}
+
+.split {
+  display: flex;
+  flex-direction: row;
+}
+
+.gutter {
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+.gutter.gutter-horizontal {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==");
+  cursor: col-resize;
 }

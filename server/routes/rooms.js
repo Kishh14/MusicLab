@@ -114,6 +114,30 @@ router.get("/all", authMiddleware, async (req, res) => {
   }
 });
 
+// Update Room details
+router.put("/:id", authMiddleware, async (req, res) => {
+  const { id } = req.params;
+  const newRoom = req.body;
+
+  try {
+    const room = await Room.findById(id).populate("members", "-password");
+    if (!room) {
+      return res.status(404).json({ error: "Room not found" });
+    }
+
+    if (newRoom.name != undefined) room.name = newRoom.name;
+    if (newRoom.isLocked != undefined) room.isLocked = newRoom.isLocked;
+
+    await room.save();
+
+    io.emit("room:updated", room);
+    return res.status(200).json(room);
+  } catch (error) {
+    console.error("Error updating room:", error);
+    return res.status(500).json({ error: "Failed to update room" });
+  }
+});
+
 // Update Room Name
 // Only owner has the right to update the room name
 // router.put("/rooms/:id", async (req, res) => {

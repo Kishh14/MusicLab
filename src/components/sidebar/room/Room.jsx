@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Avatar from "../../ui/Avatar";
 
 import {
@@ -22,8 +22,13 @@ const Room = (room) => {
   const dispatch = useAppDispatch();
 
   // FIXME: This is a temporary fix to prevent the app from crashing
-  const isChangingRoomName = false;
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
+  const [newRoomName, setNewRoomName] = React.useState("");
+  const [isChangingRoomName, setIsChangingRoomName] = React.useState(false);
+
+  const isPersonInRoom = useMemo(() => {
+    return Boolean(room.members.find((member) => member._id === user.id));
+  }, [room, user]);
 
   async function handleJoinRoom(roomId) {
     try {
@@ -45,7 +50,32 @@ const Room = (room) => {
   }
 
   const handleToggleRoomLock = () => {
-    // TODO: Send fetch request to toggle room lock
+    if (!room.isAdmin) return;
+    axios
+      .put(`/room/${room._id}`, { isLocked: !room.isLocked })
+      .then((res) => {
+        dispatch(setCurrentRoom(res.data));
+      })
+      .catch((error) => {
+        console.error("Error toggling room lock:", error);
+      });
+  };
+
+  const handleRoomNameButtonClick = () => {
+    setIsChangingRoomName(true);
+    setNewRoomName(room.name);
+  };
+
+  const handleSaveNewRoomName = () => {
+    axios
+      .put(`/room/${room._id}`, { name: newRoomName })
+      .then((res) => {
+        dispatch(setCurrentRoom(res.data));
+        setIsChangingRoomName(false);
+      })
+      .catch((error) => {
+        console.error("Error changing room name:", error);
+      });
   };
 
   return (
@@ -70,15 +100,18 @@ const Room = (room) => {
                   <IoLockClosedOutline size={20} />
                 </button>
               )}
+
               {/* Conditionally render join button */}
-              {room.members.filter((m) => m.email == user.email).length == 0 ? (
+              {!isPersonInRoom && (!room.isLocked || room.isAdmin) && (
                 <button
                   className="bg-blue-800 px-4 py-1 rounded-md cursor-pointer"
                   onClick={() => handleJoinRoom(room._id)}
                 >
                   Join
                 </button>
-              ) : (
+              )}
+
+              {isPersonInRoom && (
                 <button
                   className="bg-red-800 px-4 py-1 rounded-md cursor-pointer"
                   onClick={() => handleLeaveRoom(room._id)}
@@ -87,7 +120,7 @@ const Room = (room) => {
                 </button>
               )}
 
-              {room.isAdmin && (
+              {room.isAdmin && isPersonInRoom && (
                 <>
                   <button
                     className="cursor-pointer"
@@ -99,8 +132,8 @@ const Room = (room) => {
                     <div className="absolute top-full z-40 right-0 mt-2 w-48 bg-gray-900 border border-gray-500 rounded-md">
                       <ul className="py-1">
                         <li>
-                          <a
-                            className="flex gap-4 px-5 py-2 text-sm hover:text-gray-900 hover:bg-gray-300 "
+                          <button
+                            className="flex gap-4 px-5 py-2 w-full text-sm hover:text-gray-900 hover:bg-gray-300 "
                             onClick={handleToggleRoomLock}
                           >
                             {room.isLocked ? "Room locked" : "Room Unlocked"}
@@ -109,7 +142,7 @@ const Room = (room) => {
                             ) : (
                               <IoLockOpenOutline size={18} />
                             )}
-                          </a>
+                          </button>
                         </li>
                         {isChangingRoomName ? (
                           <li className="text-gray-200 text-sm px-3 py-2">
@@ -120,13 +153,13 @@ const Room = (room) => {
                               <input
                                 type="text"
                                 placeholder="Enter new room name"
-                                // value={newRoomName}
-                                // onChange={(e) => setNewRoomName(e.target.value)}
+                                value={newRoomName}
+                                onChange={(e) => setNewRoomName(e.target.value)}
                                 className="w-[98px] rounded-md px-4"
                               />
                               <button
                                 className="bg-gray-300 px-3 h-8 text-gray-700 border rounded-md"
-                                // onClick={handleSaveNewRoomName}
+                                onClick={handleSaveNewRoomName}
                               >
                                 Save
                               </button>
@@ -136,7 +169,7 @@ const Room = (room) => {
                           <li>
                             <a
                               className="block px-4 py-2 text-sm hover:text-gray-900 hover:bg-gray-300"
-                              // onClick={handleRoomNameButtonClick}
+                              onClick={handleRoomNameButtonClick}
                             >
                               Change Room name
                             </a>

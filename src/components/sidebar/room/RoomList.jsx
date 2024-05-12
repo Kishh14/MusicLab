@@ -82,7 +82,7 @@ const RoomList = () => {
   return (
     <div
       id="container-main"
-      className="h-screen px-5 py-8 border-l border-r sm:w-80 w-60 bg-gray-900 border-gray-700 relative scroll-smooth"
+      className="h-screen px-5 py-8 border-l border-r w-full bg-gray-900 border-gray-700 relative scroll-smooth"
       style={{ overflow: "scroll" }}
     >
       <Filters />
@@ -91,15 +91,7 @@ const RoomList = () => {
         <Chat currentRoom={currentRoom} />
       ) : (
         rooms.map((room) => (
-          <Room
-            key={room._id}
-            {...room}
-            isAdmin={
-              user.id == room.owner &&
-              currentRoom &&
-              currentRoom._id == room._id
-            }
-          />
+          <Room key={room._id} {...room} isAdmin={user.id == room.owner} />
         ))
       )}
     </div>
