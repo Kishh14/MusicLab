@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import * as Tone from 'tone';
 
 // Images
 import rideCymbalLeft from '../../../assets/Instruments/DrumKit/ride-cymbal-left.png'
@@ -12,98 +13,151 @@ import snareDrum from '../../../assets/Instruments/DrumKit/snare-drum.png'
 // Icon
 import { TfiHelpAlt } from "react-icons/tfi";
 
-function DrumKit() {
-    const [isDrumkitActivated, setIsDrumkitActivated] = useState(false);
-    const [sounds, setSounds] = useState([
-        {
-            name: "boom",
-            sound: "./sounds/drum/boom.wav",
-            key: "B",
-        },
-        {
-            name: "clap",
-            sound: "./sounds/drum/clap.wav",
-            key: "M",
-        },
-        {
-            name: "hihat",
-            sound: "./sounds/drum/hihat.wav",
-            key: "Z",
-        },
-        {
-            name: "kick",
-            sound: "./sounds/drum/kick.wav",
-            key: "K",
-        },
-        {
-            name: "openhat",
-            sound: "./sounds/drum/openhat.wav",
-            key: "L",
-        },
-        {
-            name: "ride",
-            sound: "./sounds/drum/ride.wav",
-            key: "A",
-        },
-        {
-            name: "snare",
-            sound: "./sounds/drum/snare.wav",
-            key: "X",
-        },
-        {
-            name: "tink",
-            sound: "./sounds/drum/tink.wav",
-            key: "K",
-        },
-        {
-            name: "tom",
-            sound: "./sounds/drum/tom.wav",
-            key: "S",
-        },
-    ]);
+function DrumKit({ isDrumkitActivated, setIsDrumkitActivated, boom, hiHat, kick, openHat, snare }) {
 
+    // Play DrumKit
     const play = (sound) => {
         if (isDrumkitActivated) {
-            if (sound === 'rideCymbalLeft') new Audio(sounds[5].sound).play();
-            if (sound === 'tomDrumLeft') new Audio(sounds[8].sound).play();
-            if (sound === 'tomDrumRight') new Audio(sounds[3].sound).play();
-            if (sound === 'rideCymbalRight') new Audio(sounds[4].sound).play();
-            if (sound === 'highHat') new Audio(sounds[2].sound).play();
-            if (sound === 'bassDrum') new Audio(sounds[0].sound).play();
-            if (sound === 'highHatRight') new Audio(sounds[1].sound).play();
-            if (sound === 'snareDrumLeft') new Audio(sounds[6].sound).play();
-            if (sound === 'snareDrumRight') new Audio(sounds[6].sound).play();
+            if (sound === 'rideCymbalLeft') {
+                Tone.start().then(() => {
+                    openHat.triggerAttackRelease("D4", "8n");
+                });
+                if (isRecording) {
+                    setRecordedNotes([...recordedNotes, { note: 'openhat', startTime: Date.now() }]);
+                }
+            }
+            if (sound === 'tomDrumLeft') {
+                Tone.start().then(() => {
+                    kick.triggerAttackRelease("C2", "8n");
+                });
+                if (isRecording) {
+                    setRecordedNotes([...recordedNotes, { note: 'kick', startTime: Date.now() }]);
+                }
+            }
+            if (sound === 'tomDrumRight') {
+                Tone.start().then(() => {
+                    kick.triggerAttackRelease("C2", "8n");
+                });
+                if (isRecording) {
+                    setRecordedNotes([...recordedNotes, { note: 'kick', startTime: Date.now() }]);
+                }
+            }
+            if (sound === 'rideCymbalRight') {
+                Tone.start().then(() => {
+                    openHat.triggerAttackRelease("A4", "8n");
+                });
+                if (isRecording) {
+                    setRecordedNotes([...recordedNotes, { note: 'openhat', startTime: Date.now() }]);
+                }
+            }
+            if (sound === 'highHat') {
+                Tone.start().then(() => {
+                    hiHat.triggerAttackRelease("C4", "8n");
+                });
+                if (isRecording) {
+                    setRecordedNotes([...recordedNotes, { note: 'hihat', startTime: Date.now() }]);
+                }
+            }
+            if (sound === 'bassDrum') {
+                Tone.start().then(() => {
+                    boom.triggerAttackRelease("C2", "8n");
+                });
+                if (isRecording) {
+                    setRecordedNotes([...recordedNotes, { note: 'boom', startTime: Date.now() }]);
+                }
+            }
+            if (sound === 'highHatRight') {
+                Tone.start().then(() => {
+                    hiHat.triggerAttackRelease("D4", "8n");
+                });
+                if (isRecording) {
+                    setRecordedNotes([...recordedNotes, { note: 'hihat', startTime: Date.now() }]);
+                }
+            }
+            if (sound === 'snareDrumLeft') {
+                Tone.start().then(() => {
+                    snare.triggerAttackRelease("C2", "8n");
+                });
+                if (isRecording) {
+                    setRecordedNotes([...recordedNotes, { note: 'snare', startTime: Date.now() }]);
+                }
+            }
+            if (sound === 'snareDrumRight') {
+                Tone.start().then(() => {
+                    snare.triggerAttackRelease("C2", "8n");
+                });
+                if (isRecording) {
+                    setRecordedNotes([...recordedNotes, { note: 'snare', startTime: Date.now() }]);
+                }
+            }
         }
     };
 
+    // Play DrumKit by Keyboard
     useEffect(() => {
         const handleKeyPress = (event) => {
             // Press B
-            if (event.key.toUpperCase() === 'B') return new Audio(sounds[0].sound).play();
+            if (event.key.toUpperCase() === 'B') {
+                Tone.start().then(() => {
+                    boom.triggerAttackRelease("C2", "8n");
+                });
+            };
 
             // Press M
-            if (event.key.toUpperCase() === 'M') return new Audio(sounds[1].sound).play();
+            if (event.key.toUpperCase() === 'M') {
+                Tone.start().then(() => {
+                    hiHat.triggerAttackRelease("D4", "8n");
+                });
+            }
 
             // Press Z
-            if (event.key.toUpperCase() === 'Z') return new Audio(sounds[2].sound).play();
+            if (event.key.toUpperCase() === 'Z') {
+                Tone.start().then(() => {
+                    hiHat.triggerAttackRelease("C4", "8n");
+                });
+            }
 
             // Press K
-            if (event.key.toUpperCase() === 'K') return new Audio(sounds[3].sound).play();
+            if (event.key.toUpperCase() === 'K') {
+                Tone.start().then(() => {
+                    kick.triggerAttackRelease("C2", "8n");
+                });
+            }
 
             // Press L
-            if (event.key.toUpperCase() === 'L') return new Audio(sounds[4].sound).play();
+            if (event.key.toUpperCase() === 'L') {
+                Tone.start().then(() => {
+                    openHat.triggerAttackRelease("A4", "8n");
+                });
+            }
 
             // Press A
-            if (event.key.toUpperCase() === 'A') return new Audio(sounds[5].sound).play();
+            if (event.key.toUpperCase() === 'A') {
+                Tone.start().then(() => {
+                    openHat.triggerAttackRelease("D4", "8n");
+                });
+            }
 
             // Press X
-            if (event.key.toUpperCase() === 'X') return new Audio(sounds[6].sound).play();
+            if (event.key.toUpperCase() === 'X') {
+                Tone.start().then(() => {
+                    snare.triggerAttackRelease("C2", "8n");
+                });
+            }
 
             // Press N
-            if (event.key.toUpperCase() === 'N') return new Audio(sounds[6].sound).play();
+            if (event.key.toUpperCase() === 'N') {
+                Tone.start().then(() => {
+                    snare.triggerAttackRelease("C2", "8n");
+                });
+            }
 
             // Press S
-            if (event.key.toUpperCase() === 'S') return new Audio(sounds[8].sound).play();
+            if (event.key.toUpperCase() === 'S') {
+                Tone.start().then(() => {
+                    kick.triggerAttackRelease("C2", "8n");
+                });
+            }
         };
 
         if (isDrumkitActivated) {
@@ -150,6 +204,7 @@ function DrumKit() {
                 <button style={{ margin: '0px 25px 15px 0px' }}><TfiHelpAlt style={{ fontSize: '21px' }} /></button>
             </div>
 
+            {/* DrumKit */}
             <div className="flex justify-center">
                 <img onClick={() => play('rideCymbalLeft')} src={rideCymbalLeft} alt="" style={{ width: '170px' }} />
                 <img onClick={() => play('tomDrumLeft')} src={tomDrum} alt="" style={{ width: '135px', objectFit: "contain" }} />

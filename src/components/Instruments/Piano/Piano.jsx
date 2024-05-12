@@ -1,55 +1,31 @@
 import React, { useEffect, useState } from 'react';
+import * as Tone from 'tone';
 
 import './Piano.css'
 import { TfiHelpAlt } from "react-icons/tfi";
 
-const Piano = () => {
-    const [isPianoActivated, setIsPianoActivated] = useState(false);
+const Piano = ({ isPianoActivated, setIsPianoActivated, synth, isRecording, recordedNotes, setRecordedNotes }) => {
 
-    const C4 = new Audio("sounds/piano/C4.mp3");
-    const Db4 = new Audio("sounds/piano/Db4.mp3");
-    const D4 = new Audio("sounds/piano/D4.mp3");
-    const Eb4 = new Audio("sounds/piano/Eb4.mp3");
-    const E4 = new Audio("sounds/piano/E4.mp3");
-    const F4 = new Audio("sounds/piano/F4.mp3");
-    const Gb4 = new Audio("sounds/piano/Gb4.mp3");
-    const G4 = new Audio("sounds/piano/G4.mp3");
-    const Ab4 = new Audio("sounds/piano/Ab4.mp3");
-    const A4 = new Audio("sounds/piano/A4.mp3");
-    const Bb4 = new Audio("sounds/piano/Bb4.mp3");
-    const B4 = new Audio("sounds/piano/B4.mp3");
-    const C5 = new Audio("sounds/piano/C5.mp3");
-    const Db5 = new Audio("sounds/piano/Db5.mp3");
-    const D5 = new Audio("sounds/piano/D5.mp3");
-    const Eb5 = new Audio("sounds/piano/Eb5.mp3");
-    const E5 = new Audio("sounds/piano/E5.mp3");
-
-
-    const playSound = audio => {
-        const clone = audio.cloneNode();
+    // Play Piano Note
+    const playNote = (note) => {
         if (isPianoActivated) {
-            clone.play();
+            synth.triggerAttackRelease(note, "8n");
+            if (isRecording) {
+                setRecordedNotes([...recordedNotes, { note, startTime: Date.now() }]);
+            }
         }
-        setTimeout(() => (clone.volume = 0.8), 400);
-        setTimeout(() => (clone.volume = 0.6), 800);
-        setTimeout(() => (clone.volume = 0.4), 1200);
-        setTimeout(() => (clone.volume = 0.2), 1600);
-        setTimeout(() => (clone.volume = 0), 2000);
     };
 
     // C4
     const C4Key = document.querySelector(".C4-key");
     const playC4 = () => {
-        playSound(C4);
+        playNote('C4');
         if (isPianoActivated) {
             C4Key.classList.add("active");
 
-            // const recordingObj = {
-            //     instrument: 'Piano',
-            //     note: 'C4',
-            // timeStamp: Date.now() // You can still play the audio files, just use the timestamp to know for how much duration the audio is played and play the audio again for the same duration.
-            // }
-            // setRecordingData(prevState => [...prevState, recordingObj]);
+            if (isRecording) {
+                setRecordedNotes([...recordedNotes, { note: 'C4', startTime: Date.now() }]);
+            }
         }
         setTimeout(() => C4Key.classList.remove("active"), 200);
     };
@@ -57,9 +33,13 @@ const Piano = () => {
     // Db4
     const Db4Key = document.querySelector(".Db4-key");
     const playDb4 = () => {
-        playSound(Db4);
+        playNote('Db4');
         if (isPianoActivated) {
             Db4Key.classList.add("active");
+
+            if (isRecording) {
+                setRecordedNotes([...recordedNotes, { note: 'Db4', startTime: Date.now() }]);
+            }
         }
         setTimeout(() => Db4Key.classList.remove("active"), 200);
     };
@@ -67,9 +47,13 @@ const Piano = () => {
     // D4
     const D4Key = document.querySelector(".D4-key");
     const playD4 = () => {
-        playSound(D4);
+        playNote('D4');
         if (isPianoActivated) {
             D4Key.classList.add("active");
+
+            if (isRecording) {
+                setRecordedNotes([...recordedNotes, { note: 'D4', startTime: Date.now() }]);
+            }
         }
         setTimeout(() => D4Key.classList.remove("active"), 200);
     };
@@ -77,9 +61,13 @@ const Piano = () => {
     // Eb4
     const Eb4Key = document.querySelector(".Eb4-key");
     const playEb4 = () => {
-        playSound(Eb4);
+        playNote('Eb4');
         if (isPianoActivated) {
             Eb4Key.classList.add("active");
+
+            if (isRecording) {
+                setRecordedNotes([...recordedNotes, { note: 'Eb4', startTime: Date.now() }]);
+            }
         }
         setTimeout(() => Eb4Key.classList.remove("active"), 200);
     };
@@ -87,9 +75,13 @@ const Piano = () => {
     // E4
     const E4Key = document.querySelector(".E4-key");
     const playE4 = () => {
-        playSound(E4);
+        playNote('E4');
         if (isPianoActivated) {
             E4Key.classList.add("active");
+
+            if (isRecording) {
+                setRecordedNotes([...recordedNotes, { note: 'E4', startTime: Date.now() }]);
+            }
         }
         setTimeout(() => E4Key.classList.remove("active"), 200);
     };
@@ -97,9 +89,13 @@ const Piano = () => {
     // F4
     const F4Key = document.querySelector(".F4-key");
     const playF4 = () => {
-        playSound(F4);
+        playNote('F4');
         if (isPianoActivated) {
             F4Key.classList.add("active");
+
+            if (isRecording) {
+                setRecordedNotes([...recordedNotes, { note: 'F4', startTime: Date.now() }]);
+            }
         }
         setTimeout(() => F4Key.classList.remove("active"), 200);
     };
@@ -107,9 +103,13 @@ const Piano = () => {
     // Gb4
     const Gb4Key = document.querySelector(".Gb4-key");
     const playGb4 = () => {
-        playSound(Gb4);
+        playNote('Gb4');
         if (isPianoActivated) {
             Gb4Key.classList.add("active");
+
+            if (isRecording) {
+                setRecordedNotes([...recordedNotes, { note: 'Gb4', startTime: Date.now() }]);
+            }
         }
         setTimeout(() => Gb4Key.classList.remove("active"), 200);
     };
@@ -117,9 +117,13 @@ const Piano = () => {
     // G4
     const G4Key = document.querySelector(".G4-key");
     const playG4 = () => {
-        playSound(G4);
+        playNote('G4');
         if (isPianoActivated) {
             G4Key.classList.add("active");
+
+            if (isRecording) {
+                setRecordedNotes([...recordedNotes, { note: 'G4', startTime: Date.now() }]);
+            }
         }
         setTimeout(() => G4Key.classList.remove("active"), 200);
     };
@@ -127,9 +131,13 @@ const Piano = () => {
     // Ab4
     const Ab4Key = document.querySelector(".Ab4-key");
     const playAb4 = () => {
-        playSound(Ab4);
+        playNote('Ab4');
         if (isPianoActivated) {
             Ab4Key.classList.add("active");
+
+            if (isRecording) {
+                setRecordedNotes([...recordedNotes, { note: 'Ab4', startTime: Date.now() }]);
+            }
         }
         setTimeout(() => Ab4Key.classList.remove("active"), 200);
     };
@@ -137,9 +145,13 @@ const Piano = () => {
     // A4
     const A4Key = document.querySelector(".A4-key");
     const playA4 = () => {
-        playSound(A4);
+        playNote('A4');
         if (isPianoActivated) {
             A4Key.classList.add("active");
+
+            if (isRecording) {
+                setRecordedNotes([...recordedNotes, { note: 'A4', startTime: Date.now() }]);
+            }
         }
         setTimeout(() => A4Key.classList.remove("active"), 200);
     };
@@ -147,9 +159,13 @@ const Piano = () => {
     // Bb4
     const Bb4Key = document.querySelector(".Bb4-key");
     const playBb4 = () => {
-        playSound(Bb4);
+        playNote('Bb4');
         if (isPianoActivated) {
             Bb4Key.classList.add("active");
+
+            if (isRecording) {
+                setRecordedNotes([...recordedNotes, { note: 'Bb4', startTime: Date.now() }]);
+            }
         }
         setTimeout(() => Bb4Key.classList.remove("active"), 200);
     };
@@ -157,9 +173,13 @@ const Piano = () => {
     // B4
     const B4Key = document.querySelector(".B4-key");
     const playB4 = () => {
-        playSound(B4);
+        playNote('B4');
         if (isPianoActivated) {
             B4Key.classList.add("active");
+
+            if (isRecording) {
+                setRecordedNotes([...recordedNotes, { note: 'B4', startTime: Date.now() }]);
+            }
         }
         setTimeout(() => B4Key.classList.remove("active"), 200);
     };
@@ -167,9 +187,13 @@ const Piano = () => {
     // C5
     const C5Key = document.querySelector(".C5-key");
     const playC5 = () => {
-        playSound(C5);
+        playNote('C5');
         if (isPianoActivated) {
             C5Key.classList.add("active");
+
+            if (isRecording) {
+                setRecordedNotes([...recordedNotes, { note: 'C5', startTime: Date.now() }]);
+            }
         }
         setTimeout(() => C5Key.classList.remove("active"), 200);
     };
@@ -177,9 +201,13 @@ const Piano = () => {
     // Db5
     const Db5Key = document.querySelector(".Db5-key");
     const playDb5 = () => {
-        playSound(Db5);
+        playNote('Db5');
         if (isPianoActivated) {
             Db5Key.classList.add("active");
+
+            if (isRecording) {
+                setRecordedNotes([...recordedNotes, { note: 'Db5', startTime: Date.now() }]);
+            }
         }
         setTimeout(() => Db5Key.classList.remove("active"), 200);
     };
@@ -187,9 +215,13 @@ const Piano = () => {
     // D5
     const D5Key = document.querySelector(".D5-key");
     const playD5 = () => {
-        playSound(D5);
+        playNote('D5');
         if (isPianoActivated) {
             D5Key.classList.add("active");
+
+            if (isRecording) {
+                setRecordedNotes([...recordedNotes, { note: 'D5', startTime: Date.now() }]);
+            }
         }
         setTimeout(() => D5Key.classList.remove("active"), 200);
     };
@@ -197,9 +229,13 @@ const Piano = () => {
     // Eb5
     const Eb5Key = document.querySelector(".Eb5-key");
     const playEb5 = () => {
-        playSound(Eb5);
+        playNote('Eb5');
         if (isPianoActivated) {
             Eb5Key.classList.add("active");
+
+            if (isRecording) {
+                setRecordedNotes([...recordedNotes, { note: 'Eb5', startTime: Date.now() }]);
+            }
         }
         setTimeout(() => Eb5Key.classList.remove("active"), 200);
     };
@@ -207,66 +243,104 @@ const Piano = () => {
     // E5
     const E5Key = document.querySelector(".E5-key");
     const playE5 = () => {
-        playSound(E5);
+        playNote('E5');
         if (isPianoActivated) {
             E5Key.classList.add("active");
+
+            if (isRecording) {
+                setRecordedNotes([...recordedNotes, { note: 'E5', startTime: Date.now() }]);
+            }
         }
         setTimeout(() => E5Key.classList.remove("active"), 200);
     };
 
-
+    // Play Piano using Keyboard
     useEffect(() => {
         const handleKeyPress = (event) => {
             // Press Q
-            if (event.key.toUpperCase() === 'Q') return playC4();
+            if (event.key.toUpperCase() === 'Q') {
+                playC4();
+            }
 
             // Press 2
-            if (event.key === '2') return playDb4();
+            if (event.key === '2') {
+                playDb4();
+            }
 
             // Press W
-            if (event.key.toUpperCase() === 'W') return playD4();
+            if (event.key.toUpperCase() === 'W') {
+                playD4();
+            }
 
             // Press 3
-            if (event.key === '3') return playEb4();
+            if (event.key === '3') {
+                playEb4();
+            }
 
             // Press E
-            if (event.key.toUpperCase() === 'E') return playE4();
+            if (event.key.toUpperCase() === 'E') {
+                playE4();
+            }
 
             // Press R
-            if (event.key.toUpperCase() === 'R') return playF4();
+            if (event.key.toUpperCase() === 'R') {
+                playF4();
+            }
 
             // Press 5
-            if (event.key === '5') return playGb4();
+            if (event.key === '5') {
+                playGb4();
+            }
 
             // Press T
-            if (event.key.toUpperCase() === 'T') return playG4();
+            if (event.key.toUpperCase() === 'T') {
+                playG4();
+            }
 
             // Press 6
-            if (event.key === '6') return playAb4();
+            if (event.key === '6') {
+                playAb4();
+            }
 
             // Press Y
-            if (event.key.toUpperCase() === 'Y') return playA4();
+            if (event.key.toUpperCase() === 'Y') {
+                playA4();
+            }
 
             // Press 7
-            if (event.key === '7') return playBb4();
+            if (event.key === '7') {
+                playBb4();
+            }
 
             // Press U
-            if (event.key.toUpperCase() === 'U') return playB4();
+            if (event.key.toUpperCase() === 'U') {
+                playB4();
+            }
 
             // Press I
-            if (event.key.toUpperCase() === 'I') return playC5();
+            if (event.key.toUpperCase() === 'I') {
+                playC5();
+            }
 
             // Press 9
-            if (event.key === '9') return playDb5();
+            if (event.key === '9') {
+                playDb5();
+            }
 
             // Press O
-            if (event.key.toUpperCase() === 'O') return playD5();
+            if (event.key.toUpperCase() === 'O') {
+                playD5();
+            }
 
             // Press 0 
-            if (event.key === '0') return playEb5();
+            if (event.key === '0') {
+                playEb5();
+            }
 
             // Press P
-            if (event.key.toUpperCase() === 'P') return playE5();
+            if (event.key.toUpperCase() === 'P') {
+                playE5();
+            }
         };
         if (isPianoActivated) {
             document.addEventListener('keydown', handleKeyPress);
@@ -281,8 +355,6 @@ const Piano = () => {
         <>
             <section className="piano-container">
                 <div className="flex items-center justify-between">
-                    {/* <button className='shadow__btn my-4' onClick={() => setIsPianoActivated(!isPianoActivated)}>{isPianoActivated ? 'Deactivate' : 'Activate'}</button> */}
-                    {/* <button className='shadow__btn my-4'>Full Screen</button> */}
                     <div className="voltage-button">
                         <button onClick={() => setIsPianoActivated(!isPianoActivated)}>{isPianoActivated ? 'Deactivate' : 'Activate'}</button>
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 234.6 61.3" preserveAspectRatio="none" xmlSpace="preserve">
