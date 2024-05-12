@@ -9,7 +9,7 @@ import {
 import axios from "axios";
 import { toast } from "sonner";
 import { useAuth } from "../../../context/AuthContext";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { useAppDispatch } from "../../../app/hooks";
 import { setCurrentRoom } from "../../../features/room/roomSlice";
 
 /**

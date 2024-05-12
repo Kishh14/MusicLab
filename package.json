@@ -1,5 +1,5 @@
 {
-  "name": "music-gen",
+  "name": "music-lab",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -26,7 +26,6 @@
     "react-dom": "^18.2.0",
     "react-icons": "^5.2.0",
     "react-redux": "^9.1.2",
-    "react-router": "^6.23.0",
     "react-router-dom": "^6.23.0",
     "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5",

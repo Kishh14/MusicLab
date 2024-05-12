@@ -17,7 +17,13 @@ export const AuthContext = createContext({
 });
 
 // Hook
-export const useAuth = () => React.useContext(AuthContext);
+export const useAuth = () => {
+  if (!React.useContext(AuthContext)) {
+    throw new Error("useAuth must be used within AuthProvider");
+  }
+
+  return React.useContext(AuthContext);
+};
 
 function isTokenValid() {
   return (

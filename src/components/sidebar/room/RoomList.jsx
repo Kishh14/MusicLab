@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import Room from "./Room";
 import axios from "axios";
 
+import Filters from "../Filters";
+import Chat from "../Chat";
+
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
   addRoom,
@@ -13,8 +16,6 @@ import {
 
 import { useSocket } from "../../../context/SocketContext";
 import { useAuth } from "../../../context/AuthContext";
-import Filters from "../Filters";
-import Chat from "../Chat";
 
 const RoomList = () => {
   const rooms = useAppSelector((state) => state.room.rooms);
@@ -68,11 +69,8 @@ const RoomList = () => {
   useEffect(() => {
     if (!currentRoom || !socket || !isSocketConnected) return;
 
-    console.log(currentRoom);
-
     // Join the current room when socket is ready
-    console.log(socket);
-
+    console.log(currentRoom);
     const roomId = currentRoom._id;
     socket.emit("room:join", roomId);
 
@@ -89,9 +87,8 @@ const RoomList = () => {
     >
       <Filters />
 
-      {isChatOpen && rooms.length > 0 ? (
-        // FIXME: Assigned the first room id to the chat component temporarily
-        <Chat roomId={rooms[0]._id} />
+      {isChatOpen && currentRoom ? (
+        <Chat currentRoom={currentRoom} />
       ) : (
         rooms.map((room) => (
           <Room

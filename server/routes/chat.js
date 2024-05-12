@@ -1,47 +1,55 @@
-import { Router } from "express";
-import Room from "../models/Room.js";
-import { authMiddleware } from "../lib/utils.js";
+import express from 'express';
+import Chat from '../models/Chat.js';
+import User from "../models/User.js"
+import Room from '../models/Room.js'
+const router = express.Router();
 
-const router = Router();
-
-// Route for getting messages for a specific room
-router.get('/messages/:roomId', authMiddleware, async (req, res) => {
+router.post('/send' , async (req, res) => {
     try {
-        const room = await Room.find({ room: req.params.roomId }).populate('sender');
-        res.json(room);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Server Error' });
+      const { roomId, text, senderId } = req.body;
+      
+      const room = await Room.findById(roomId);
+      if (!room) {
+        return res.status(404).json({ message: 'Room not found' });
+      }
+      const sender = await User.findById(senderId);
+      if (!sender) {
+        return res.status(404).json({ message: 'Sender not found' });
+      }
+      const newMessage = {
+        text,
+        roomId,
+        sender: senderId,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      //room.messages.(newMessage);
+      const chat = new Chat(newMessage);
+      await chat.save();
+      //room.messages.push(newMessage);
+      
+      res.json(newMessage);
+    } catch (error) {
+      console.error('Error sending message:', error);
+      res.status(500).json({ message: 'Failed to send message' });
     }
-});
-
-// Route for sending a new message to a room
-router.post('/messages/:roomId', authMiddleware, async (req, res) => {
-    const { content } = req.body;
-    const { roomId } = req.params;
+  });
+  
+ 
+router.get('/room/:roomId', async (req, res) => {
+  try {
+    const roomId = req.params.roomId;
+    const chat = await Chat.find({ roomId }).populate('sender', 'username'); // Populate sender's username
+    if (!chat) {
+      return res.status(404).json({ message: 'Room not found' });
+    }
     
-    try {
-        // Check if the room exists
-        const room = await Room.findById(roomId);
-        if (!room) {
-            return res.status(404).json({ message: 'Room not found' });
-        }
-
-        // Create a new message
-        const newRoom = new Room({
-            room: roomId,
-            sender: req.user.id, 
-            content
-        });
-
-        // Save the message
-        const savedMessage = await newRoom.save();
-
-        res.status(201).json(savedMessage);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Server Error' });
-    }
+    res.json(chat);
+  } catch (error) {
+    console.error('Error fetching messages:', error);
+    res.status(500).json({ message: 'Failed to fetch messages' });
+  }
 });
-
+  
+  
 export default router;
