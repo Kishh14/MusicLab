@@ -1,7 +1,6 @@
 import Room from "../models/Room.js";
 import { Router } from "express";
 import { authMiddleware } from "../lib/utils.js";
-import User from "../models/User.js";
 import { io } from "../main.js";
 
 const router = Router();
@@ -49,12 +48,25 @@ router.post("/create", authMiddleware, async (req, res) => {
 router.post("/:id/join", authMiddleware, async (req, res) => {
   const { id } = req.params;
 
+  console.log(id);
+
   try {
     let room = await Room.findById(id);
     if (!room) {
       return res //
         .status(404)
         .send({ error: true, message: "Room not found" });
+    }
+
+    // If the user already in the other room, remove them
+    const existingRooms = await Room.find({ members: req.userId });
+
+    for (let i = 0; i < existingRooms.length; i++) {
+      const index = existingRooms[i].members.indexOf(req.userId);
+      if (index > -1) {
+        existingRooms[i].members.splice(index, 1);
+        await existingRooms[i].save();
+      }
     }
 
     if (!room.members.includes(req.userId)) {
@@ -111,6 +123,23 @@ router.get("/all", authMiddleware, async (req, res) => {
   } catch (error) {
     console.error("Error fetching rooms:", error);
     return res.status(500).json({ error: "Failed to fetch rooms" });
+  }
+});
+
+// Get Room details
+router.get("/:id", authMiddleware, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const room = await Room.findById(id).populate("members", "-password");
+    if (!room) {
+      return res.status(404).json({ error: "Room not found" });
+    }
+
+    return res.status(200).json(room);
+  } catch (error) {
+    console.error("Error fetching room:", error);
+    return res.status(500).json({ error: "Failed to fetch room" });
   }
 });
 

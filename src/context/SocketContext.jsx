@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import { useAuth } from "./AuthContext";
 import { toast } from "sonner";
-import { SOCKET_URL } from "../constants";
+import { SOCKET_URL } from "../constants/utils";
 
 /**
  * Create a context to hold the socket instance

@@ -5,6 +5,7 @@ import { sounds } from "./Sounds";
 
 import { useEffect, useState } from "react";
 import { useSocket } from "../../context/SocketContext";
+import { InviteLinkModel } from "../InviteLinkModel";
 
 // Instrument Sounds
 const { synth, boom, hiHat, kick, openHat, snare } = sounds;
@@ -112,7 +113,10 @@ const Instruments = () => {
         </h1>
 
         {/* Actions */}
-        <div className="flex gap-4">
+        <div className="flex gap-4 items-center">
+          {/* Invite Link Button */}
+          <InviteLinkModel />
+
           {/* Record Button */}
           <button className="Btn" onClick={startRecording}>
             <div className="sign">
