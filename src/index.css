@@ -99,7 +99,7 @@ aside ::-webkit-scrollbar {
   fill: white;
 }
 
-.text {
+.rsp-text {
   position: absolute;
   right: 0%;
   width: 0%;

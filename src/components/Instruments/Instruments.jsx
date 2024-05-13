@@ -1,9 +1,13 @@
 import * as Tone from "tone";
 import DrumKit from "./DrumKit/DrumKit";
 import Piano from "./Piano/Piano";
+import { sounds } from "./Sounds";
 
 import { useEffect, useState } from "react";
 import { useSocket } from "../../context/SocketContext";
+
+// Instrument Sounds
+const { synth, boom, hiHat, kick, openHat, snare } = sounds;
 
 const Instruments = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -14,69 +18,6 @@ const Instruments = () => {
   const [isDrumkitActivated, setIsDrumkitActivated] = useState(false);
 
   const { socket } = useSocket();
-
-  // Piano Sound
-  const [synth] = useState(new Tone.Synth().toDestination());
-
-  // Drum Sounds
-  const [boom] = useState(
-    new Tone.Synth({
-      oscillator: {
-        type: "sine",
-      },
-      envelope: {
-        attack: 0.01,
-        decay: 0.4,
-        sustain: 0,
-        release: 0.2,
-      },
-    }).toDestination()
-  );
-
-  const [hiHat] = useState(
-    new Tone.MetalSynth({
-      envelope: {
-        attack: 0.04,
-        decay: 0.4,
-        sustain: 0.1,
-        release: 0.2,
-      },
-      pitchDecay: 0.5,
-      reverse: false,
-    }).toDestination()
-  );
-
-  const [kick] = useState(
-    new Tone.MembraneSynth({ polyphony: 4 }).toDestination()
-  );
-
-  const [openHat] = useState(
-    new Tone.Synth({
-      oscillator: {
-        type: "triangle",
-      },
-      envelope: {
-        attack: 0.005,
-        decay: 0.05,
-        sustain: 0,
-        release: 0.02,
-      },
-    }).toDestination()
-  );
-
-  const [snare] = useState(
-    new Tone.Synth({
-      oscillator: {
-        type: "sine",
-      },
-      envelope: {
-        attack: 0.01,
-        decay: 0.4,
-        sustain: 0,
-        release: 0.2,
-      },
-    }).toDestination()
-  );
 
   // Media Methods
   const startRecording = () => {
@@ -118,7 +59,7 @@ const Instruments = () => {
     return () => {
       socket.off("music");
     };
-  }, [socket, synth]);
+  }, [socket]);
 
   const stopRecording = async () => {
     setIsRecording(false);
@@ -185,7 +126,7 @@ const Instruments = () => {
                 <path d="M384,138a117.93,117.93,0,0,0-91.84,192H219.84A118,118,0,1,0,128,374H384a118,118,0,0,0,0-236ZM54,256a74,74,0,1,1,74,74A74.09,74.09,0,0,1,54,256Zm330,74a74,74,0,1,1,74-74A74.09,74.09,0,0,1,384,330Z" />
               </svg>
             </div>
-            <div className="text">Record</div>
+            <div className="rsp-text">Record</div>
           </button>
 
           {/* Stop Button */}
@@ -205,7 +146,7 @@ const Instruments = () => {
                   <path d="M5 6.5A1.5 1.5 0 0 1 6.5 5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5v-3z" />{" "}
                 </svg>
               </div>
-              <div className="text">Stop</div>
+              <div className="rsp-text">Stop</div>
             </button>
           )}
 
@@ -225,7 +166,7 @@ const Instruments = () => {
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z" />{" "}
                 </svg>
               </div>
-              <div className="text">Play</div>
+              <div className="rsp-text">Play</div>
             </button>
           )}
 
