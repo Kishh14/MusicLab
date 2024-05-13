@@ -79,7 +79,7 @@ const Login = () => {
             New User?{" "}
             <Link
               className="font-bold text-gray-600 hover:text-gray-800"
-              to="/"
+              to="/signup"
             >
               Sign Up{" "}
             </Link>

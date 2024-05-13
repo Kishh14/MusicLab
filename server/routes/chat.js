@@ -2,6 +2,9 @@ import express from 'express';
 import Chat from '../models/Chat.js';
 import User from "../models/User.js"
 import Room from '../models/Room.js'
+
+import { io } from "../main.js"
+
 const router = express.Router();
 
 router.post('/send' , async (req, res) => {
@@ -27,8 +30,13 @@ router.post('/send' , async (req, res) => {
       const chat = new Chat(newMessage);
       await chat.save();
       //room.messages.push(newMessage);
+
+      const result = await chat.populate('sender', 'username');
+
+      // Broadcast the received message to all connected clients in the same room
+      io.to(roomId).emit('message', result)
       
-      res.json(newMessage);
+      res.json(result);
     } catch (error) {
       console.error('Error sending message:', error);
       res.status(500).json({ message: 'Failed to send message' });

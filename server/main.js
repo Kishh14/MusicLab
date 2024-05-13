@@ -39,7 +39,7 @@ app.use("/room", roomsRouter);
 app.use("/chat", chatRouter);
 
 // Start the server
-if (!isDev) {
+if (isDev) {
   ViteExpress.bind(app, server);
 }
 

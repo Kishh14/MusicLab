@@ -35,7 +35,6 @@ const Chat = ({ currentRoom }) => {
           },
         };
 
-
         socket.emit('message', newMessage);
       }
       setMessageText('');
@@ -116,9 +115,9 @@ const Chat = ({ currentRoom }) => {
           ))}
         </div>
       </div>
-      <div className=" relative  p-5">
+      <div className="flex-grow relative  p-5">
         <div className="p-4 absolute bottom-0 left-0 right-0">
-          <div className="flex items-center">
+          <div className="flex flex-1 items-center">
             <input
               className="flex-1 rounded-full border border-gray-200  py-2 px-4 mr-2"
               type="text"
