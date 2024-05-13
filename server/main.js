@@ -7,7 +7,7 @@ import http from "http";
 
 import authRouter from "./routes/auth.js";
 import roomsRouter from "./routes/rooms.js";
-import chatRouter from "./routes/chat.js"
+import chatRouter from "./routes/chat.js";
 
 import { MONGO_URI, PORT, isDev } from "./constants.js";
 import { Server } from "socket.io";

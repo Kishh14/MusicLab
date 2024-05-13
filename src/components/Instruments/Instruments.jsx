@@ -6,6 +6,9 @@ import { sounds } from "./Sounds";
 import { useEffect, useState } from "react";
 import { useSocket } from "../../context/SocketContext";
 
+// Instrument Sounds
+const { synth, boom, hiHat, kick, openHat, snare } = sounds;
+
 const Instruments = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [recorder] = useState(new Tone.Recorder());
@@ -13,9 +16,6 @@ const Instruments = () => {
   const [recordedAudioBlob, setRecordedAudioBlob] = useState(null);
   const [isPianoActivated, setIsPianoActivated] = useState(false);
   const [isDrumkitActivated, setIsDrumkitActivated] = useState(false);
-
-  // Instrument Sounds
-  const { synth, boom, hiHat, kick, openHat, snare } = sounds;
 
   const { socket } = useSocket();
 
@@ -59,7 +59,7 @@ const Instruments = () => {
     return () => {
       socket.off("music");
     };
-  }, [socket, synth]);
+  }, [socket]);
 
   const stopRecording = async () => {
     setIsRecording(false);
