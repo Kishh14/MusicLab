@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import { useAuth } from "../context/AuthContext";
 
@@ -13,6 +13,9 @@ const Login = () => {
   const [formData, setFormData] = useState(initialFormData);
   const { login, isAuthenticated } = useAuth();
 
+  const [searchParams] = useSearchParams();
+  const redirect = searchParams.get("redirect");
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,6 +24,7 @@ const Login = () => {
         // toast is not initialized yet
         toast.info("You are already logged in");
       }, 100);
+
       // The page need to reload to get the user data
       navigate("/home");
     }
@@ -38,7 +42,7 @@ const Login = () => {
       .post("/auth/login", formData)
       .then((res) => {
         login(res.data);
-        window.location.href = "/home";
+        window.location.href = redirect ? redirect : "/home";
       })
       .catch((err) => {
         toast.error(err.response.data.message);
@@ -79,7 +83,7 @@ const Login = () => {
             New User?{" "}
             <Link
               className="font-bold text-gray-600 hover:text-gray-800"
-              to="/signup"
+              to={"/signup" + (redirect ? `?redirect=${redirect}` : "")}
             >
               Sign Up{" "}
             </Link>

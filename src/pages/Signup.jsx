@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import { useAuth } from "../context/AuthContext";
 
@@ -14,6 +14,9 @@ const Signup = () => {
   const [formData, setFormData] = useState(initialFormData);
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
+
+  const [searchParams] = useSearchParams();
+  const redirect = searchParams.get("redirect");
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -38,7 +41,7 @@ const Signup = () => {
       .post("/auth/register", formData)
       .then((res) => {
         toast.success(res.data.message);
-        navigate("/login");
+        navigate(redirect ? "/login?redirect=" + redirect : "/login");
       })
       .catch((err) => {
         toast.error(err.response.data.message);
@@ -88,7 +91,7 @@ const Signup = () => {
               Already have an account?{" "}
               <Link
                 className="font-bold text-gray-600 hover:text-gray-800"
-                to="/login"
+                to={redirect ? "/login?redirect=" + redirect : "/login"}
               >
                 Login{" "}
               </Link>
