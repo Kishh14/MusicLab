@@ -35,7 +35,7 @@ import {
   telegram,
   twitter,
   yourlogo,
-} from "../../assets";
+} from "../assets";
 
 export const navigation = [
   {
@@ -124,7 +124,6 @@ export const roadmap = [
     imageUrl: roadmap4,
   },
 ];
-
 
 export const collabText =
   "With smart automation and top-notch security, it's the perfect solution for teams looking to work smarter.";
@@ -292,7 +291,6 @@ export const benefits = [
     imageUrl: benefitImage2,
   },
 ];
-
 
 export const socials = [
   {

@@ -1,13 +1,13 @@
 import Section from "./Section";
 import Heading from "./Heading";
-import { service1, service2, service3, check } from "../assets";
-import { brainwaveServices, brainwaveServicesIcons } from "./constants";
+import { service1, service2, service3, check } from "../../assets";
+import { brainwaveServices, brainwaveServicesIcons } from "../../constants";
 import {
   PhotoChatMessage,
   Gradient,
   VideoBar,
   VideoChatMessage,
-} from "./design/Services";
+} from "../design/Services";
 
 import Generating from "./Generating";
 
@@ -33,9 +33,11 @@ const Services = () => {
             </div>
 
             <div className="relative z-1 max-w-[15rem] ml-auto">
-              <h4 className="h4 mb-4">Collaborative Music Making, Reinvented</h4>
+              <h4 className="h4 mb-4">
+                Collaborative Music Making, Reinvented
+              </h4>
               <p className="body-2 mb-[3rem] text-n-3">
-              Empowering Musicians to Collaborate in Real-Time with MusicLab
+                Empowering Musicians to Collaborate in Real-Time with MusicLab
               </p>
               <ul className="body-2">
                 {brainwaveServices.map((item, index) => (
@@ -68,7 +70,7 @@ const Services = () => {
               <div className="absolute inset-0 flex flex-col justify-end p-8 bg-gradient-to-b from-n-8/0 to-n-8/90 lg:p-15">
                 <h4 className="h4 mb-4">Compose Music Together</h4>
                 <p className="body-2 mb-[3rem] text-n-3">
-                Experience Seamless Music Collaboration Online. Join Now!
+                  Experience Seamless Music Collaboration Online. Join Now!
                 </p>
               </div>
 
@@ -79,7 +81,8 @@ const Services = () => {
               <div className="py-12 px-4 xl:px-8">
                 <h4 className="h4 mb-4">Music generation</h4>
                 <p className="body-2 mb-[2rem] text-n-3">
-                Unlock Collective Creativity: Collaborative Music Making. What will you create?
+                  Unlock Collective Creativity: Collaborative Music Making. What
+                  will you create?
                 </p>
 
                 <ul className="flex items-center justify-between">

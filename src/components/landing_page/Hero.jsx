@@ -1,12 +1,11 @@
-import { curve, heroBackground, robot } from "../assets";
+import { curve, heroBackground, robot } from "../../assets";
 import Button from "./Button";
 import Section from "./Section";
-import { BackgroundCircles, Gradient } from "./design/Hero";
-import { heroIcons } from "./constants";
+import { BackgroundCircles, Gradient } from "../design/Hero";
+import { heroIcons } from "../../constants";
 import { ScrollParallax } from "react-just-parallax";
 import { useRef } from "react";
 import Notification from "./Notification";
-
 
 const Hero = () => {
   const parallaxRef = useRef(null);
@@ -35,7 +34,9 @@ const Hero = () => {
             </span>
           </h1>
           <p className="body-1 max-w-3xl mx-auto mb-6 text-n-2 lg:mb-8">
-            Experience the future of music collaboration with MusicLab, where musicians come together in real-time to create, compose, and innovate.
+            Experience the future of music collaboration with MusicLab, where
+            musicians come together in real-time to create, compose, and
+            innovate.
           </p>
           <Button href="/pricing" white>
             Get started
