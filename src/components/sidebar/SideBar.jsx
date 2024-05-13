@@ -118,7 +118,7 @@ export default function SideBar() {
 
   return (
     <>
-      <aside className="flex sidebar w-full">
+      <aside className="flex sidebar">
         <div className="flex flex-col items-center w-16 h-screen py-8 bg-white dark:bg-gray-900 dark:border-gray-300 relative shrink-0">
           <nav className="flex flex-col items-center flex-1 space-y-6 ">
             {/* avatar */}
@@ -196,8 +196,8 @@ export default function SideBar() {
             )}
           </div>
         </div>
-
         <RoomList />
+
       </aside>
     </>
   );
