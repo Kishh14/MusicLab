@@ -3,6 +3,7 @@
   overflow-y: scroll;
   /* padding: 2% 5%; */
   display: flex;
+  height: 100vh;
 }
 
 .nav-wrapper {
@@ -11,7 +12,7 @@
   background-size: cover;
 
   /* height: 100vh; */
-  padding: 6% 0;
+  padding: 4.5% 0;
 
   display: flex;
   /* justify-items: center; */
@@ -30,9 +31,8 @@
 .home-divide {
   display: flex;
   width: 85vw;
-  height: 100vh;
 
-  padding: 6% 0% 6% 8%;
+  padding: 0% 0% 6% 8%;
 }
 
 .home-divide .popular-left,
@@ -56,18 +56,6 @@
 .container-right section {
   display: flex;
 }
-
-/* Start Cards Tracks */
-
-.top-songs-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding-top: 20px;
-  overflow: visible;
-}
-
-/* End Cards Tracks */
 
 /* Start Chart Artists */
 

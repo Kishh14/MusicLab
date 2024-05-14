@@ -44,11 +44,6 @@ const CardSong = ({
     setSongImage(imageData?.urls.full);
   };
 
-  const pauseSong = () => {
-    // audioEl.pause();
-    // setIsPlaying(false);
-  };
-
   return (
     <div className="container-song">
       <div className="cover-container">
@@ -63,17 +58,10 @@ const CardSong = ({
         </div>
       </div>
       <div className="icon-controller">
-        {/* <audio controls ref={audioRef}>
-          <source src={audioUrl} type="audio/mp3" />
-          Your browser does not support the audio element.
-        </audio> */}
         <button className="" onClick={playSong}>
           Play
         </button>
         <br />
-        {/* <button className="" onClick={pauseSong}>
-          Pause
-        </button> */}
       </div>
     </div>
   );
