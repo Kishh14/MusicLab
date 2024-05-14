@@ -37,7 +37,6 @@
   align-items: end;
   justify-content: center;
   padding-bottom: 7px;
-  
 }
 
 .white-key.active {
@@ -73,7 +72,6 @@
 
 .Ab4-key {
   left: 45%;
-  
 }
 
 .Bb4-key {
@@ -85,7 +83,7 @@
 }
 
 .Eb5-key {
-  right:6%;
+  right: 6%;
 }
 
 .voltage-button {
@@ -268,422 +266,359 @@
     0 0 40px rgb(0, 140, 255), 0 0 90px rgb(0, 140, 255);
 }
 
-
 @media screen and (max-width: 1254px) {
- 
-  .piano_control{
+  .piano_control {
     display: block;
     flex-direction: column;
     justify-content: center;
-    
   }
-  body{
-    background-color: blue !important;
-  }
+
   .Db4-key {
     left: 6.5%;
   }
-  
+
   .Eb4-key {
     left: 16.5%;
   }
-  
+
   .Gb4-key {
     left: 36%;
   }
-  
+
   .Ab4-key {
     left: 46%;
-    
   }
-  
+
   .Bb4-key {
     right: 36.5%;
   }
-  
+
   .Db5-key {
     right: 15.5%;
   }
-  
+
   .Eb5-key {
     right: 5.5%;
   }
+}
+@media screen and (min-width: 1284px) and (max-width: 1350px) {
+  .piano_control {
+    display: block;
+    flex-direction: column;
+    justify-content: center;
   }
-@media screen and (min-width:1284px)and (max-width:1350px) {
- 
-.piano_control{
-  display: block;
-  flex-direction: column;
-  justify-content: center;
-  
-}
-body{
-  background-color: red !important;
-  
-}
-.Db4-key {
-  left: 9%;
-}
 
-.Eb4-key {
-  left: 19.2%;
-}
+  .Db4-key {
+    left: 9%;
+  }
 
-.Gb4-key {
-  left: 36%;
-}
+  .Eb4-key {
+    left: 19.2%;
+  }
 
-.Ab4-key {
-  left: 46%;
-  
-}
+  .Gb4-key {
+    left: 36%;
+  }
 
-.Bb4-key {
-  right: 36.5%;
+  .Ab4-key {
+    left: 46%;
+  }
+
+  .Bb4-key {
+    right: 36.5%;
+  }
+
+  .Db5-key {
+    right: 17.5%;
+  }
+
+  .Eb5-key {
+    right: 8.5%;
+  }
 }
 
-.Db5-key {
-  right: 17.5%;
+@media screen and (min-width: 1350px) and (max-width: 1490px) {
+  .piano_control {
+    display: block;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .Db4-key {
+    left: 12%;
+  }
+
+  .Eb4-key {
+    left: 22%;
+  }
+
+  .Gb4-key {
+    left: 38%;
+  }
+
+  .Ab4-key {
+    left: 47%;
+  }
+
+  .Bb4-key {
+    right: 38.5%;
+  }
+
+  .Db5-key {
+    right: 22%;
+  }
+
+  .Eb5-key {
+    right: 13%;
+  }
 }
 
-.Eb5-key {
-  right: 8.5%;
+@media screen and (min-width: 1490px) and (max-width: 1630px) {
+  .piano_control {
+    display: block;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .Db4-key {
+    left: 16%;
+  }
+
+  .Eb4-key {
+    left: 25%;
+  }
+
+  .Gb4-key {
+    left: 40%;
+  }
+
+  .Ab4-key {
+    left: 47%;
+  }
+
+  .Bb4-key {
+    right: 40%;
+  }
+
+  .Db5-key {
+    right: 24%;
+  }
+
+  .Eb5-key {
+    right: 16%;
+  }
 }
+
+@media screen and (min-width: 1630px) and (max-width: 1780px) {
+  .piano_control {
+    display: block;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .Db4-key {
+    left: 19%;
+  }
+
+  .Eb4-key {
+    left: 27%;
+  }
+
+  .Gb4-key {
+    left: 39%;
+  }
+
+  .Ab4-key {
+    left: 47%;
+  }
+
+  .Bb4-key {
+    right: 39.5%;
+  }
+
+  .Db5-key {
+    right: 27%;
+  }
+
+  .Eb5-key {
+    right: 19%;
+  }
+}
+@media screen and (min-width: 1780px) and (max-width: 1900px) {
+  .piano_control {
+    display: block;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .Db4-key {
+    left: 22%;
+  }
+
+  .Eb4-key {
+    left: 29%;
+  }
+
+  .Gb4-key {
+    left: 41%;
+  }
+
+  .Ab4-key {
+    left: 47%;
+  }
+
+  .Bb4-key {
+    right: 41%;
+  }
+
+  .Db5-key {
+    right: 29%;
+  }
+
+  .Eb5-key {
+    right: 21%;
+  }
 }
 
+@media screen and (min-width: 1900px) and (max-width: 2080px) {
+  .piano_control {
+    display: block;
+    flex-direction: column;
+    justify-content: center;
+  }
 
-@media screen and (min-width:1350px) and (max-width:1490px) {
- 
-    .piano_control{
-      display: block;
-      flex-direction: column;
-      justify-content: center;
-      
-    }
-    body{
-      background-color: red !important;
-      
-    }
-    .Db4-key {
-      left: 12%;
-    }
-    
-    .Eb4-key {
-      left: 22%;
-    }
-    
-    .Gb4-key {
-      left: 38%;
-    }
-    
-    .Ab4-key {
-      left: 47%;
-      
-    }
-    
-    .Bb4-key {
-      right: 38.5%;
-    }
-    
-    .Db5-key {
-      right: 22%;
-    }
-    
-    .Eb5-key {
-      right: 13%;
-    }
-    }
+  .Db4-key {
+    left: 24%;
+  }
 
-      @media screen and (min-width:1490px) and (max-width:1630px){
- 
-        .piano_control{
-          display: block;
-          flex-direction: column;
-          justify-content: center;
-          
-        }
-        body{
-          background-color: red !important;
-          
-        }
-        .Db4-key {
-          left: 16%;
-        }
-        
-        .Eb4-key {
-          left: 25%;
-        }
-        
-        .Gb4-key {
-          left: 40%;
-        }
-        
-        .Ab4-key {
-          left: 47%;
-          
-        }
-        
-        .Bb4-key {
-          right: 40%;
-        }
-        
-        .Db5-key {
-          right: 24%;
-        }
-        
-        .Eb5-key {
-          right: 16%;
-        }
-        }
-  
-        
-        @media screen and (min-width:1630px) and (max-width:1780px) {
- 
-          .piano_control{
-            display: block;
-            flex-direction: column;
-            justify-content: center;
-            
-          }
-          body{
-            background-color: red !important;
-            
-          }
-          .Db4-key {
-            left: 19%;
-          }
-          
-          .Eb4-key {
-            left: 27%;
-          }
-          
-          .Gb4-key {
-            left: 39%;
-          }
-          
-          .Ab4-key {
-            left: 47%;
-            
-          }
-          
-          .Bb4-key {
-            right: 39.5%;
-          }
-          
-          .Db5-key {
-            right: 27%;
-          }
-          
-          .Eb5-key {
-            right: 19%;
-          }
-          }   
-          @media screen and (min-width:1780px) and (max-width:1900px) {
- 
-            .piano_control{
-              display: block;
-              flex-direction: column;
-              justify-content: center;
-              
-            }
-            body{
-              background-color: red !important;
-              
-            }
-            .Db4-key {
-              left: 22%;
-            }
-            
-            .Eb4-key {
-              left: 29%;
-            }
-            
-            .Gb4-key {
-              left: 41%;
-            }
-            
-            .Ab4-key {
-              left: 47%;
-              
-            }
-            
-            .Bb4-key {
-              right: 41%;
-            }
-            
-            .Db5-key {
-              right: 29%;
-            }
-            
-            .Eb5-key {
-              right: 21%;
-            }
-            }  
+  .Eb4-key {
+    left: 30%;
+  }
 
-            @media screen and (min-width:1900px) and (max-width:2080px) {
- 
-              .piano_control{
-                display: block;
-                flex-direction: column;
-                justify-content: center;
-                
-              }
-              body{
-                background-color: red !important;
-                
-              }
-              .Db4-key {
-                left: 24%;
-              }
-              
-              .Eb4-key {
-                left: 30%;
-              }
-              
-              .Gb4-key {
-                left: 42%;
-              }
-              
-              .Ab4-key {
-                left: 48%;
-                
-              }
-              
-              .Bb4-key {
-                right: 42%;
-              }
-              
-              .Db5-key {
-                right: 30%;
-              }
-              
-              .Eb5-key {
-                right: 24%;
-              }
-              } 
-              
-              @media screen and (min-width:2080px) and (max-width:2270px) {
- 
-                .piano_control{
-                  display: block;
-                  flex-direction: column;
-                  justify-content: center;
-                  
-                }
-                body{
-                  background-color: red !important;
-                  
-                }
-                .Db4-key {
-                  left: 26%;
-                }
-                
-                .Eb4-key {
-                  left: 32%;
-                }
-                
-                .Gb4-key {
-                  left: 37%;
-                }
-                
-                .Ab4-key {
-                  left: 48%;
-                  
-                }
-                
-                .Bb4-key {
-                  right: 43%;
-                }
-                
-                .Db5-key {
-                  right: 32%;
-                }
-                
-                .Eb5-key {
-                  right: 27%;
-                }
-                }  
+  .Gb4-key {
+    left: 42%;
+  }
 
-                @media screen and (min-width:2270px) and (max-width:2460px) {
- 
-                  .piano_control{
-                    display: block;
-                    flex-direction: column;
-                    justify-content: center;
-                    
-                  }
-                  body{
-                    background-color: red !important;
-                    
-                  }
-                  .Db4-key {
-                    left: 28%;
-                  }
-                  
-                  .Eb4-key {
-                    left: 34%;
-                  }
-                  
-                  .Gb4-key {
-                    left: 39%;
-                  }
-                  
-                  .Ab4-key {
-                    left: 48%;
-                    
-                  }
-                  
-                  .Bb4-key {
-                    right: 43%;
-                  }
-                  
-                  .Db5-key {
-                    right: 34%;
-                  }
-                  
-                  .Eb5-key {
-                    right: 29%;
-                  }
-                  }
-                  
-                  @media screen and (min-width:2460px) and (max-width:2710px) {
- 
-                    .piano_control{
-                      display: block;
-                      flex-direction: column;
-                      justify-content: center;
-                      
-                    }
-                    body{
-                      background-color: red !important;
-                      
-                    }
-                    .Db4-key {
-                      left: 30%;
-                    }
-                    
-                    .Eb4-key {
-                      left: 35%;
-                    }
-                    
-                    .Gb4-key {
-                      left: 39%;
-                    }
-                    
-                    .Ab4-key {
-                      left: 48%;
-                      
-                    }
-                    
-                    .Bb4-key {
-                      right: 44%;
-                    }
-                    
-                    .Db5-key {
-                      right: 35%;
-                    }
-                    
-                    .Eb5-key {
-                      right: 30%;
-                    }
-                    }                   
+  .Ab4-key {
+    left: 48%;
+  }
+
+  .Bb4-key {
+    right: 42%;
+  }
+
+  .Db5-key {
+    right: 30%;
+  }
+
+  .Eb5-key {
+    right: 24%;
+  }
+}
+
+@media screen and (min-width: 2080px) and (max-width: 2270px) {
+  .piano_control {
+    display: block;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .Db4-key {
+    left: 26%;
+  }
+
+  .Eb4-key {
+    left: 32%;
+  }
+
+  .Gb4-key {
+    left: 37%;
+  }
+
+  .Ab4-key {
+    left: 48%;
+  }
+
+  .Bb4-key {
+    right: 43%;
+  }
+
+  .Db5-key {
+    right: 32%;
+  }
+
+  .Eb5-key {
+    right: 27%;
+  }
+}
+
+@media screen and (min-width: 2270px) and (max-width: 2460px) {
+  .piano_control {
+    display: block;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .Db4-key {
+    left: 28%;
+  }
+
+  .Eb4-key {
+    left: 34%;
+  }
+
+  .Gb4-key {
+    left: 39%;
+  }
+
+  .Ab4-key {
+    left: 48%;
+  }
+
+  .Bb4-key {
+    right: 43%;
+  }
+
+  .Db5-key {
+    right: 34%;
+  }
+
+  .Eb5-key {
+    right: 29%;
+  }
+}
+
+@media screen and (min-width: 2460px) and (max-width: 2710px) {
+  .piano_control {
+    display: block;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .Db4-key {
+    left: 30%;
+  }
+
+  .Eb4-key {
+    left: 35%;
+  }
+
+  .Gb4-key {
+    left: 39%;
+  }
+
+  .Ab4-key {
+    left: 48%;
+  }
+
+  .Bb4-key {
+    right: 44%;
+  }
+
+  .Db5-key {
+    right: 35%;
+  }
+
+  .Eb5-key {
+    right: 30%;
+  }
+}
