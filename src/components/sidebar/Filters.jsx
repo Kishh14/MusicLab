@@ -22,20 +22,13 @@ export default function Filters() {
                 <div>
                   <label className="flex items-center space-x-2 px-4 py-2">
                     <input type="checkbox" />
-                    <span>Filter name</span>
+                    <span>Locked Rooms</span>
                   </label>
                   <label className="flex items-center space-x-2 px-4 py-2">
                     <input type="checkbox" />
-                    <span>Filter</span>
+                    <span>Unlocked Rooms</span>
                   </label>
-                  <label className="flex items-center space-x-2 px-4 py-2">
-                    <input type="checkbox" />
-                    <span>Filter</span>
-                  </label>
-                  <label className="flex items-center space-x-2 px-4 py-2">
-                    <input type="checkbox" />
-                    <span>Filter</span>
-                  </label>
+
                 </div>
               </div>
             )}

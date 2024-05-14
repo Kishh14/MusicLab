@@ -5,13 +5,14 @@ import { Link } from "react-router-dom";
 import logo from "../assets/MusicLabwhite_LOGO.png";
 import textLogo from "../assets/Text_logo.png";
 import axios from "axios";
+
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 
 const InviteRoute = () => {
   // Get the room ID from the URL
   const { id } = useParams();
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const { roomId } = JSON.parse(decodeURI(atob(id)));
 
   /**
@@ -22,12 +23,19 @@ const InviteRoute = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!roomId) return;
+    if (!isAuthenticated) {
+      navigate("/login?redirect=/invite/" + id);
+      toast.warning("You must login to accept the invite.");
+    }
+  }, [isAuthenticated]);
+
+  useEffect(() => {
+    if (!roomId || !isAuthenticated) return;
 
     axios //
       .get(`/room/${roomId}`)
       .then((res) => setRoom(res.data));
-  }, [roomId]);
+  }, [roomId, user, isAuthenticated]);
 
   // Call the API to join the room
   const joinRoom = () => {
@@ -48,7 +56,7 @@ const InviteRoute = () => {
     <section className="min-h-screen h-full grid place-items-center">
       <div className="max-w-2xl px-6 py-8 mx-auto bg-white dark:bg-gray-900 rounded">
         <header>
-          <Link href="/" className="flex items-center">
+          <Link to="/" className="flex items-center">
             <img
               className="w-auto h-12 sm:h-16"
               src={logo}
@@ -64,7 +72,7 @@ const InviteRoute = () => {
 
         <main className="mt-8">
           <h2 className="text-gray-700 dark:text-gray-200">
-            Hi {user.username},
+            Hi {user?.username ?? "user"},
           </h2>
 
           <p className="mt-2 leading-loose text-gray-600 dark:text-gray-300">

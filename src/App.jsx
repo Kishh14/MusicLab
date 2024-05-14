@@ -16,13 +16,7 @@ const App = () => {
         <Toaster richColors />
       </ReduxProvider>
 
-      {/*
-           Check Header.jsx inside for login and signup routes  
-           check Header.jsx in that there are nav links for Home studio and discover  
-           Home - /
-           Studio - home {which is the main page of rooms and instruments}
-           Discover  - discover {this page will be added later}
-        */}
+
     </>
   );
 };
