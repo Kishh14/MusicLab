@@ -171,6 +171,7 @@ export default function SideBar() {
             </div>
           </nav>
 
+          {/* TODO: Add an option to go back to the landing page */}
           {/* Exit icon */}
           <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             <button
@@ -197,7 +198,6 @@ export default function SideBar() {
           </div>
         </div>
         <RoomList />
-
       </aside>
     </>
   );

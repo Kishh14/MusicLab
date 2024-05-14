@@ -71,6 +71,8 @@ const Discover = () => {
   };
   return (
     <>
+      {/* FIXME: The song source is not being changed upon playing other songs */}
+      {/* FIXME: The UI is taking much more height than needed */}
       <div className="container-right">
         <div className="nav-wrapper">
           <div className="nav-left">

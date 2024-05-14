@@ -14,7 +14,6 @@ const App_demo = () => {
         <Header />
         <Hero />
         <Benefits />
-        {/* <Collaboration /> */}
         <Services />
         <Pricing />
         <Roadmap />

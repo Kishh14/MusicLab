@@ -18,6 +18,7 @@ const Hero = () => {
       customPaddings
       id="hero"
     >
+      {/* TODO: Change the background dradient color */}
       <div className="container relative" ref={parallaxRef}>
         <div className="relative z-1 max-w-[62rem] mx-auto text-center mb-[3.875rem] md:mb-20 lg:mb-[6.25rem]">
           <h1 className="h1 mb-6">
@@ -38,6 +39,7 @@ const Hero = () => {
             musicians come together in real-time to create, compose, and
             innovate.
           </p>
+          {/* // TODO: Replace the button with flower animated button from UIVERSE */}
           <Button href="/home" white>
             Get started
           </Button>

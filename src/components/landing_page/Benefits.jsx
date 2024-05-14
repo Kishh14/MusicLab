@@ -13,7 +13,7 @@ const Benefits = () => {
           className="md:max-w-md lg:max-w-2xl"
           title="Compose Together, Seamlessly and in Real-Time with MusicLab"
         />
-
+        {/* TODO: Change link urls and add relevent content */}
         <div className="flex flex-wrap gap-10 mb-10">
           {benefits.map((item) => (
             <div

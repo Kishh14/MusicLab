@@ -103,6 +103,7 @@ const Instruments = () => {
       className="w-full h-screen instruments"
       style={{ background: "#111827", overflowY: "scroll" }}
     >
+      {/* TODO: Add the functionality to publish recorded audio in the discover page */}
       {/* Header */}
       <section className="border-b border-gray-700 pt-7 pb-5 px-10 flex justify-between">
         <h1 style={{ fontSize: "19px" }}>
@@ -223,6 +224,7 @@ const Instruments = () => {
         </section>
       )}
 
+      {/* TODO: Add help modal and integrate driver.js */}
       {/* Instruments */}
       {/* Piano */}
       {isInstruments && (

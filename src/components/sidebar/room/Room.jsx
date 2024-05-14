@@ -190,6 +190,7 @@ const Room = (room) => {
         style={{ scrollSnapType: "x mandatory", whiteSpace: "nowrap" }}
       >
         {room.members.map((member, index) => (
+          // TODO: Add voice visulization and show other user if the mic is on or off
           <Avatar
             key={index}
             // FIXME: Added hardcoded profile image
