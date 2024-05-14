@@ -38,7 +38,7 @@ const Hero = () => {
             musicians come together in real-time to create, compose, and
             innovate.
           </p>
-          <Button href="/pricing" white>
+          <Button href="/home" white>
             Get started
           </Button>
         </div>

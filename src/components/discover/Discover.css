@@ -1,0 +1,86 @@
+.container-right {
+  /* grid-area: main; */
+  overflow-y: scroll;
+  /* padding: 2% 5%; */
+  display: flex;
+}
+
+.nav-wrapper {
+  background: url("https://wallpaperset.com/w/full/7/3/c/291218.jpg");
+  background-position: center;
+  background-size: cover;
+
+  /* height: 100vh; */
+  padding: 6% 0;
+
+  display: flex;
+  /* justify-items: center; */
+  /* align-items: center; */
+}
+
+.nav-left {
+  display: flex;
+  /* justify-items: center; */
+  /* align-items: center; */
+  /* height: 100vh; */
+  backdrop-filter: blur(6px) !important;
+}
+
+/* Start Divide Screen Home */
+.home-divide {
+  display: flex;
+  width: 85vw;
+  height: 100vh;
+
+  padding: 6% 0% 6% 8%;
+}
+
+.home-divide .popular-left,
+.popular-right {
+  flex: 0.5;
+  height: 100%;
+}
+
+@media (max-width: 900px) {
+  .home-divide {
+    flex-direction: column;
+  }
+}
+
+/* End Divide Screen Home */
+
+.container-right {
+  overflow: hidden;
+}
+
+.container-right section {
+  display: flex;
+}
+
+/* Start Cards Tracks */
+
+.top-songs-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 20px;
+  overflow: visible;
+}
+
+/* End Cards Tracks */
+
+/* Start Chart Artists */
+
+.featured-artists {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+}
+
+@media (max-width: 390px) {
+  .featured-artists {
+    grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+  }
+}
+
+/* End Chart Artists */

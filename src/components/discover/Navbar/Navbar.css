@@ -1,0 +1,40 @@
+.home-button,
+.upload-button {
+  text-align: center;
+  width: 150px;
+  object-fit: cover;
+  background-color: #1a73e8; /* Set background color */
+  color: white; /* Set text color */
+  border: none; /* Remove button border */
+  /* border-radius: 20px; */
+  padding: 8px 15px; /* Apply padding */
+  font-size: 13px; /* Set font size */
+  cursor: pointer; /* Change cursor on hover */
+  transition: background-color 0.3s ease; /* Add transition effect on background color */
+}
+
+.home-button:hover,
+.upload-button:hover {
+  background-color: #0f62fe; /* Change background color on hover */
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* Ensure modal appears above other content */
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  width: 80%;
+  max-width: 600px;
+}

@@ -41,7 +41,7 @@ export const navigation = [
   {
     id: "0",
     title: "Home",
-    url: "/",
+    url: "/#",
   },
   {
     id: "1",
@@ -51,7 +51,7 @@ export const navigation = [
   {
     id: "2",
     title: "Discover",
-    url: "#how-to-use",
+    url: "/discover",
   },
   {
     id: "3",

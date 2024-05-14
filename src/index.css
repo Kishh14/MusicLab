@@ -104,7 +104,7 @@ aside ::-webkit-scrollbar {
   right: 0%;
   width: 0%;
   opacity: 0;
-  color: white;
+  color: white !important;
   font-size: 1em;
   font-weight: 600;
   transition-duration: 0.3s;
@@ -127,6 +127,7 @@ aside ::-webkit-scrollbar {
   width: 70%;
   transition-duration: 0.3s;
   padding-right: 10px;
+  color: white;
 }
 
 .Btn:active {

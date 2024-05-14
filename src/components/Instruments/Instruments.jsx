@@ -2,15 +2,17 @@ import * as Tone from "tone";
 import DrumKit from "./DrumKit/DrumKit";
 import Piano from "./Piano/Piano";
 import { sounds } from "./Sounds";
-
+import "../../index.css";
 import { useEffect, useState } from "react";
 import { useSocket } from "../../context/SocketContext";
 import { InviteLinkModel } from "../InviteLinkModel";
+import InitialPlayer from "./InitialPlayer/InitialPlayer";
 
 // Instrument Sounds
 const { synth, boom, hiHat, kick, openHat, snare } = sounds;
 
 const Instruments = () => {
+  const [isInstruments, setIsInstruments] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [recorder] = useState(new Tone.Recorder());
   const [recordedNotes, setRecordedNotes] = useState([]);
@@ -118,20 +120,22 @@ const Instruments = () => {
           <InviteLinkModel />
 
           {/* Record Button */}
-          <button className="Btn" onClick={startRecording}>
-            <div className="sign">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="512"
-                height="512"
-                viewBox="0 0 512 512"
-              >
-                <title>ionicons-v5-p</title>
-                <path d="M384,138a117.93,117.93,0,0,0-91.84,192H219.84A118,118,0,1,0,128,374H384a118,118,0,0,0,0-236ZM54,256a74,74,0,1,1,74,74A74.09,74.09,0,0,1,54,256Zm330,74a74,74,0,1,1,74-74A74.09,74.09,0,0,1,384,330Z" />
-              </svg>
-            </div>
-            <div className="rsp-text">Record</div>
-          </button>
+          {isInstruments && (
+            <button className="Btn" onClick={startRecording}>
+              <div className="sign">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="512"
+                  height="512"
+                  viewBox="0 0 512 512"
+                >
+                  <title>ionicons-v5-p</title>
+                  <path d="M384,138a117.93,117.93,0,0,0-91.84,192H219.84A118,118,0,1,0,128,374H384a118,118,0,0,0,0-236ZM54,256a74,74,0,1,1,74,74A74.09,74.09,0,0,1,54,256Zm330,74a74,74,0,1,1,74-74A74.09,74.09,0,0,1,384,330Z" />
+                </svg>
+              </div>
+              <div className="rsp-text text-white">Record</div>
+            </button>
+          )}
 
           {/* Stop Button */}
           {isRecording && (
@@ -205,31 +209,49 @@ const Instruments = () => {
         </div>
       </section>
 
+      {/* InitialPlayer */}
+      {!isInstruments && (
+        <section className="px-2 pt-5 ml-10 mt-14">
+          <h1 className="text-2xl font-bold">Know a bit about making music</h1>
+          <InitialPlayer />
+          <button
+            className="mt-10 text-right border border-black mr-20 p-3 hover:bg-black"
+            onClick={() => setIsInstruments(true)}
+          >
+            Proceed to Instruments
+          </button>
+        </section>
+      )}
+
       {/* Instruments */}
       {/* Piano */}
-      <section className="p-6">
-        <Piano
-          isPianoActivated={isPianoActivated}
-          setIsPianoActivated={setIsPianoActivated}
-          synth={synth}
-          isRecording={isRecording}
-          recordedNotes={recordedNotes}
-          setRecordedNotes={setRecordedNotes}
-        />
-      </section>
+      {isInstruments && (
+        <section className="p-6">
+          <Piano
+            isPianoActivated={isPianoActivated}
+            setIsPianoActivated={setIsPianoActivated}
+            synth={synth}
+            isRecording={isRecording}
+            recordedNotes={recordedNotes}
+            setRecordedNotes={setRecordedNotes}
+          />
+        </section>
+      )}
 
       {/* DrumKit */}
-      <section className="p-6">
-        <DrumKit
-          isDrumkitActivated={isDrumkitActivated}
-          setIsDrumkitActivated={setIsDrumkitActivated}
-          boom={boom}
-          hiHat={hiHat}
-          kick={kick}
-          openHat={openHat}
-          snare={snare}
-        />
-      </section>
+      {isInstruments && (
+        <section className="p-6">
+          <DrumKit
+            isDrumkitActivated={isDrumkitActivated}
+            setIsDrumkitActivated={setIsDrumkitActivated}
+            boom={boom}
+            hiHat={hiHat}
+            kick={kick}
+            openHat={openHat}
+            snare={snare}
+          />
+        </section>
+      )}
     </section>
   );
 };

@@ -27,6 +27,10 @@ const router = createBrowserRouter([
         Component: React.lazy(() => import("./HomeRoute")),
       },
       {
+        path: "/discover",
+        Component: React.lazy(() => import("../pages/Discover")),
+      },
+      {
         path: "/invite/:id",
         Component: React.lazy(() => import("./InviteRoute")),
       },

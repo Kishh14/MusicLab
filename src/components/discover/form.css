@@ -1,0 +1,51 @@
+/* Styles for Form Components */
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+/* Input fields */
+.inputField {
+  width: 50%;
+  padding: 10px;
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: white;
+  background: rgba(0, 0, 0, 0.596);
+}
+
+/* File input field */
+.fileInputField {
+  width: 50%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: black;
+}
+
+/* Submit button */
+.upload {
+  width: 50%;
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.upload:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.upload:hover {
+  background-color: #0f62fe;
+}
