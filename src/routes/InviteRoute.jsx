@@ -3,7 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 
 import logo from "../assets/MusicLabwhite_LOGO.png";
-import textLogo from "../assets/Text_logo.png";
+import textLogo from "../assets/header/Text_logo.png";
 import axios from "axios";
 
 import { toast } from "sonner";
