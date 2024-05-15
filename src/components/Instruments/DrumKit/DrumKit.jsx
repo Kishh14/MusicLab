@@ -14,6 +14,7 @@ import { useSocket } from "../../../context/SocketContext";
 
 // Icon
 import { TfiHelpAlt } from "react-icons/tfi";
+import { howToPlayDrumKit } from "../../Tours";
 
 function DrumKit({
   isDrumkitActivated,
@@ -218,7 +219,7 @@ function DrumKit({
     >
       <div className="flex justify-between">
         <div className="voltage-button" style={{ margin: "10px 0 0 25px" }}>
-          <button onClick={() => setIsDrumkitActivated(!isDrumkitActivated)}>
+          <button onClick={() => setIsDrumkitActivated(!isDrumkitActivated)} id="drum-activate-button">
             {isDrumkitActivated ? "Deactivate" : "Activate"}
           </button>
           <svg
@@ -279,7 +280,10 @@ function DrumKit({
           </div>
         </div>
 
-        <button style={{ margin: "0px 25px 15px 0px" }}>
+        <button
+          style={{ margin: "0px 25px 15px 0px" }}
+          onClick={() => howToPlayDrumKit().drive()}
+        >
           <TfiHelpAlt style={{ fontSize: "21px" }} />
         </button>
       </div>
@@ -291,24 +295,28 @@ function DrumKit({
           src={rideCymbalLeft}
           alt=""
           style={{ width: "170px" }}
+          id="rideCymbalLeft"
         />
         <img
           onClick={() => play("tomDrumLeft")}
           src={tomDrum}
           alt=""
           style={{ width: "135px", objectFit: "contain" }}
+          id="tomDrumLeft"
         />
         <img
           onClick={() => play("tomDrumRight")}
           src={tomDrum}
           alt=""
           style={{ width: "135px", objectFit: "contain" }}
+          id="tomDrumRight"
         />
         <img
           onClick={() => play("rideCymbalRight")}
           src={rideCymbalRight}
           alt=""
           style={{ width: "170px" }}
+          id="rideCymbalRight"
         />
       </div>
       <div className="flex justify-center">
@@ -317,6 +325,7 @@ function DrumKit({
           src={highHat}
           className=""
           alt=""
+          id="highHat"
           style={{
             width: "150px",
             position: "absolute",
@@ -330,12 +339,14 @@ function DrumKit({
           className="bassDrum"
           alt=""
           style={{ width: "220px", position: "absolute", top: "35%" }}
+          id="bassDrum"
         />
         <img
           onClick={() => play("highHatRight")}
           src={highHatRight}
           className=""
           alt=""
+          id="highHatRight"
           style={{
             width: "150px",
             position: "absolute",
@@ -349,6 +360,7 @@ function DrumKit({
           onClick={() => play("snareDrumLeft")}
           src={snareDrum}
           className=""
+          id="snareDrumLeft"
           alt=""
           style={{
             width: "144px",
@@ -361,6 +373,7 @@ function DrumKit({
           onClick={() => play("snareDrumRight")}
           src={snareDrum}
           className=""
+          id="snareDrumRight"
           alt=""
           style={{
             width: "144px",
