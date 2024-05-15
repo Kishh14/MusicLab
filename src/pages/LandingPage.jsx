@@ -6,7 +6,7 @@ import Roadmap from "../components/landing_page/Roadmap";
 import Footer from "../components/landing_page/Footer";
 import ButtonGradient from "../assets/svg/ButtonGradient";
 
-const App_demo = () => {
+const LandingPage = () => {
   return (
     <>
       <div className="pt-[4.75rem] lg:pt-[5.25rem] overflow-hidden">
@@ -23,4 +23,4 @@ const App_demo = () => {
   );
 };
 
-export default App_demo;
+export default LandingPage;
