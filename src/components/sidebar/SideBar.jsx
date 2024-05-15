@@ -17,8 +17,9 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { setCurrentRoom, toggleChat } from "../../features/room/roomSlice";
 import { useAuth } from "../../context/AuthContext";
 import { InitialTour } from "../Tours";
+import { generateMinidenticonImg } from "../ui/MinidenticonImg";
 
-export default function SideBar({}) {
+export default function SideBar() {
   const { socket } = useSocket();
   const { user } = useAuth();
 
@@ -131,8 +132,8 @@ export default function SideBar({}) {
             <div className="relative mt-3" title="Profile">
               <Link to="/">
                 <img
-                  className="object-cover w-10 h-10 rounded-full ring ring-gray-300 dark:ring-gray-600"
-                  src={avatar}
+                  className="object-cover w-10 h-10 rounded-full ring ring-gray-300 dark:ring-gray-600 bg-white"
+                  src={generateMinidenticonImg(user.id)}
                   alt="User"
                 />
                 {/* onlinedot */}

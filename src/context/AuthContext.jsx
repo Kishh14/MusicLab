@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
+import { generateMinidenticonImg } from "../components/ui/MinidenticonImg";
 
 // Create Context
 export const AuthContext = createContext({
@@ -11,6 +12,7 @@ export const AuthContext = createContext({
     id: "",
     email: "",
     username: "",
+    profile_img: "",
   },
   login: (user) => {},
   logout: () => {},
@@ -44,10 +46,11 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   function login(user) {
+    user = { ...user, profile_img: generateMinidenticonImg(user.id) };
     localStorage.setItem("token", user.token);
     localStorage.setItem("user", JSON.stringify(user));
     setIsAuthenticated(true);
-    setUser(user);
+    setUser({ ...user });
     setToken(user.token);
   }
 
@@ -61,6 +64,10 @@ export const AuthProvider = ({ children }) => {
   }
 
   useEffect(() => {
+    if (user) {
+      setUser((prev) => ({ ...prev, profile_img: user.profile_img }));
+    }
+
     if (!isAuthenticated) return;
 
     const token = localStorage.getItem("token");

@@ -22,3 +22,10 @@ export const MinidenticonImg = ({
   );
   return <img src={svgURI} alt={username} {...props} />;
 };
+
+export function generateMinidenticonImg(userId) {
+  return (
+    "data:image/svg+xml;utf8," +
+    encodeURIComponent(minidenticon(userId, 90, 50))
+  );
+}

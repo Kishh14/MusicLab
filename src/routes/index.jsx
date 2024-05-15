@@ -34,12 +34,12 @@ const router = createBrowserRouter([
         path: "/invite/:id",
         Component: React.lazy(() => import("./InviteRoute")),
       },
+      {
+        // It's outside because it should logout even if network is down
+        path: "/logout",
+        element: <Logout />,
+      },
     ],
-  },
-  {
-    // It's outside because it should logout even if network is down
-    path: "/logout",
-    element: <Logout />,
   },
 ]);
 

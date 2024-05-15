@@ -78,7 +78,6 @@ const RoomList = () => {
     if (!currentRoom || !socket || !isSocketConnected) return;
 
     // Join the current room when socket is ready
-    console.log(currentRoom);
     const roomId = currentRoom._id;
     socket.emit("room:join", roomId);
 
@@ -88,14 +87,14 @@ const RoomList = () => {
   }, [socket, isSocketConnected, currentRoom]);
 
   return (
-    <div className="w-full border-x bg-gray-900 border-gray-700">
+    <div className="w-full border-x bg-gray-900 border-gray-700 flex flex-col h-screen overflow-hidden">
       <Filters
         filters={filters}
         setFilters={setFilters}
         filtersApplied={filtersApplied}
       />
 
-      <div className="px-2 py-4 overflow-y-auto">
+      <div className="px-2 py-4 overflow-y-auto h-full">
         {isChatOpen && currentRoom ? (
           <Chat currentRoom={currentRoom} />
         ) : (

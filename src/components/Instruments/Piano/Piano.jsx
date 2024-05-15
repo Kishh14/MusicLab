@@ -499,7 +499,7 @@ const Piano = ({
           </div>
 
           <button style={{ margin: "0px 0 15px 0" }}>
-            <div class="relative inline-block text-left">
+            <div className="relative inline-block text-left">
               <TfiHelpAlt
                 style={{ fontSize: "21px" }}
                 onClick={() => {
@@ -508,21 +508,21 @@ const Piano = ({
               />
               {showPianoHelp && (
                 <div
-                  class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="menu-button"
-                  tabindex="-1"
+                  tabIndex="-1"
                 >
-                  <div class="py-1" role="none">
+                  <div className="py-1" role="none">
                     <a
                       onClick={() => {
                         howToPlayPianoTour().drive();
                         setShowPianoHelp(!showPianoHelp);
                       }}
-                      class="text-gray-700 block px-4 py-2 text-sm"
+                      className="text-gray-700 block px-4 py-2 text-sm"
                       role="menuitem"
-                      tabindex="-1"
+                      tabIndex="-1"
                       id="menu-item-1"
                     >
                       How to play piano?
@@ -532,9 +532,9 @@ const Piano = ({
                         playHBDSongInPiano().drive();
                         setShowPianoHelp(!showPianoHelp);
                       }}
-                      class="text-gray-700 block px-4 py-2 text-sm"
+                      className="text-gray-700 block px-4 py-2 text-sm"
                       role="menuitem"
-                      tabindex="-1"
+                      tabIndex="-1"
                       id="menu-item-0"
                     >
                       Learn to play Happy Birthday Song
