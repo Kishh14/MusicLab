@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import Room from "./Room";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import Filters from "../Filters";
@@ -16,8 +15,15 @@ import {
 
 import { useSocket } from "../../../context/SocketContext";
 import { useAuth } from "../../../context/AuthContext";
+import NewRoomUI from "./NewRoomUI";
 
 const RoomList = () => {
+  const [filters, setFilters] = useState({
+    isLocked: false,
+    isUnlocked: false,
+    search: "",
+  });
+
   const rooms = useAppSelector((state) => state.room.rooms);
   const isChatOpen = useAppSelector((state) => state.room.isChatOpen);
 
@@ -26,6 +32,8 @@ const RoomList = () => {
 
   const { user } = useAuth();
   const { socket, isSocketConnected } = useSocket();
+
+  const filtersApplied = Object.values(filters).filter(Boolean).length;
 
   React.useEffect(() => {
     axios
@@ -80,20 +88,39 @@ const RoomList = () => {
   }, [socket, isSocketConnected, currentRoom]);
 
   return (
-    <div
-      id="container-main"
-      className="h-screen px-5 py-8 border-l border-r w-full bg-gray-900 border-gray-700 relative scroll-smooth"
-      style={{ overflow: "scroll" }}
-    >
-      <Filters />
+    <div className="w-full border-x bg-gray-900 border-gray-700">
+      <Filters
+        filters={filters}
+        setFilters={setFilters}
+        filtersApplied={filtersApplied}
+      />
 
-      {isChatOpen && currentRoom ? (
-        <Chat currentRoom={currentRoom} />
-      ) : (
-        rooms.map((room) => (
-          <Room key={room._id} {...room} isAdmin={user.id == room.owner} />
-        ))
-      )}
+      <div className="px-2 py-4 overflow-y-auto">
+        {isChatOpen && currentRoom ? (
+          <Chat currentRoom={currentRoom} />
+        ) : (
+          <div className="space-y-3">
+            {rooms.map((room) => {
+              const showRoom =
+                (((filters.isLocked && room.isLocked) ||
+                  (filters.isUnlocked && !room.isLocked)) &&
+                  room.name
+                    .toLowerCase()
+                    .includes(filters.search.toLowerCase())) ||
+                filtersApplied === 0;
+
+              return (
+                <NewRoomUI
+                  key={room._id}
+                  {...room}
+                  isAdmin={user.id == room.owner}
+                  className={!showRoom && "hidden"}
+                />
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

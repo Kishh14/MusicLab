@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import * as Tone from "tone";
-import { howToPlayDrumKit } from "../../Tours";
 
 // Images
 import rideCymbalLeft from "../../../assets/Instruments/DrumKit/ride-cymbal-left.png";
@@ -10,6 +9,8 @@ import highHat from "../../../assets/Instruments/DrumKit/highhats.png";
 import highHatRight from "../../../assets/Instruments/DrumKit/highhats-right.png";
 import bassDrum from "../../../assets/Instruments/DrumKit/bass-drum.png";
 import snareDrum from "../../../assets/Instruments/DrumKit/snare-drum.png";
+
+import { useSocket } from "../../../context/SocketContext";
 
 // Icon
 import { TfiHelpAlt } from "react-icons/tfi";
@@ -22,13 +23,19 @@ function DrumKit({
   kick,
   openHat,
   snare,
+  isRecording,
+  setRecordedNotes,
+  recordedNotes,
 }) {
+  const { socket } = useSocket();
+
   // Play DrumKit
-  const play = (sound) => {
+  function play(sound) {
     if (isDrumkitActivated) {
       if (sound === "rideCymbalLeft") {
         Tone.start().then(() => {
           openHat.triggerAttackRelease("D4", "8n");
+          socket.emit("music", "drum", "rideCymbalLeft");
         });
         if (isRecording) {
           setRecordedNotes([
@@ -40,6 +47,7 @@ function DrumKit({
       if (sound === "tomDrumLeft") {
         Tone.start().then(() => {
           kick.triggerAttackRelease("C2", "8n");
+          socket.emit("music", "drum", "tomDrumLeft");
         });
         if (isRecording) {
           setRecordedNotes([
@@ -51,6 +59,7 @@ function DrumKit({
       if (sound === "tomDrumRight") {
         Tone.start().then(() => {
           kick.triggerAttackRelease("C2", "8n");
+          socket.emit("music", "drum", "tomDrumRight");
         });
         if (isRecording) {
           setRecordedNotes([
@@ -62,6 +71,7 @@ function DrumKit({
       if (sound === "rideCymbalRight") {
         Tone.start().then(() => {
           openHat.triggerAttackRelease("A4", "8n");
+          socket.emit("music", "drum", "rideCymbalRight");
         });
         if (isRecording) {
           setRecordedNotes([
@@ -73,6 +83,7 @@ function DrumKit({
       if (sound === "highHat") {
         Tone.start().then(() => {
           hiHat.triggerAttackRelease("C4", "8n");
+          socket.emit("music", "drum", "highHat");
         });
         if (isRecording) {
           setRecordedNotes([
@@ -84,6 +95,7 @@ function DrumKit({
       if (sound === "bassDrum") {
         Tone.start().then(() => {
           boom.triggerAttackRelease("C2", "8n");
+          socket.emit("music", "drum", "bassDrum");
         });
         if (isRecording) {
           setRecordedNotes([
@@ -95,6 +107,7 @@ function DrumKit({
       if (sound === "highHatRight") {
         Tone.start().then(() => {
           hiHat.triggerAttackRelease("D4", "8n");
+          socket.emit("music", "drum", "highHatRight");
         });
         if (isRecording) {
           setRecordedNotes([
@@ -106,6 +119,7 @@ function DrumKit({
       if (sound === "snareDrumLeft") {
         Tone.start().then(() => {
           snare.triggerAttackRelease("C2", "8n");
+          socket.emit("music", "drum", "snareDrumLeft");
         });
         if (isRecording) {
           setRecordedNotes([
@@ -117,6 +131,7 @@ function DrumKit({
       if (sound === "snareDrumRight") {
         Tone.start().then(() => {
           snare.triggerAttackRelease("C2", "8n");
+          socket.emit("music", "drum", "snareDrumRight");
         });
         if (isRecording) {
           setRecordedNotes([
@@ -126,81 +141,64 @@ function DrumKit({
         }
       }
     }
-  };
+  }
+
+  useEffect(() => {
+    if (!socket) return;
+
+    socket.on("music", (instrument, sound) => {
+      if (instrument === "drum") {
+        play(sound);
+      }
+    });
+  }, [socket]);
 
   // Play DrumKit by Keyboard
   useEffect(() => {
     const handleKeyPress = (event) => {
       // Press B
       if (event.key.toUpperCase() === "B") {
-        Tone.start().then(() => {
-          boom.triggerAttackRelease("C2", "8n");
-          howToPlayDrumKit().moveNext();
-        });
+        play("bassDrum");
       }
 
       // Press M
       if (event.key.toUpperCase() === "M") {
-        Tone.start().then(() => {
-          hiHat.triggerAttackRelease("D4", "8n");
-          howToPlayDrumKit().moveNext();
-        });
+        play("bassDrum");
       }
 
       // Press Z
       if (event.key.toUpperCase() === "Z") {
-        Tone.start().then(() => {
-          hiHat.triggerAttackRelease("C4", "8n");
-          howToPlayDrumKit().moveNext();
-        });
+        play("highHat");
       }
 
       // Press K
       if (event.key.toUpperCase() === "K") {
-        Tone.start().then(() => {
-          kick.triggerAttackRelease("C2", "8n");
-          howToPlayDrumKit().moveNext();
-        });
+        play("highHat");
       }
 
       // Press L
       if (event.key.toUpperCase() === "L") {
-        Tone.start().then(() => {
-          openHat.triggerAttackRelease("A4", "8n");
-          howToPlayDrumKit().moveNext();
-        });
+        play("highHatRight");
       }
 
       // Press A
       if (event.key.toUpperCase() === "A") {
-        Tone.start().then(() => {
-          openHat.triggerAttackRelease("D4", "8n");
-          howToPlayDrumKit().moveNext();
-        });
+        play("rideCymbalLeft");
       }
 
       // Press X
       if (event.key.toUpperCase() === "X") {
-        Tone.start().then(() => {
-          snare.triggerAttackRelease("C2", "8n");
-          howToPlayDrumKit().moveNext();
-        });
+        play("snareDrumLeft");
       }
 
       // Press N
       if (event.key.toUpperCase() === "N") {
-        Tone.start().then(() => {
-          snare.triggerAttackRelease("C2", "8n");
-          howToPlayDrumKit().moveNext();
-        });
+        play("snareDrumRight");
       }
 
       // Press S
       if (event.key.toUpperCase() === "S") {
-        Tone.start().then(() => {
-          kick.triggerAttackRelease("C2", "8n");
-          howToPlayDrumKit().moveNext();
-        });
+        play("tomDrumLeft");
       }
     };
 
@@ -220,13 +218,7 @@ function DrumKit({
     >
       <div className="flex justify-between">
         <div className="voltage-button" style={{ margin: "10px 0 0 25px" }}>
-          <button
-            onClick={() => {
-              setIsDrumkitActivated(!isDrumkitActivated);
-              howToPlayDrumKit().moveNext();
-            }}
-            id="drum-activate-button"
-          >
+          <button onClick={() => setIsDrumkitActivated(!isDrumkitActivated)}>
             {isDrumkitActivated ? "Deactivate" : "Activate"}
           </button>
           <svg
@@ -287,10 +279,7 @@ function DrumKit({
           </div>
         </div>
 
-        <button
-          style={{ margin: "0px 25px 15px 0px" }}
-          onClick={() => howToPlayDrumKit().drive()}
-        >
+        <button style={{ margin: "0px 25px 15px 0px" }}>
           <TfiHelpAlt style={{ fontSize: "21px" }} />
         </button>
       </div>
@@ -298,56 +287,36 @@ function DrumKit({
       {/* DrumKit */}
       <div className="flex justify-center">
         <img
-          onClick={() => {
-            play("rideCymbalLeft");
-            howToPlayDrumKit().moveNext();
-          }}
+          onClick={() => play("rideCymbalLeft")}
           src={rideCymbalLeft}
           alt=""
-          id="rideCymbalLeft"
           style={{ width: "170px" }}
         />
         <img
-          onClick={() => {
-            play("tomDrumLeft");
-            howToPlayDrumKit().moveNext();
-          }}
+          onClick={() => play("tomDrumLeft")}
           src={tomDrum}
           alt=""
-          id="tomDrumLeft"
           style={{ width: "135px", objectFit: "contain" }}
         />
         <img
-          onClick={() => {
-            play("tomDrumRight");
-            howToPlayDrumKit().moveNext();
-          }}
+          onClick={() => play("tomDrumRight")}
           src={tomDrum}
           alt=""
-          id="tomDrumRight"
           style={{ width: "135px", objectFit: "contain" }}
         />
         <img
-          onClick={() => {
-            play("rideCymbalRight");
-            howToPlayDrumKit().moveNext();
-          }}
+          onClick={() => play("rideCymbalRight")}
           src={rideCymbalRight}
           alt=""
-          id="rideCymbalRight"
           style={{ width: "170px" }}
         />
       </div>
       <div className="flex justify-center">
         <img
-          onClick={() => {
-            play("highHat");
-            howToPlayDrumKit().moveNext();
-          }}
+          onClick={() => play("highHat")}
           src={highHat}
           className=""
           alt=""
-          id="highHat"
           style={{
             width: "150px",
             position: "absolute",
@@ -356,25 +325,17 @@ function DrumKit({
           }}
         />
         <img
-          onClick={() => {
-            play("bassDrum");
-            howToPlayDrumKit().moveNext();
-          }}
+          onClick={() => play("bassDrum")}
           src={bassDrum}
           className="bassDrum"
           alt=""
-          id="bassDrum"
           style={{ width: "220px", position: "absolute", top: "35%" }}
         />
         <img
-          onClick={() => {
-            play("highHatRight");
-            howToPlayDrumKit().moveNext();
-          }}
+          onClick={() => play("highHatRight")}
           src={highHatRight}
           className=""
           alt=""
-          id="highHatRight"
           style={{
             width: "150px",
             position: "absolute",
@@ -385,14 +346,10 @@ function DrumKit({
       </div>
       <div className="flex justify-center">
         <img
-          onClick={() => {
-            play("snareDrumLeft");
-            howToPlayDrumKit().moveNext();
-          }}
+          onClick={() => play("snareDrumLeft")}
           src={snareDrum}
           className=""
           alt=""
-          id="snareDrumLeft"
           style={{
             width: "144px",
             position: "absolute",
@@ -401,14 +358,10 @@ function DrumKit({
           }}
         />
         <img
-          onClick={() => {
-            play("snareDrumRight");
-            howToPlayDrumKit().moveNext();
-          }}
+          onClick={() => play("snareDrumRight")}
           src={snareDrum}
           className=""
           alt=""
-          id="snareDrumRight"
           style={{
             width: "144px",
             position: "absolute",

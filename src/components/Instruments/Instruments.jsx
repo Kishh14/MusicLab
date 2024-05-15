@@ -1,12 +1,13 @@
 import * as Tone from "tone";
+
 import DrumKit from "./DrumKit/DrumKit";
 import Piano from "./Piano/Piano";
+import InitialPlayer from "./InitialPlayer/InitialPlayer";
+
 import { sounds } from "./Sounds";
-import "../../index.css";
 import { useEffect, useState } from "react";
 import { useSocket } from "../../context/SocketContext";
-import { InviteLinkModel } from "../InviteLinkModel";
-import InitialPlayer from "./InitialPlayer/InitialPlayer";
+import { LuPlay } from "react-icons/lu";
 import { InitialTour, howToRecord } from "../Tours";
 
 // Instrument Sounds
@@ -45,18 +46,6 @@ const Instruments = () => {
     socket.on("music", (instrument, key) => {
       if (instrument === "piano") {
         synth.triggerAttackRelease(key, "8n");
-      } else if (instrument === "drumkit") {
-        if (key === "boom") {
-          boom.triggerAttackRelease("C2", "8n");
-        } else if (key === "hiHat") {
-          hiHat.triggerAttackRelease("32n");
-        } else if (key === "kick") {
-          kick.triggerAttackRelease("C2", "8n");
-        } else if (key === "openHat") {
-          openHat.triggerAttackRelease("C2", "8n");
-        } else if (key === "snare") {
-          snare.triggerAttackRelease("C2", "8n");
-        }
       }
     });
 
@@ -119,9 +108,6 @@ const Instruments = () => {
         {/* Actions */}
         {/* FIXME: Fix the css of these buttons */}
         <div className="flex gap-4 items-center">
-          {/* Invite Link Button */}
-          <InviteLinkModel />
-
           {/* Record Button */}
           {isInstruments && (
             <button
@@ -239,10 +225,11 @@ const Instruments = () => {
           <h1 className="text-2xl font-bold">Know a bit about making music</h1>
           <InitialPlayer />
           <button
-            className="mt-10 text-right border border-black mr-20 p-3 hover:bg-black"
+            className="mt-10 mr-20 py-3 px-8 bg-primary text-primary-foreground rounded"
             onClick={() => setIsInstruments(true)}
           >
-            Proceed to Instruments
+            <LuPlay className="inline-block mr-2" />
+            Play Instruments
           </button>
         </section>
       )}
@@ -266,6 +253,9 @@ const Instruments = () => {
       {isInstruments && (
         <section className="p-6">
           <DrumKit
+            isRecording={isRecording}
+            setRecordedNotes={setRecordedNotes}
+            recordedNotes={recordedNotes}
             isDrumkitActivated={isDrumkitActivated}
             setIsDrumkitActivated={setIsDrumkitActivated}
             boom={boom}
