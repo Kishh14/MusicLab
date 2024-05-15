@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
 import * as Tone from "tone";
+import {
+  howToPlayPianoTour,
+  playHBDSongInPiano,
+  howToRecord,
+} from "../../Tours";
 import { useSocket } from "../../../context/SocketContext";
 
 import "./Piano.css";
@@ -14,6 +19,7 @@ const Piano = ({
   setRecordedNotes,
 }) => {
   const { socket } = useSocket();
+  const [showPianoHelp, setShowPianoHelp] = useState(false);
 
   // Play Piano Note
   const playNote = (note) => {
@@ -321,6 +327,7 @@ const Piano = ({
       // Press Q
       if (event.key.toUpperCase() === "Q") {
         playC4();
+        playHBDSongInPiano().moveNext();
       }
 
       // Press 2
@@ -331,6 +338,7 @@ const Piano = ({
       // Press W
       if (event.key.toUpperCase() === "W") {
         playD4();
+        playHBDSongInPiano().moveNext();
       }
 
       // Press 3
@@ -341,11 +349,13 @@ const Piano = ({
       // Press E
       if (event.key.toUpperCase() === "E") {
         playE4();
+        playHBDSongInPiano().moveNext();
       }
 
       // Press R
       if (event.key.toUpperCase() === "R") {
         playF4();
+        playHBDSongInPiano().moveNext();
       }
 
       // Press 5
@@ -356,6 +366,7 @@ const Piano = ({
       // Press T
       if (event.key.toUpperCase() === "T") {
         playG4();
+        playHBDSongInPiano().moveNext();
       }
 
       // Press 6
@@ -366,11 +377,13 @@ const Piano = ({
       // Press Y
       if (event.key.toUpperCase() === "Y") {
         playA4();
+        playHBDSongInPiano().moveNext();
       }
 
       // Press 7
       if (event.key === "7") {
         playBb4();
+        playHBDSongInPiano().moveNext();
       }
 
       // Press U
@@ -381,6 +394,7 @@ const Piano = ({
       // Press I
       if (event.key.toUpperCase() === "I") {
         playC5();
+        playHBDSongInPiano().moveNext();
       }
 
       // Press 9
@@ -417,7 +431,13 @@ const Piano = ({
       <section className="piano-container">
         <div className="flex items-center justify-between">
           <div className="voltage-button">
-            <button onClick={() => setIsPianoActivated(!isPianoActivated)}>
+            <button
+              onClick={() => {
+                setIsPianoActivated(!isPianoActivated);
+                howToPlayPianoTour().moveNext();
+              }}
+              id="activate-button"
+            >
               {isPianoActivated ? "Deactivate" : "Activate"}
             </button>
             <svg
@@ -479,49 +499,162 @@ const Piano = ({
           </div>
 
           <button style={{ margin: "0px 0 15px 0" }}>
-            <TfiHelpAlt style={{ fontSize: "21px" }} />
+            <div class="relative inline-block text-left">
+              <TfiHelpAlt
+                style={{ fontSize: "21px" }}
+                onClick={() => {
+                  setShowPianoHelp(!showPianoHelp);
+                }}
+              />
+              {showPianoHelp && (
+                <div
+                  class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="menu-button"
+                  tabindex="-1"
+                >
+                  <div class="py-1" role="none">
+                    <a
+                      onClick={() => {
+                        howToPlayPianoTour().drive();
+                        setShowPianoHelp(!showPianoHelp);
+                      }}
+                      class="text-gray-700 block px-4 py-2 text-sm"
+                      role="menuitem"
+                      tabindex="-1"
+                      id="menu-item-1"
+                    >
+                      How to play piano?
+                    </a>
+                    <a
+                      onClick={() => {
+                        playHBDSongInPiano().drive();
+                        setShowPianoHelp(!showPianoHelp);
+                      }}
+                      class="text-gray-700 block px-4 py-2 text-sm"
+                      role="menuitem"
+                      tabindex="-1"
+                      id="menu-item-0"
+                    >
+                      Learn to play Happy Birthday Song
+                    </a>
+                  </div>
+                </div>
+              )}
+            </div>
           </button>
         </div>
 
         <div className="flex justify-center">
           <div className="piano" id="piano">
-            <button className="white-key C4-key" onClick={playC4}>
+            <button
+              className="white-key C4-key"
+              onClick={() => {
+                playC4();
+                playHBDSongInPiano().moveNext();
+              }}
+              id="piano-q-note"
+            >
               Q
             </button>
-            <button className="black-key Db4-key" onClick={playDb4}>
+            <button
+              className="black-key Db4-key"
+              id="piano-2-note"
+              onClick={() => {
+                playDb4();
+                howToPlayPianoTour().moveNext();
+              }}
+            >
               2
             </button>
-            <button className="white-key D4-key" onClick={playD4}>
+            <button
+              className="white-key D4-key"
+              onClick={() => {
+                playD4();
+                playHBDSongInPiano().moveNext();
+              }}
+              id="piano-w-note"
+            >
               W
             </button>
             <button className="black-key Eb4-key" onClick={playEb4}>
               3
             </button>
-            <button className="white-key E4-key" onClick={playE4}>
+            <button
+              className="white-key E4-key"
+              onClick={() => {
+                playE4();
+                playHBDSongInPiano().moveNext();
+              }}
+              id="piano-e-note"
+            >
               E
             </button>
-            <button className="white-key F4-key" onClick={playF4}>
+            <button
+              className="white-key F4-key"
+              onClick={() => {
+                playF4();
+                playHBDSongInPiano().moveNext();
+              }}
+              id="piano-r-note"
+            >
               R
             </button>
-            <button className="black-key Gb4-key" onClick={playGb4}>
+            <button
+              className="black-key Gb4-key"
+              onClick={() => {
+                playGb4();
+                howToRecord().moveNext();
+              }}
+              id="piano-5-note"
+            >
               5
             </button>
-            <button className="white-key G4-key" onClick={playG4}>
+            <button
+              className="white-key G4-key"
+              onClick={() => {
+                playG4();
+                playHBDSongInPiano().moveNext();
+              }}
+              id="piano-t-note"
+            >
               T
             </button>
-            <button className="black-key Ab4-key" onClick={playAb4}>
+            <button
+              className="black-key Ab4-key"
+              onClick={() => {
+                playAb4();
+                howToRecord().moveNext();
+              }}
+              id="piano-6-note"
+            >
               6
             </button>
             <button className="white-key A4-key" onClick={playA4}>
               Y
             </button>
-            <button className="black-key Bb4-key" onClick={playBb4}>
+            <button
+              className="black-key Bb4-key"
+              onClick={() => {
+                playBb4();
+                playHBDSongInPiano().moveNext();
+              }}
+              id="piano-7-note"
+            >
               7
             </button>
             <button className="white-key B4-key" onClick={playB4}>
               U
             </button>
-            <button className="white-key C5-key" onClick={playC5}>
+            <button
+              className="white-key C5-key"
+              onClick={() => {
+                playC5();
+                playHBDSongInPiano().moveNext();
+              }}
+              id="piano-i-note"
+            >
               I
             </button>
             <button className="black-key Db5-key" onClick={playDb5}>

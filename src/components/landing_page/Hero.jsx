@@ -18,9 +18,11 @@ const Hero = () => {
       customPaddings
       id="hero"
     >
-      {/* TODO: Change the background dradient color */}
       <div className="container relative" ref={parallaxRef}>
-        <div className="relative z-1 max-w-[62rem] mx-auto text-center mb-[3.875rem] md:mb-20 lg:mb-[6.25rem]">
+        <div
+          className="relative z-1 max-w-[62rem] mx-auto text-center mb-[3.875rem] md:mb-20 lg:mb-[6.25rem]"
+          style={{ backdropFilter: "blur(7px" }}
+        >
           <h1 className="h1 mb-6">
             Make Music Together, Anywhere, Anytime with {` `}
             <span className="inline-block relative">
@@ -39,8 +41,7 @@ const Hero = () => {
             musicians come together in real-time to create, compose, and
             innovate.
           </p>
-          {/* // TODO: Replace the button with flower animated button from UIVERSE */}
-          <Button href="/home" white>
+          <Button href="/home" white className={"mb-7"}>
             Get started
           </Button>
         </div>
@@ -81,9 +82,13 @@ const Hero = () => {
 
             <Gradient />
           </div>
-          <div className="absolute -top-[54%] left-1/2 w-[234%] -translate-x-1/2 md:-top-[46%] md:w-[138%] lg:-top-[104%]">
+          <div className="absolute -top-[52%] left-1/2 w-[234%] -translate-x-1/2 md:-top-[46%] md:w-[138%] lg:-top-[109%]">
             <img
-              src={heroBackground}
+              // https://wallpaperaccess.com/full/5902897.jpg
+              // https://img.freepik.com/premium-photo/music-note-with-bright-glowing-futuristic-blue-neon-lights-black-background-3d-render_989822-4190.jpg
+              src={
+                "https://static7.depositphotos.com/1004573/790/v/450/depositphotos_7908005-stock-illustration-musical-vector-background.jpg"
+              }
               className="w-full"
               width={1440}
               height={1800}

@@ -13,8 +13,7 @@ const Benefits = () => {
           className="md:max-w-md lg:max-w-2xl"
           title="Compose Together, Seamlessly and in Real-Time with MusicLab"
         />
-        {/* TODO: Change link urls and add relevent content */}
-        <div className="flex flex-wrap gap-10 mb-10">
+        <div className="flex flex-wrap gap-10 mb-0">
           {benefits.map((item) => (
             <div
               className="block relative p-0.5 bg-no-repeat bg-[length:100%_100%] md:max-w-[24rem]"
@@ -23,20 +22,16 @@ const Benefits = () => {
               }}
               key={item.id}
             >
-              <div className="relative z-2 flex flex-col min-h-[22rem] p-[2.4rem] pointer-events-none">
+              <div className="relative z-2 flex flex-col min-h-[20rem] p-[2.4rem] pointer-events-none">
                 <h5 className="h5 mb-5">{item.title}</h5>
-                <p className="body-2 mb-6 text-n-3">{item.text}</p>
-                <div className="flex items-center mt-auto">
+                <p className="body-2 mb-0 text-n-3">{item.text}</p>
+                <div className="flex items-center justify-center mt-auto">
                   <img
                     src={item.iconUrl}
                     width={48}
                     height={48}
                     alt={item.title}
                   />
-                  <p className="ml-auto font-code text-xs font-bold text-n-1 uppercase tracking-wider">
-                    Explore more
-                  </p>
-                  <Arrow />
                 </div>
               </div>
 

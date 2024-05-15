@@ -23,12 +23,11 @@ const Discover = () => {
 
   const audioEl = document.createElement("audio");
   audioEl.addEventListener("ended", () => {
-    console.log("The audio has ended.");
     setIsPlaying(false);
   });
 
   const playAudio = (AudioElId) => {
-    if (AudioElId) {
+    if (AudioElId && !isPlaying) {
       const audioEl = document.getElementById(AudioElId);
       audioEl.play();
       setIsPlaying(true);
@@ -41,44 +40,24 @@ const Discover = () => {
     }
   };
 
-  const pauseAudio = (AudioElId) => {
-    const audioEl = document.getElementById(AudioElId);
-    audioEl.pause();
-    setIsPlaying(false);
-    setSongElID(AudioElId);
-  };
-
   const shufflePlay = () => {
-    const randomIndex = Math.floor(Math.random() * tracks.length);
-    const randomSong = tracks[randomIndex];
-    setSongImage(imageData[randomIndex]?.urls?.full);
-    setUsername(randomSong.userName);
-    setSongName(randomSong.songName);
     if (!isPlaying) {
+      const randomIndex = Math.floor(Math.random() * tracks.length);
+      const randomSong = tracks[randomIndex];
+      setSongImage(imageData[randomIndex]?.urls?.full);
+      setUsername(randomSong.userName);
+      setSongName(randomSong.songName);
       playAudio(randomSong.songName);
     } else {
-      pauseAudio(randomSong.songName);
+      alert("A song is already playing!");
+      return;
     }
   };
 
-  // FIXME: Fix the CORS policy error
-  const donwloadAudio = () => {
-    const audio = document.getElementById(songElID);
-    const audioSrc = audio.src;
-
-    fetch(audioSrc)
-      .then((response) => response.blob())
-      .then((blob) => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = songName;
-        a.click();
-        window.URL.revokeObjectURL(url);
-      })
-      .catch((error) => {
-        console.error("Error downloading audio:", error);
-      });
+  const loopSong = () => {
+    const audioEl = document.getElementById(songElID);
+    audioEl.loop = true;
+    console.log(audioEl);
   };
 
   // Fetching Data from Firebase
@@ -102,7 +81,7 @@ const Discover = () => {
     );
   }, []);
 
-  // Fetching image from Unsplash
+  // Fetching images from Unsplash
   useEffect(() => {
     const queries = ["airplane, buildings, rose, skyscapper"];
     const access_key = "p99v6inZ1kCvsBEdSeV783T_oCjfIiI35dTS1ABiSdQ";
@@ -169,7 +148,7 @@ const Discover = () => {
                 songElID={songElID}
                 shufflePlay={shufflePlay}
                 songDuration={songDuration}
-                donwloadAudio={donwloadAudio}
+                loopSong={loopSong}
               />
             </div>
 
@@ -199,9 +178,11 @@ const Discover = () => {
                           className=""
                           onClick={() => {
                             playAudio(track.songName);
-                            setSongImage(imageData[index]?.urls?.full);
-                            setSongName(track.songName);
-                            setUsername(track.userName);
+                            if (!isPlaying) {
+                              setSongImage(imageData[index]?.urls?.full);
+                              setSongName(track.songName);
+                              setUsername(track.userName);
+                            }
                           }}
                         >
                           Play

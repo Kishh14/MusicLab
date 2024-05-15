@@ -16,7 +16,9 @@ import {
 
 import { useAppSelector } from "../app/hooks";
 import { toast } from "sonner";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+
+import { InitialTour } from "./Tours";
 
 export function InviteLinkModel() {
   const currentRoom = useAppSelector((state) => state.room.currentRoom);
@@ -27,10 +29,18 @@ export function InviteLinkModel() {
     )}`;
   }, [currentRoom]);
 
+  // useEffect(() => {
+  //   InitialTour().drive(2);
+  // }, []);
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" className={!currentRoom && "hidden"}>
+        <Button
+          variant="outline"
+          className={!currentRoom && "hidden"}
+          id="invite-button"
+        >
           <LuLink2 className="mr-1" />
           Invite
         </Button>

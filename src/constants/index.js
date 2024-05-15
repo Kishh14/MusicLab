@@ -73,7 +73,7 @@ export const notificationImages = [notification4, notification3, notification2];
 
 export const companyLogos = [yourlogo, yourlogo, yourlogo, yourlogo, yourlogo];
 
-export const brainwaveServices = [
+export const musicLabServices = [
   "Virtual Rooms",
   "Virtual Instruments",
   "Audio Sample Upload",
@@ -81,7 +81,7 @@ export const brainwaveServices = [
   "Seamless Recording and Export",
 ];
 
-export const brainwaveServicesIcons = [
+export const musciLabServicesIcons = [
   recording03,
   recording01,
   disc02,
@@ -109,8 +109,8 @@ export const roadmap = [
   },
   {
     id: "2",
-    title: "Audio Sample Upload",
-    text: "Enable users to upload and share audio samples, facilitating collaborative music creation using personalized sounds.",
+    title: "Audio Recording and Download",
+    text: "Enable users to record and share audio files, facilitating collaborative music creation using personalized sounds.",
     date: "May 2024",
     status: "done",
     imageUrl: roadmap3,
@@ -251,7 +251,7 @@ export const benefits = [
   {
     id: "1",
     title: "Effortless Creation",
-    text: "Compose and collaborate seamlessly using virtual instruments and audio sample uploads.",
+    text: "Compose and collaborate seamlessly using virtual instruments.",
     backgroundUrl: "./src/assets/benefits/card-2.svg",
     iconUrl: benefitIcon2,
     imageUrl: benefitImage2,
@@ -284,8 +284,8 @@ export const benefits = [
   },
   {
     id: "5",
-    title: "Seamless Integration",
-    text: "Integrate audio samples and virtual instruments effortlessly into your creative workflow.",
+    title: "Seamless Sharing",
+    text: "Share your recorded audio with the public and get noticed",
     backgroundUrl: "./src/assets/benefits/card-6.svg",
     iconUrl: benefitIcon5,
     imageUrl: benefitImage2,

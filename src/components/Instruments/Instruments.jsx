@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useSocket } from "../../context/SocketContext";
 import { InviteLinkModel } from "../InviteLinkModel";
 import InitialPlayer from "./InitialPlayer/InitialPlayer";
+import { InitialTour, howToRecord } from "../Tours";
 
 // Instrument Sounds
 const { synth, boom, hiHat, kick, openHat, snare } = sounds;
@@ -116,13 +117,21 @@ const Instruments = () => {
         </h1>
 
         {/* Actions */}
+        {/* FIXME: Fix the css of these buttons */}
         <div className="flex gap-4 items-center">
           {/* Invite Link Button */}
           <InviteLinkModel />
 
           {/* Record Button */}
           {isInstruments && (
-            <button className="Btn" onClick={startRecording}>
+            <button
+              className="Btn"
+              onClick={() => {
+                startRecording();
+                howToRecord().moveNext();
+              }}
+              id="record-button"
+            >
               <div className="sign">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -140,7 +149,14 @@ const Instruments = () => {
 
           {/* Stop Button */}
           {isRecording && (
-            <button className="Btn" onClick={stopRecording}>
+            <button
+              className="Btn"
+              onClick={() => {
+                stopRecording();
+                howToRecord().moveNext();
+              }}
+              id="stop-recording-button"
+            >
               <div className="sign">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -161,7 +177,14 @@ const Instruments = () => {
 
           {/* Play Button */}
           {recordedAudioBlob && (
-            <button className="Btn" onClick={playRecording}>
+            <button
+              className="Btn"
+              onClick={() => {
+                playRecording();
+                howToRecord().moveNext();
+              }}
+              id="play-recording-button"
+            >
               <div className="sign">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -224,7 +247,6 @@ const Instruments = () => {
         </section>
       )}
 
-      {/* TODO: Add help modal and integrate driver.js */}
       {/* Instruments */}
       {/* Piano */}
       {isInstruments && (

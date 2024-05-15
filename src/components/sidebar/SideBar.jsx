@@ -10,13 +10,15 @@ import { IoAddSharp } from "react-icons/io5";
 import { TbMicrophone, TbMicrophoneOff } from "react-icons/tb";
 import { BsChatLeftText } from "react-icons/bs";
 import { IoExitOutline } from "react-icons/io5";
+import { TfiHelpAlt } from "react-icons/tfi";
 
 import { useSocket } from "../../context/SocketContext";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { setCurrentRoom, toggleChat } from "../../features/room/roomSlice";
 import { useAuth } from "../../context/AuthContext";
+import { InitialTour } from "../Tours";
 
-export default function SideBar() {
+export default function SideBar({}) {
   const { socket } = useSocket();
   const { user } = useAuth();
 
@@ -108,7 +110,9 @@ export default function SideBar() {
     if (!isRoomCreated && roomName) {
       axios
         .post("/room/create", { roomName })
-        .then((res) => dispatch(setCurrentRoom(res.data)))
+        .then((res) => {
+          dispatch(setCurrentRoom(res.data));
+        })
         .catch((err) => {
           console.error(err);
           toast.error("Failed to create room");
@@ -138,8 +142,11 @@ export default function SideBar() {
             {!isRoomCreated && (
               <div
                 className="flex items-center px-3 py-3 cursor-pointer text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
-                onClick={toggleAdd}
+                onClick={() => {
+                  toggleAdd();
+                }}
                 title="Create Room"
+                id="add-room-button"
               >
                 <IoAddSharp size={26} />
               </div>
@@ -151,7 +158,10 @@ export default function SideBar() {
                 "flex items-center px-3 py-3  text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 " +
                 (isMicOn && "bg-gray-800")
               }
-              onClick={toggleMic}
+              onClick={() => {
+                toggleMic();
+              }}
+              // id="mic-button"
               title={isMicOn ? "Turn Microphone Off" : "Turn Microphone On"}
             >
               {isMicOn ? (
@@ -171,9 +181,20 @@ export default function SideBar() {
             </div>
           </nav>
 
-          {/* TODO: Add an option to go back to the landing page */}
           {/* Exit icon */}
-          <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+          <div className="flex flex-col gap-4 items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+            {/* Help Button */}
+            <button
+              type="button"
+              className="text-sm"
+              onClick={() => {
+                InitialTour().drive();
+              }}
+              title="logout"
+            >
+              <TfiHelpAlt size={22} />
+            </button>
+
             <button
               type="button"
               className="text-sm"
@@ -185,10 +206,17 @@ export default function SideBar() {
             {/* Dropdown menu */}
             {isDropdownOpen && (
               <div className="absolute left-14 z-50 bg-gray-900 shadow-md border  rounded-md">
-                <div className="px-4 py-3">
+                <div className="py-3">
+                  <Link
+                    to={"/"}
+                    className="text-sm px-4 cursor-pointer text-white font-bold "
+                  >
+                    Home
+                  </Link>
+                  <hr className="my-1" />
                   <Link
                     to={"/logout"}
-                    className="text-sm cursor-pointer text-white font-bold "
+                    className="text-sm px-4 cursor-pointer text-white font-bold "
                   >
                     Logout
                   </Link>
