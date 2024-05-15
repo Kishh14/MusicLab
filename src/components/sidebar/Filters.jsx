@@ -71,14 +71,6 @@ export default function Filters({ filters, setFilters, filtersApplied }) {
       {filtersApplied > 0 && (
         <div className="flex items-center text-sm dark:text-gray-400 mt-2">
           {filtersApplied} filters applied
-          <button
-            onClick={() =>
-              setFilters({ search: "", isLocked: false, isUnlocked: false })
-            }
-            className="ml-2 text-xs text-gray-400 hover:text-gray-200"
-          >
-            Clear all
-          </button>
         </div>
       )}
     </div>
