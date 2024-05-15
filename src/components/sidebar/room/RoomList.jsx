@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Room from "./Room";
 import axios from "axios";
 
@@ -18,6 +18,9 @@ import { useSocket } from "../../../context/SocketContext";
 import { useAuth } from "../../../context/AuthContext";
 
 const RoomList = () => {
+  const [filter, setFilter] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+
   const rooms = useAppSelector((state) => state.room.rooms);
   const isChatOpen = useAppSelector((state) => state.room.isChatOpen);
 
@@ -27,12 +30,11 @@ const RoomList = () => {
   const { user } = useAuth();
   const { socket, isSocketConnected } = useSocket();
 
-  React.useEffect(() => {
+  useEffect(() => {
     axios
       .get("/room/all")
       .then((res) => {
         dispatch(setRooms(res.data));
-        // get current room
         const currentRoom = res.data.find((room) =>
           room.members.find((member) => member._id === user.id)
         );
@@ -44,7 +46,7 @@ const RoomList = () => {
       .catch(console.error);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!socket) return;
 
     socket.on("room:new", (room) => {
@@ -69,8 +71,6 @@ const RoomList = () => {
   useEffect(() => {
     if (!currentRoom || !socket || !isSocketConnected) return;
 
-    // Join the current room when socket is ready
-    console.log(currentRoom);
     const roomId = currentRoom._id;
     socket.emit("room:join", roomId);
 
@@ -79,18 +79,34 @@ const RoomList = () => {
     };
   }, [socket, isSocketConnected, currentRoom]);
 
+  const handleFilterSelect = (selectedFilter) => {
+    setFilter(selectedFilter);
+  };
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
+
+  const filteredRooms = rooms.filter((room) => {
+    if (!searchQuery) {
+      return filter ? (filter === "locked" ? room.isLocked : !room.isLocked) : true;
+    } else {
+      return room.name.toLowerCase().includes(searchQuery.toLowerCase());
+    }
+  });
+
   return (
     <div
       id="container-main"
       className="h-screen px-5 py-8 border-l border-r w-full bg-gray-900 border-gray-700 relative scroll-smooth"
       style={{ overflow: "scroll" }}
     >
-      <Filters />
+      <Filters onSelectFilter={handleFilterSelect} onSearch={handleSearch} />
 
       {isChatOpen && currentRoom ? (
         <Chat currentRoom={currentRoom} />
       ) : (
-        rooms.map((room) => (
+        filteredRooms.map((room) => (
           <Room key={room._id} {...room} isAdmin={user.id == room.owner} />
         ))
       )}

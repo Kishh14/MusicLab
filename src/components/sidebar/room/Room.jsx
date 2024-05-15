@@ -1,34 +1,22 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import Avatar from "../../ui/Avatar";
-
-import {
-  IoLockClosedOutline,
-  IoLockOpenOutline,
-  IoSettingsOutline,
-} from "react-icons/io5";
+import { IoLockClosedOutline, IoLockOpenOutline, IoSettingsOutline } from "react-icons/io5";
 import axios from "axios";
 import { toast } from "sonner";
 import { useAuth } from "../../../context/AuthContext";
 import { useAppDispatch } from "../../../app/hooks";
 import { setCurrentRoom } from "../../../features/room/roomSlice";
 
-/**
- * @type {React.FC<import("../../../types/user").RoomType & { isAdmin: boolean }>}
- */
-
-const Room = (room) => {
+const Room = ({ _id, name, members, isLocked, isAdmin }) => {
   const { user } = useAuth();
-
   const dispatch = useAppDispatch();
-
-  // FIXME: This is a temporary fix to prevent the app from crashing
-  const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
-  const [newRoomName, setNewRoomName] = React.useState("");
-  const [isChangingRoomName, setIsChangingRoomName] = React.useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [newRoomName, setNewRoomName] = useState("");
+  const [isChangingRoomName, setIsChangingRoomName] = useState(false);
 
   const isPersonInRoom = useMemo(() => {
-    return Boolean(room.members.find((member) => member._id === user.id));
-  }, [room, user]);
+    return Boolean(members.find((member) => member._id === user.id));
+  }, [members, user]);
 
   async function handleJoinRoom(roomId) {
     try {
@@ -50,9 +38,9 @@ const Room = (room) => {
   }
 
   const handleToggleRoomLock = () => {
-    if (!room.isAdmin) return;
+    if (!isAdmin) return;
     axios
-      .put(`/room/${room._id}`, { isLocked: !room.isLocked })
+      .put(`/room/${_id}`, { isLocked: !isLocked })
       .then((res) => {
         dispatch(setCurrentRoom(res.data));
       })
@@ -63,12 +51,12 @@ const Room = (room) => {
 
   const handleRoomNameButtonClick = () => {
     setIsChangingRoomName(true);
-    setNewRoomName(room.name);
+    setNewRoomName(name);
   };
 
   const handleSaveNewRoomName = () => {
     axios
-      .put(`/room/${room._id}`, { name: newRoomName })
+      .put(`/room/${_id}`, { name: newRoomName })
       .then((res) => {
         dispatch(setCurrentRoom(res.data));
         setIsChangingRoomName(false);
@@ -79,48 +67,37 @@ const Room = (room) => {
   };
 
   return (
-    <div
-      className={`mt-4 space-y-6 cursor cursor-pointer rounded-lg h-[172px] border-2 ${
-        room.isLocked ? "border-red-500" : "border-gray-700"
-      } relative`}
-    >
-      <style
-        hidden
-      >{`#memberContainer::-webkit-scrollbar {display: none;}`}</style>
+    <div className={`mt-4 space-y-6 cursor cursor-pointer rounded-lg h-[172px] border-2 ${isLocked ? "border-red-500" : "border-gray-700"
+      } relative`}>
       <div className="flex mx-2 my-1 flex-row justify-between items-center gap-1 border rounded-md border-gray-600">
         <div className="py-1 px-2">
-          <h4 className="font-semibold text-sm">{room.name}</h4>
+          <h4 className="font-semibold text-sm">{name}</h4>
         </div>
         <div className="p-2 mx-1 relative">
           <div className="relative">
             <div className="flex item-center gap-2">
-              {/* allow user to lock  */}
-              {room.isLocked && (
-                <button onClick={room.isLocked ? handleToggleRoomLock : null}>
+              {isLocked && (
+                <button onClick={isLocked ? handleToggleRoomLock : null}>
                   <IoLockClosedOutline size={20} />
                 </button>
               )}
-
-              {/* Conditionally render join button */}
-              {!isPersonInRoom && (!room.isLocked || room.isAdmin) && (
+              {!isPersonInRoom && (!isLocked || isAdmin) && (
                 <button
                   className="bg-blue-800 px-4 py-1 rounded-md cursor-pointer"
-                  onClick={() => handleJoinRoom(room._id)}
+                  onClick={() => handleJoinRoom(_id)}
                 >
                   Join
                 </button>
               )}
-
               {isPersonInRoom && (
                 <button
                   className="bg-red-800 px-4 py-1 rounded-md cursor-pointer"
-                  onClick={() => handleLeaveRoom(room._id)}
+                  onClick={() => handleLeaveRoom(_id)}
                 >
                   Leave
                 </button>
               )}
-
-              {room.isAdmin && isPersonInRoom && (
+              {isAdmin && isPersonInRoom && (
                 <>
                   <button
                     className="cursor-pointer"
@@ -136,8 +113,8 @@ const Room = (room) => {
                             className="flex gap-4 px-5 py-2 w-full text-sm hover:text-gray-900 hover:bg-gray-300 "
                             onClick={handleToggleRoomLock}
                           >
-                            {room.isLocked ? "Room locked" : "Room Unlocked"}
-                            {room.isLocked ? (
+                            {isLocked ? "Room locked" : "Room Unlocked"}
+                            {isLocked ? (
                               <IoLockClosedOutline size={18} />
                             ) : (
                               <IoLockOpenOutline size={18} />
@@ -189,11 +166,9 @@ const Room = (room) => {
         className="flex space-x-6 py-2 px-3 cursor-pointer scroll-smooth overflow-y-hidden overflow-x-auto"
         style={{ scrollSnapType: "x mandatory", whiteSpace: "nowrap" }}
       >
-        {room.members.map((member, index) => (
-          // TODO: Add voice visulization and show other user if the mic is on or off
+        {members.map((member, index) => (
           <Avatar
             key={index}
-            // FIXME: Added hardcoded profile image
             userId={member._id}
             username={member.username}
             isMicOn={member.isMicOn}

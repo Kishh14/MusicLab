@@ -1,11 +1,23 @@
 import { useState } from "react";
 import { IoFilter } from "react-icons/io5";
 
-export default function Filters() {
+export default function Filters({ onSelectFilter, onSearch }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleFilterClick = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleFilterSelect = (filter) => {
+    onSelectFilter(filter);
+    setIsOpen(false);
+  };
+
+  const handleSearchInput = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    onSearch(query);
   };
 
   return (
@@ -16,19 +28,27 @@ export default function Filters() {
             <div className="cursor-pointer" onClick={handleFilterClick}>
               <IoFilter size={22} />
             </div>
-            {/* Dropdown with checkboxes */}
             {isOpen && (
-              <div className="absolute z-10 top-full py-2 left-0 mt-1 w-[200px] bg-gray-900 text-white border rounded-md shadow-lg">
+              <div className="absolute z-10 top-full py-2 left-0 mt-1 w-[200px] bg-gray-900  text-white border rounded-md shadow-lg">
                 <div>
-                  <label className="flex items-center space-x-2 px-4 py-2">
-                    <input type="checkbox" />
+                  <label className="flex items-center space-x-2 px-4 py-2 hover:bg-gray-700">
+                    <input
+                      type="radio"
+                      name="filter"
+                      value="locked"
+                      onChange={() => handleFilterSelect("locked")}
+                    />
                     <span>Locked Rooms</span>
                   </label>
-                  <label className="flex items-center space-x-2 px-4 py-2">
-                    <input type="checkbox" />
+                  <label className="flex items-center space-x-2 px-4 py-2 hover:bg-gray-700">
+                    <input
+                      type="radio"
+                      name="filter"
+                      value="unlocked"
+                      onChange={() => handleFilterSelect("unlocked")}
+                    />
                     <span>Unlocked Rooms</span>
                   </label>
-
                 </div>
               </div>
             )}
@@ -49,12 +69,12 @@ export default function Filters() {
                 />
               </svg>
             </span>
-            {/* Search box */}
-            {/* TODO: Implement the functionality to search the rooms based on room name */}
             <input
               type="text"
               className="w-full py-1 px-2 pl-10 pr-4 text-gray-700 bg-white border rounded-md dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring"
               placeholder="Search"
+              value={searchQuery}
+              onChange={handleSearchInput}
             />
           </div>
         </div>
