@@ -19,8 +19,8 @@ import NewRoomUI from "./NewRoomUI";
 
 const RoomList = () => {
   const [filters, setFilters] = useState({
-    isLocked: false,
-    isUnlocked: false,
+    isLocked: true,
+    isUnlocked: true,
     search: "",
   });
 
@@ -102,12 +102,9 @@ const RoomList = () => {
           <div className="space-y-3">
             {rooms.map((room) => {
               const showRoom =
-                (((filters.isLocked && room.isLocked) ||
+                ((filters.isLocked && room.isLocked) ||
                   (filters.isUnlocked && !room.isLocked)) &&
-                  room.name
-                    .toLowerCase()
-                    .includes(filters.search.toLowerCase())) ||
-                filtersApplied === 0;
+                room.name.toLowerCase().includes(filters.search.toLowerCase());
 
               return (
                 <NewRoomUI
