@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo } from "react";
 
 import { useAuth } from "../../../context/AuthContext";
 import { useAppDispatch } from "../../../app/hooks";
@@ -58,8 +58,6 @@ const NewRoomUI = ({ className, ...room }) => {
 
   useEffect(() => {
     if (!socket || !isPersonInRoom) return;
-
-    console.log(room._id);
 
     function handleMic(userId, isMicOn) {
       setMics((prev) => ({ ...prev, [userId]: isMicOn }));

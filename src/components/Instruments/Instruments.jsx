@@ -45,18 +45,6 @@ const Instruments = () => {
     socket.on("music", (instrument, key) => {
       if (instrument === "piano") {
         synth.triggerAttackRelease(key, "8n");
-      } else if (instrument === "drumkit") {
-        if (key === "boom") {
-          boom.triggerAttackRelease("C2", "8n");
-        } else if (key === "hiHat") {
-          hiHat.triggerAttackRelease("32n");
-        } else if (key === "kick") {
-          kick.triggerAttackRelease("C2", "8n");
-        } else if (key === "openHat") {
-          openHat.triggerAttackRelease("C2", "8n");
-        } else if (key === "snare") {
-          snare.triggerAttackRelease("C2", "8n");
-        }
       }
     });
 
@@ -243,6 +231,9 @@ const Instruments = () => {
       {isInstruments && (
         <section className="p-6">
           <DrumKit
+            isRecording={isRecording}
+            setRecordedNotes={setRecordedNotes}
+            recordedNotes={recordedNotes}
             isDrumkitActivated={isDrumkitActivated}
             setIsDrumkitActivated={setIsDrumkitActivated}
             boom={boom}
