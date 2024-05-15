@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import Room from "./Room";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import Filters from "../Filters";
@@ -16,10 +15,14 @@ import {
 
 import { useSocket } from "../../../context/SocketContext";
 import { useAuth } from "../../../context/AuthContext";
+import NewRoomUI from "./NewRoomUI";
 
 const RoomList = () => {
-  const [filter, setFilter] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [filters, setFilters] = useState({
+    isLocked: false,
+    isUnlocked: false,
+    search: "",
+  });
 
   const rooms = useAppSelector((state) => state.room.rooms);
   const isChatOpen = useAppSelector((state) => state.room.isChatOpen);
@@ -30,11 +33,14 @@ const RoomList = () => {
   const { user } = useAuth();
   const { socket, isSocketConnected } = useSocket();
 
-  useEffect(() => {
+  const filtersApplied = Object.values(filters).filter(Boolean).length;
+
+  React.useEffect(() => {
     axios
       .get("/room/all")
       .then((res) => {
         dispatch(setRooms(res.data));
+        // get current room
         const currentRoom = res.data.find((room) =>
           room.members.find((member) => member._id === user.id)
         );
@@ -46,7 +52,7 @@ const RoomList = () => {
       .catch(console.error);
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!socket) return;
 
     socket.on("room:new", (room) => {
@@ -71,6 +77,8 @@ const RoomList = () => {
   useEffect(() => {
     if (!currentRoom || !socket || !isSocketConnected) return;
 
+    // Join the current room when socket is ready
+    console.log(currentRoom);
     const roomId = currentRoom._id;
     socket.emit("room:join", roomId);
 
@@ -79,37 +87,40 @@ const RoomList = () => {
     };
   }, [socket, isSocketConnected, currentRoom]);
 
-  const handleFilterSelect = (selectedFilter) => {
-    setFilter(selectedFilter);
-  };
-
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-  };
-
-  const filteredRooms = rooms.filter((room) => {
-    if (!searchQuery) {
-      return filter ? (filter === "locked" ? room.isLocked : !room.isLocked) : true;
-    } else {
-      return room.name.toLowerCase().includes(searchQuery.toLowerCase());
-    }
-  });
-
   return (
-    <div
-      id="container-main"
-      className="h-screen px-5 py-8 border-l border-r w-full bg-gray-900 border-gray-700 relative scroll-smooth"
-      style={{ overflow: "scroll" }}
-    >
-      <Filters onSelectFilter={handleFilterSelect} onSearch={handleSearch} />
+    <div className="w-full border-x bg-gray-900 border-gray-700">
+      <Filters
+        filters={filters}
+        setFilters={setFilters}
+        filtersApplied={filtersApplied}
+      />
 
-      {isChatOpen && currentRoom ? (
-        <Chat currentRoom={currentRoom} />
-      ) : (
-        filteredRooms.map((room) => (
-          <Room key={room._id} {...room} isAdmin={user.id == room.owner} />
-        ))
-      )}
+      <div className="px-2 py-4 overflow-y-auto">
+        {isChatOpen && currentRoom ? (
+          <Chat currentRoom={currentRoom} />
+        ) : (
+          <div className="space-y-3">
+            {rooms.map((room) => {
+              const showRoom =
+                (((filters.isLocked && room.isLocked) ||
+                  (filters.isUnlocked && !room.isLocked)) &&
+                  room.name
+                    .toLowerCase()
+                    .includes(filters.search.toLowerCase())) ||
+                filtersApplied === 0;
+
+              return (
+                <NewRoomUI
+                  key={room._id}
+                  {...room}
+                  isAdmin={user.id == room.owner}
+                  className={!showRoom && "hidden"}
+                />
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -1,22 +1,36 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import Avatar from "../../ui/Avatar";
-import { IoLockClosedOutline, IoLockOpenOutline, IoSettingsOutline } from "react-icons/io5";
 import axios from "axios";
+
+import {
+  IoLockClosedOutline,
+  IoLockOpenOutline,
+  IoSettingsOutline,
+} from "react-icons/io5";
+
 import { toast } from "sonner";
 import { useAuth } from "../../../context/AuthContext";
 import { useAppDispatch } from "../../../app/hooks";
 import { setCurrentRoom } from "../../../features/room/roomSlice";
+import { InviteLinkModel } from "../../InviteLinkModel";
+import { LuPen } from "react-icons/lu";
 
-const Room = ({ _id, name, members, isLocked, isAdmin }) => {
+/**
+ * @type {React.FC<import("../../../types/user").RoomType & { isAdmin: boolean, className: string }>}
+ */
+
+const Room = ({ className, ...room }) => {
   const { user } = useAuth();
+
   const dispatch = useAppDispatch();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [newRoomName, setNewRoomName] = useState("");
-  const [isChangingRoomName, setIsChangingRoomName] = useState(false);
+
+  const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
+  const [newRoomName, setNewRoomName] = React.useState("");
+  const [isChangingRoomName, setIsChangingRoomName] = React.useState(false);
 
   const isPersonInRoom = useMemo(() => {
-    return Boolean(members.find((member) => member._id === user.id));
-  }, [members, user]);
+    return Boolean(room.members.find((member) => member._id === user.id));
+  }, [room, user]);
 
   async function handleJoinRoom(roomId) {
     try {
@@ -38,25 +52,21 @@ const Room = ({ _id, name, members, isLocked, isAdmin }) => {
   }
 
   const handleToggleRoomLock = () => {
-    if (!isAdmin) return;
+    if (!room.isAdmin) return;
     axios
-      .put(`/room/${_id}`, { isLocked: !isLocked })
-      .then((res) => {
-        dispatch(setCurrentRoom(res.data));
-      })
-      .catch((error) => {
-        console.error("Error toggling room lock:", error);
-      });
+      .put(`/room/${room._id}`, { isLocked: !room.isLocked })
+      .then((res) => dispatch(setCurrentRoom(res.data)))
+      .catch((error) => console.error("Error toggling room lock:", error));
   };
 
   const handleRoomNameButtonClick = () => {
     setIsChangingRoomName(true);
-    setNewRoomName(name);
+    setNewRoomName(room.name);
   };
 
   const handleSaveNewRoomName = () => {
     axios
-      .put(`/room/${_id}`, { name: newRoomName })
+      .put(`/room/${room._id}`, { name: newRoomName })
       .then((res) => {
         dispatch(setCurrentRoom(res.data));
         setIsChangingRoomName(false);
@@ -67,37 +77,45 @@ const Room = ({ _id, name, members, isLocked, isAdmin }) => {
   };
 
   return (
-    <div className={`mt-4 space-y-6 cursor cursor-pointer rounded-lg h-[172px] border-2 ${isLocked ? "border-red-500" : "border-gray-700"
-      } relative`}>
+    <div
+      className={`mt-4 space-y-6 cursor cursor-pointer rounded-lg h-[172px] border-2 ${className} ${
+        room.isLocked ? "border-red-500" : "border-gray-700"
+      } relative`}
+    >
       <div className="flex mx-2 my-1 flex-row justify-between items-center gap-1 border rounded-md border-gray-600">
         <div className="py-1 px-2">
-          <h4 className="font-semibold text-sm">{name}</h4>
+          <h4 className="font-semibold text-sm">{room.name}</h4>
         </div>
         <div className="p-2 mx-1 relative">
           <div className="relative">
             <div className="flex item-center gap-2">
-              {isLocked && (
-                <button onClick={isLocked ? handleToggleRoomLock : null}>
+              {/* allow user to lock  */}
+              {room.isLocked && (
+                <button onClick={room.isLocked ? handleToggleRoomLock : null}>
                   <IoLockClosedOutline size={20} />
                 </button>
               )}
-              {!isPersonInRoom && (!isLocked || isAdmin) && (
+
+              {/* Conditionally render join button */}
+              {!isPersonInRoom && (!room.isLocked || room.isAdmin) && (
                 <button
                   className="bg-blue-800 px-4 py-1 rounded-md cursor-pointer"
-                  onClick={() => handleJoinRoom(_id)}
+                  onClick={() => handleJoinRoom(room._id)}
                 >
                   Join
                 </button>
               )}
+
               {isPersonInRoom && (
                 <button
                   className="bg-red-800 px-4 py-1 rounded-md cursor-pointer"
-                  onClick={() => handleLeaveRoom(_id)}
+                  onClick={() => handleLeaveRoom(room._id)}
                 >
                   Leave
                 </button>
               )}
-              {isAdmin && isPersonInRoom && (
+
+              {room.isAdmin && isPersonInRoom && (
                 <>
                   <button
                     className="cursor-pointer"
@@ -106,19 +124,19 @@ const Room = ({ _id, name, members, isLocked, isAdmin }) => {
                     <IoSettingsOutline size={22} />
                   </button>
                   {isDropdownOpen && (
-                    <div className="absolute top-full z-40 right-0 mt-2 w-48 bg-gray-900 border border-gray-500 rounded-md">
+                    <div className="absolute top-full z-40 right-0 mt-2 w-52 bg-gray-900 border border-gray-500 rounded-md">
                       <ul className="py-1">
                         <li>
                           <button
-                            className="flex gap-4 px-5 py-2 w-full text-sm hover:text-gray-900 hover:bg-gray-300 "
+                            className="flex gap-2 px-5 py-2 w-full text-sm hover:text-gray-900 hover:bg-gray-300"
                             onClick={handleToggleRoomLock}
                           >
-                            {isLocked ? "Room locked" : "Room Unlocked"}
-                            {isLocked ? (
-                              <IoLockClosedOutline size={18} />
+                            {room.isLocked ? (
+                              <IoLockClosedOutline className="my-auto" />
                             ) : (
-                              <IoLockOpenOutline size={18} />
+                              <IoLockOpenOutline className="my-auto" />
                             )}
+                            {room.isLocked ? "Room locked" : "Room Unlocked"}
                           </button>
                         </li>
                         {isChangingRoomName ? (
@@ -132,7 +150,7 @@ const Room = ({ _id, name, members, isLocked, isAdmin }) => {
                                 placeholder="Enter new room name"
                                 value={newRoomName}
                                 onChange={(e) => setNewRoomName(e.target.value)}
-                                className="w-[98px] rounded-md px-4"
+                                className="w-full rounded-md px-4"
                               />
                               <button
                                 className="bg-gray-300 px-3 h-8 text-gray-700 border rounded-md"
@@ -144,14 +162,19 @@ const Room = ({ _id, name, members, isLocked, isAdmin }) => {
                           </li>
                         ) : (
                           <li>
-                            <a
-                              className="block px-4 py-2 text-sm hover:text-gray-900 hover:bg-gray-300"
+                            <button
+                              className="flex gap-2 px-5 py-2 w-full text-sm hover:text-gray-900 hover:bg-gray-300"
                               onClick={handleRoomNameButtonClick}
                             >
+                              <LuPen className="my-auto" />
                               Change Room name
-                            </a>
+                            </button>
                           </li>
                         )}
+                        <li>
+                          {/* Invite Link Button */}
+                          <InviteLinkModel />
+                        </li>
                       </ul>
                     </div>
                   )}
@@ -163,10 +186,10 @@ const Room = ({ _id, name, members, isLocked, isAdmin }) => {
       </div>
       <div
         id="memberContainer"
-        className="flex space-x-6 py-2 px-3 cursor-pointer scroll-smooth overflow-y-hidden overflow-x-auto"
-        style={{ scrollSnapType: "x mandatory", whiteSpace: "nowrap" }}
+        className="flex py-2 px-3 cursor-pointer scroll-smooth overflow-y-hidden overflow-x-auto"
+        style={{ scrollSnapType: "x mandatory" }}
       >
-        {members.map((member, index) => (
+        {room.members.map((member, index) => (
           <Avatar
             key={index}
             userId={member._id}

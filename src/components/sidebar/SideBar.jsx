@@ -89,9 +89,11 @@ export default function SideBar() {
     if (isMicOnRef.current) {
       setIsMice(false);
       stopVoiceChat();
+      socket.emit("room:mic", false);
     } else {
       setIsMice(true);
       startVoiceChat();
+      socket.emit("room:mic", true);
     }
   };
 

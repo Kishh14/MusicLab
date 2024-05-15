@@ -18,7 +18,7 @@ import { useAppSelector } from "../app/hooks";
 import { toast } from "sonner";
 import { useMemo } from "react";
 
-export function InviteLinkModel() {
+export function InviteLinkModel({ isOpen, setIsInviteLinkOpen }) {
   const currentRoom = useAppSelector((state) => state.room.currentRoom);
 
   const link = useMemo(() => {
@@ -28,12 +28,17 @@ export function InviteLinkModel() {
   }, [currentRoom]);
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline" className={!currentRoom && "hidden"}>
-          <LuLink2 className="mr-1" />
-          Invite
-        </Button>
+    <Dialog
+      forceMount
+      open={isOpen}
+      onOpenChange={(open) => {
+        console.log(open);
+        setIsInviteLinkOpen(open);
+      }}
+    >
+      <DialogTrigger className="flex items-center w-full cursor-default">
+        <LuLink2 className="mr-2 h-4 w-4" />
+        <span>Invite</span>
       </DialogTrigger>
       <DialogContent className="sm:max-w-xl">
         <DialogHeader>

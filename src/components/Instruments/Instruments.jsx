@@ -1,12 +1,13 @@
 import * as Tone from "tone";
+
 import DrumKit from "./DrumKit/DrumKit";
 import Piano from "./Piano/Piano";
+import InitialPlayer from "./InitialPlayer/InitialPlayer";
+
 import { sounds } from "./Sounds";
-import "../../index.css";
 import { useEffect, useState } from "react";
 import { useSocket } from "../../context/SocketContext";
-import { InviteLinkModel } from "../InviteLinkModel";
-import InitialPlayer from "./InitialPlayer/InitialPlayer";
+import { LuPlay } from "react-icons/lu";
 
 // Instrument Sounds
 const { synth, boom, hiHat, kick, openHat, snare } = sounds;
@@ -117,9 +118,6 @@ const Instruments = () => {
 
         {/* Actions */}
         <div className="flex gap-4 items-center">
-          {/* Invite Link Button */}
-          <InviteLinkModel />
-
           {/* Record Button */}
           {isInstruments && (
             <button className="Btn" onClick={startRecording}>
@@ -216,10 +214,11 @@ const Instruments = () => {
           <h1 className="text-2xl font-bold">Know a bit about making music</h1>
           <InitialPlayer />
           <button
-            className="mt-10 text-right border border-black mr-20 p-3 hover:bg-black"
+            className="mt-10 mr-20 py-3 px-8 bg-primary text-primary-foreground rounded"
             onClick={() => setIsInstruments(true)}
           >
-            Proceed to Instruments
+            <LuPlay className="inline-block mr-2" />
+            Play Instruments
           </button>
         </section>
       )}
