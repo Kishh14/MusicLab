@@ -29,7 +29,7 @@ export default function SideBar() {
   // Check if user has already created a room
   const isRoomCreated = useAppSelector(
     (state) =>
-      state.room.rooms.filter((room) => room.owner === user.id).length > 0
+      state.room.rooms.filter((room) => room.owner === user?.id).length > 0
   );
   const dispatch = useAppDispatch();
 
@@ -133,7 +133,7 @@ export default function SideBar() {
               <Link to="/">
                 <img
                   className="object-cover w-10 h-10 rounded-full ring ring-gray-300 dark:ring-gray-600 bg-white"
-                  src={generateMinidenticonImg(user.id)}
+                  src={generateMinidenticonImg(user?.id)}
                   alt="User"
                 />
                 {/* onlinedot */}

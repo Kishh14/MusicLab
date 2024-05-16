@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { disablePageScroll, enablePageScroll } from "scroll-lock";
 
 import musiclogo from "../../assets/header/Text_logo.png";
@@ -6,11 +6,14 @@ import { navigation } from "../../constants";
 import Button from "./Button";
 import MenuSvg from "../../assets/svg/MenuSvg";
 import { HamburgerMenu } from "../design/Header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../context/AuthContext";
+import { set } from "firebase/database";
 
 const Header = () => {
   const pathname = useLocation();
   const [openNavigation, setOpenNavigation] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const toggleNavigation = () => {
     if (openNavigation) {
@@ -21,6 +24,15 @@ const Header = () => {
       disablePageScroll();
     }
   };
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (!user) {
+      setIsLoggedIn(false);
+    } else {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   const handleClick = () => {
     if (!openNavigation) return;
@@ -49,7 +61,7 @@ const Header = () => {
             {navigation.map((item) => (
               <a
                 key={item.id}
-                href={item.url}
+                href={isLoggedIn ? item.url : "/signup"}
                 onClick={handleClick}
                 className={`block relative font-code text-2xl uppercase text-n-1 transition-colors hover:text-color-1 ${
                   item.onlyMobile ? "lg:hidden" : ""

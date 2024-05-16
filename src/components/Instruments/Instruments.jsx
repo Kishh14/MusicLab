@@ -195,7 +195,7 @@ const Instruments = () => {
             <div className="" onClick={downloadRecording}>
               Download
               <div className="">
-                <div className="download-text"></div>
+                {/* <div className="download-text"></div> */}
                 {/* <span className="icon">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

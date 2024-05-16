@@ -7,6 +7,8 @@ import UploadPage from "../components/discover/Uploadpage/UploadPage";
 
 import { database } from "../../firebase-config";
 import { ref as databaseRef, onValue } from "firebase/database";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Discover = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -101,6 +103,14 @@ const Discover = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  // useEffect(() => {
+  //   const { user } = useAuth();
+  //   if (!user) {
+  //     const navigate = useNavigate();
+  //     navigate("/signup");
+  //   }
+  // }, []);
 
   if (loading) {
     return <div>Loading...</div>;

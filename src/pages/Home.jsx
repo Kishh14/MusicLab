@@ -4,8 +4,12 @@ import SideBar from "../components/sidebar/SideBar";
 import SmallDevicesError from "../components/ui/SmallDevicesError";
 import Instruments from "../components/Instruments/Instruments";
 import AudioTunnel from "../components/AudioTunnel";
+import { useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
+
   return (
     <>
       {/* Small Devices Error */}
