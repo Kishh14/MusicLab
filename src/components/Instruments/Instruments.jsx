@@ -8,7 +8,7 @@ import { sounds } from "./Sounds";
 import { useEffect, useState } from "react";
 import { useSocket } from "../../context/SocketContext";
 import { LuPlay } from "react-icons/lu";
-import { InitialTour, howToRecord } from "../Tours";
+import { howToRecord } from "../Tours";
 
 // Instrument Sounds
 const { synth, boom, hiHat, kick, openHat, snare } = sounds;
