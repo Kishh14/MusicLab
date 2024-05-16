@@ -4,7 +4,8 @@ import Section from "./Section";
 import { BackgroundCircles, Gradient } from "../design/Hero";
 import { heroIcons } from "../../constants";
 import { ScrollParallax } from "react-just-parallax";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 
 const Hero = () => {
   const parallaxRef = useRef(null);
@@ -51,7 +52,11 @@ const Hero = () => {
             musicians come together in real-time to create, compose, and
             innovate.
           </p>
-          <Button href={isLoggedIn ? "/home" : "/signup"} white className={"mb-7"}>
+          <Button
+            href={isLoggedIn ? "/home" : "/signup"}
+            white
+            className={"mb-7"}
+          >
             Get started
           </Button>
         </div>
