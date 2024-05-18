@@ -7,8 +7,6 @@ import UploadPage from "../components/discover/Uploadpage/UploadPage";
 
 import { database } from "../../firebase-config";
 import { ref as databaseRef, onValue } from "firebase/database";
-import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
 
 const Discover = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,9 +20,17 @@ const Discover = () => {
   const [songImage, setSongImage] = useState();
   const [songElID, setSongElID] = useState();
   const [username, setUsername] = useState();
+  const [isMobile, setIsMobile] = useState();
+
+  useEffect(() => {
+    if (window.innerWidth < 450) {
+      setIsMobile(true);
+    }
+  }, [window.innerWidth]);
 
   const audioEl = document.createElement("audio");
-  audioEl.addEventListener("ended", () => {
+  const currentAudioEl = document.getElementById(songElID);
+  currentAudioEl?.addEventListener("ended", () => {
     setIsPlaying(false);
   });
 
@@ -85,17 +91,30 @@ const Discover = () => {
 
   // Fetching images from Unsplash
   useEffect(() => {
-    const queries = ["airplane, buildings, rose, skyscapper"];
+    const queries = [
+      "airplane, rose, skyscapper",
+      "nature, landscape, city, music, travel, fashion",
+    ];
     const access_key = "p99v6inZ1kCvsBEdSeV783T_oCjfIiI35dTS1ABiSdQ";
-    const response = fetch(
-      `https://api.unsplash.com/search/photos?query=${queries}&client_id=${access_key}`
-    );
-    response
-      .then((res) => res.json())
-      .then((data) => {
-        setImageData(data.results);
-      });
-  }, [imageData]);
+    const fetchImages = async (page) => {
+      const response = await fetch(
+        `https://api.unsplash.com/search/photos?query=${queries}&client_id=${access_key}&page=${page}`
+      );
+      const data = await response.json();
+      return data.results;
+    };
+
+    const fetchAllImages = async () => {
+      const images = [];
+      for (let page = 1; page <= 10; page++) {
+        const pageImages = await fetchImages(page);
+        images.push(...pageImages);
+      }
+      setImageData(images);
+    };
+
+    fetchAllImages();
+  }, [isModalOpen]);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -103,14 +122,6 @@ const Discover = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
-  // useEffect(() => {
-  //   const { user } = useAuth();
-  //   if (!user) {
-  //     const navigate = useNavigate();
-  //     navigate("/signup");
-  //   }
-  // }, []);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -133,12 +144,15 @@ const Discover = () => {
 
         <div>
           <div style={{ padding: "0% 0% 6% 8%", marginTop: "5%" }}>
-            <h1 className="text-3xl" style={{ width: "70%" }}>
+            <h1
+              className="text-3xl"
+              style={{ width: `${isMobile ? "100%" : "70%"}` }}
+            >
               Explore the Sounds of Our Community: <br /> Listen to User-Created
               Music
             </h1>
             <br />
-            <p style={{ width: "70%" }}>
+            <p style={{ width: `${isMobile ? "100%" : "70%"}` }}>
               Dive into a world of creativity and talent with our curated
               collection of user-generated music. From catchy pop tunes to
               soulful ballads. Let your ears be captivated by the unique voices
@@ -176,7 +190,17 @@ const Discover = () => {
                         />
                       </div>
                       <div className="info-container">
-                        <span>{track.songName}</span>
+                        <span>
+                          {isMobile
+                            ? `${
+                                track.songName.length > 12
+                                  ? track.songName.slice(0, 12) + "..."
+                                  : track.songName
+                              }`
+                            : track.songName.length > 38
+                            ? track.songName.slice(0, 38) + "..."
+                            : track.songName}
+                        </span>
                         <div className="contributors">
                           <p key={track.userName} className="track-artist">
                             {track.userName}

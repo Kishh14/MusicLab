@@ -1,7 +1,4 @@
 .container-right {
-  /* grid-area: main; */
-  overflow-y: scroll;
-  /* padding: 2% 5%; */
   display: flex;
   height: 100vh;
 }
@@ -11,20 +8,14 @@
   background-position: center;
   background-size: cover;
 
-  /* height: 100vh; */
   padding: 4.5% 0;
-
   display: flex;
-  /* justify-items: center; */
-  /* align-items: center; */
 }
 
 .nav-left {
   display: flex;
-  /* justify-items: center; */
-  /* align-items: center; */
-  /* height: 100vh; */
   backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
 }
 
 /* Start Divide Screen Home */
@@ -65,9 +56,14 @@
   grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
 }
 
-@media (max-width: 390px) {
+@media (min-width: 0px) and (max-width: 450px) {
   .featured-artists {
     grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+  }
+
+  .container-right {
+    flex-direction: column;
+    height: auto !important;
   }
 }
 

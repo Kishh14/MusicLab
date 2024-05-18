@@ -5,7 +5,6 @@ import { musicLabServices, musciLabServicesIcons } from "../../constants";
 import {
   PhotoChatMessage,
   Gradient,
-  VideoBar,
   VideoChatMessage,
 } from "../design/Services";
 
@@ -51,8 +50,6 @@ const Services = () => {
                 ))}
               </ul>
             </div>
-
-            {/* <Generating className="absolute left-4 right-4 bottom-4 border-n-1/10 border lg:left-1/2 lg-right-auto lg:bottom-8 lg:-translate-x-1/2" /> */}
           </div>
 
           <div className="relative z-1 grid gap-5 lg:grid-cols-2">
@@ -119,7 +116,6 @@ const Services = () => {
                 />
 
                 <VideoChatMessage />
-                <VideoBar />
               </div>
             </div>
           </div>

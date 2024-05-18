@@ -8,7 +8,6 @@ import { sounds } from "./Sounds";
 import { useEffect, useState } from "react";
 import { useSocket } from "../../context/SocketContext";
 import { LuPlay } from "react-icons/lu";
-import { howToRecord } from "../Tours";
 
 // Instrument Sounds
 const { synth, boom, hiHat, kick, openHat, snare } = sounds;
@@ -36,7 +35,7 @@ const Instruments = () => {
       snare.connect(recorder);
       recorder.start();
     } else {
-      alert("Activate and play any of the instrument then start recording!!");
+      alert("Activate any of the instrument then start recording!!");
     }
   };
 
@@ -79,9 +78,9 @@ const Instruments = () => {
       anchor.download = "MusicLab.mp3";
       anchor.href = url;
       anchor.click();
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 1000);
     } else {
       console.warn("No recording available to downalod");
       alert("No recording available to download");
@@ -106,45 +105,43 @@ const Instruments = () => {
         </h1>
 
         {/* Actions */}
-        {/* FIXME: Fix the css of these buttons */}
         <div className="flex gap-4 items-center">
           {/* Record Button */}
           {isInstruments && (
             <button
-              className=""
+              className="flex items-center gap-2 border rounded-md px-2 py-1 border-blue-900 hover:bg-blue-900 transition"
               onClick={() => {
                 startRecording();
-                howToRecord().moveNext();
               }}
               id="record-button"
             >
-              Record
-              {/* <div className="sign">
+              <div className="">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="512"
-                  height="512"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
                   viewBox="0 0 512 512"
                 >
-                  <title>ionicons-v5-p</title>
                   <path d="M384,138a117.93,117.93,0,0,0-91.84,192H219.84A118,118,0,1,0,128,374H384a118,118,0,0,0,0-236ZM54,256a74,74,0,1,1,74,74A74.09,74.09,0,0,1,54,256Zm330,74a74,74,0,1,1,74-74A74.09,74.09,0,0,1,384,330Z" />
                 </svg>
               </div>
-              <div className="rsp-text text-white"></div> */}
+              <div className="text-white">
+                {recordedAudioBlob ? "Record Again" : "Record"}
+              </div>
             </button>
           )}
 
           {/* Stop Button */}
           {isRecording && (
             <button
-              className=""
+              className="flex items-center gap-2 border rounded-md px-2 py-1 border-blue-900 hover:bg-blue-900 transition"
               onClick={() => {
                 stopRecording();
-                howToRecord().moveNext();
               }}
               id="stop-recording-button"
             >
-              {/* <div className="sign">
+              <div className="">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -157,7 +154,7 @@ const Instruments = () => {
                   <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />{" "}
                   <path d="M5 6.5A1.5 1.5 0 0 1 6.5 5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5v-3z" />{" "}
                 </svg>
-              </div> */}
+              </div>
               <div className="">Stop</div>
             </button>
           )}
@@ -165,15 +162,13 @@ const Instruments = () => {
           {/* Play Button */}
           {recordedAudioBlob && (
             <button
-              className=""
+              className="flex items-center gap-2 border rounded-md px-2 py-1 border-blue-900 hover:bg-blue-900 transition"
               onClick={() => {
                 playRecording();
-                howToRecord().moveNext();
               }}
               id="play-recording-button"
             >
-              Play
-              {/* <div className="sign">
+              <div className="">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -185,39 +180,40 @@ const Instruments = () => {
                   {" "}
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z" />{" "}
                 </svg>
-              </div> */}
-              <div className=""></div>
+              </div>
+              <div className="">Play</div>
             </button>
           )}
 
           {/* Download Button */}
           {recordedAudioBlob && (
-            <div className="" onClick={downloadRecording}>
-              Download
-              <div className="">
-                {/* <div className="download-text"></div> */}
-                {/* <span className="icon">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                    role="img"
-                    width="2em"
-                    height="2em"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"
-                    ></path>
-                  </svg>
-                </span> */}
+            <button
+              className="flex items-center gap-2 border rounded-md px-2 py-1 border-blue-900 hover:bg-blue-900 transition"
+              onClick={downloadRecording}
+            >
+              <div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                  role="img"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"
+                  ></path>
+                </svg>
               </div>
-            </div>
+              <div className="">Download</div>
+            </button>
           )}
         </div>
       </section>

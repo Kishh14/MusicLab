@@ -37,6 +37,7 @@ function DrumKit({
         Tone.start().then(() => {
           openHat.triggerAttackRelease("D4", "8n");
           socket.emit("music", "drum", "rideCymbalLeft");
+          howToPlayDrumKit().moveNext();
         });
         if (isRecording) {
           setRecordedNotes([
@@ -49,6 +50,7 @@ function DrumKit({
         Tone.start().then(() => {
           kick.triggerAttackRelease("C2", "8n");
           socket.emit("music", "drum", "tomDrumLeft");
+          howToPlayDrumKit().moveNext();
         });
         if (isRecording) {
           setRecordedNotes([
@@ -61,6 +63,7 @@ function DrumKit({
         Tone.start().then(() => {
           kick.triggerAttackRelease("C2", "8n");
           socket.emit("music", "drum", "tomDrumRight");
+          howToPlayDrumKit().moveNext();
         });
         if (isRecording) {
           setRecordedNotes([
@@ -73,6 +76,7 @@ function DrumKit({
         Tone.start().then(() => {
           openHat.triggerAttackRelease("A4", "8n");
           socket.emit("music", "drum", "rideCymbalRight");
+          howToPlayDrumKit().moveNext();
         });
         if (isRecording) {
           setRecordedNotes([
@@ -85,6 +89,7 @@ function DrumKit({
         Tone.start().then(() => {
           hiHat.triggerAttackRelease("C4", "8n");
           socket.emit("music", "drum", "highHat");
+          howToPlayDrumKit().moveNext();
         });
         if (isRecording) {
           setRecordedNotes([
@@ -97,6 +102,7 @@ function DrumKit({
         Tone.start().then(() => {
           boom.triggerAttackRelease("C2", "8n");
           socket.emit("music", "drum", "bassDrum");
+          howToPlayDrumKit().moveNext();
         });
         if (isRecording) {
           setRecordedNotes([
@@ -109,6 +115,7 @@ function DrumKit({
         Tone.start().then(() => {
           hiHat.triggerAttackRelease("D4", "8n");
           socket.emit("music", "drum", "highHatRight");
+          howToPlayDrumKit().moveNext();
         });
         if (isRecording) {
           setRecordedNotes([
@@ -121,6 +128,7 @@ function DrumKit({
         Tone.start().then(() => {
           snare.triggerAttackRelease("C2", "8n");
           socket.emit("music", "drum", "snareDrumLeft");
+          howToPlayDrumKit().moveNext();
         });
         if (isRecording) {
           setRecordedNotes([
@@ -133,6 +141,7 @@ function DrumKit({
         Tone.start().then(() => {
           snare.triggerAttackRelease("C2", "8n");
           socket.emit("music", "drum", "snareDrumRight");
+          howToPlayDrumKit().moveNext();
         });
         if (isRecording) {
           setRecordedNotes([

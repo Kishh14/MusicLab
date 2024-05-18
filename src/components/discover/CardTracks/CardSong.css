@@ -94,4 +94,8 @@
   .container-song .duration {
     display: none;
   }
+
+  .top-songs-container{
+    width: 88vw !important;
+  }
 }

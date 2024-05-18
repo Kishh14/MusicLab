@@ -151,7 +151,7 @@ export default function SideBar() {
                 title="Create Room"
                 id="add-room-button"
               >
-                <IoAddSharp size={26} />
+                <IoAddSharp size={26} id='add-room-button' />
               </div>
             )}
 
@@ -164,13 +164,12 @@ export default function SideBar() {
               onClick={() => {
                 toggleMic();
               }}
-              // id="mic-button"
               title={isMicOn ? "Turn Microphone Off" : "Turn Microphone On"}
             >
               {isMicOn ? (
                 <TbMicrophone className="text-red-600" size={26} />
               ) : (
-                <TbMicrophoneOff size={26} />
+                <TbMicrophoneOff size={26} id="mic-button" />
               )}
             </button>
 
@@ -180,7 +179,7 @@ export default function SideBar() {
               onClick={toggleChatHandler}
               title="Chat"
             >
-              <BsChatLeftText size={26} />
+              <BsChatLeftText size={26} id='chat-button' />
             </div>
           </nav>
 

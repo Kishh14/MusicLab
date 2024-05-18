@@ -10,10 +10,16 @@ const PopularGenres = ({
   playAudio,
   songElID,
   shufflePlay,
-  songDuration,
   loopSong,
 }) => {
   const [imageData, setImageData] = useState(null);
+  const [isMobile, setIsMobile] = useState();
+
+  useEffect(() => {
+    if (window.innerWidth < 450) {
+      setIsMobile(true);
+    }
+  }, [window.innerWidth]);
 
   const playSong = () => {
     playAudio(songElID);
@@ -25,8 +31,8 @@ const PopularGenres = ({
     setIsPlaying(false);
   };
 
+  // Fetching image from Unsplash
   useEffect(() => {
-    // Fetching image from Unsplash
     const access_key = "p99v6inZ1kCvsBEdSeV783T_oCjfIiI35dTS1ABiSdQ";
     const response = fetch(
       `https://api.unsplash.com/search/photos?query=sky&client_id=${access_key}`
@@ -43,9 +49,12 @@ const PopularGenres = ({
       <h1 className="text-3xl">Player</h1>
 
       <>
-        <div className="flex flex-col items-center justify-center mr-6 mb-5 mt-7">
+        <div
+          className="flex flex-col items-center justify-center mr-6 mb-5 mt-7"
+          style={{ width: `${isMobile ? "85vw" : "100%"}` }}
+        >
           <div className="relative w-player flex flex-col rounded-xl bg-player-light-background	">
-            <div className="px-10 pt-10 mt-3 flex items-center z-50">
+            <div className={`px-10 ${!isMobile? 'pt-10' : 'pt-2'} mt-3 flex items-center z-50`}>
               <img
                 src={songImage ? songImage : imageData}
                 data-amplitude-song-info="cover_art_url"

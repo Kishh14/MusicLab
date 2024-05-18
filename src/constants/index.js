@@ -56,14 +56,11 @@ export const navigation = [
 
 export const heroIcons = [homeSmile, file02, searchMd, plusSquare];
 
-// export const notificationImages = [notification4, notification3, notification2];
-
 export const companyLogos = [yourlogo, yourlogo, yourlogo, yourlogo, yourlogo];
 
 export const musicLabServices = [
   "Virtual Rooms",
   "Virtual Instruments",
-  "Audio Sample Upload",
   "Integrated Chat Feature",
   "Seamless Recording and Export",
 ];
@@ -80,7 +77,7 @@ export const roadmap = [
   {
     id: "0",
     title: "Real-time Collaboration",
-    text: "Implement real-time features to enable musicians to collaborate synchronously on music creation from different locations.",
+    text: "Real-time features to enable musicians to collaborate synchronously on music creation from different locations.",
     date: "May 2024",
     status: "done",
     imageUrl: roadmap1,
@@ -89,15 +86,15 @@ export const roadmap = [
   {
     id: "1",
     title: "Virtual Instruments Integration",
-    text: "Integrate a variety of virtual instruments into the platform to allow musicians to play and record music remotely.",
+    text: "A variety of virtual instruments to allow musicians to play and record music remotely.",
     date: "May 2024",
-    status: "progress",
+    status: "done",
     imageUrl: roadmap2,
   },
   {
     id: "2",
-    title: "Audio Recording and Download",
-    text: "Enable users to record and share audio files, facilitating collaborative music creation using personalized sounds.",
+    title: "Recording and Download",
+    text: "Users can record and share audio files, facilitating collaborative music creation using personalized sounds.",
     date: "May 2024",
     status: "done",
     imageUrl: roadmap3,
@@ -105,9 +102,9 @@ export const roadmap = [
   {
     id: "3",
     title: "Chat Feature",
-    text: "Implement a chat feature within the platform to facilitate communication and feedback among collaborating musicians.",
+    text: "Chat feature integrated within the platform to facilitate communication and feedback sharing among collaborating musicians.",
     date: "May 2024",
-    status: "progress",
+    status: "done",
     imageUrl: roadmap4,
   },
 ];

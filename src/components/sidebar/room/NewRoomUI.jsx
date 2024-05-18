@@ -4,6 +4,7 @@ import React, { useEffect, useMemo } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { useAppDispatch } from "../../../app/hooks";
 import { setCurrentRoom } from "../../../features/room/roomSlice";
+import { InitialTour } from "../../Tours";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -172,7 +173,7 @@ const NewRoomUI = ({ className, ...room }) => {
                   variant="outline"
                   className="px-2 bg-transparent"
                 >
-                  <IoSettingsOutline size={18} />
+                  <IoSettingsOutline size={18} id="invite-button" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="start">

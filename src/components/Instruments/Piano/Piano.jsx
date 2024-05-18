@@ -3,7 +3,6 @@ import * as Tone from "tone";
 import {
   howToPlayPianoTour,
   playHBDSongInPiano,
-  howToRecord,
 } from "../../Tours";
 import { useSocket } from "../../../context/SocketContext";
 
@@ -605,7 +604,6 @@ const Piano = ({
               className="black-key Gb4-key"
               onClick={() => {
                 playGb4();
-                howToRecord().moveNext();
               }}
               id="piano-5-note"
             >
@@ -625,7 +623,6 @@ const Piano = ({
               className="black-key Ab4-key"
               onClick={() => {
                 playAb4();
-                howToRecord().moveNext();
               }}
               id="piano-6-note"
             >

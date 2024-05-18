@@ -21,7 +21,7 @@
 .fileInputField {
   width: 50%;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
@@ -48,4 +48,12 @@
 
 .upload:hover {
   background-color: #0f62fe;
+}
+
+@media screen and (max-width: 450px) {
+  .inputField,
+  .fileInputField,
+  .upload {
+    width: 85%;
+  }
 }

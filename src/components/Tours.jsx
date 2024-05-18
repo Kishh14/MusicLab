@@ -9,27 +9,28 @@ export const InitialTour = () => {
       {
         element: "#add-room-button",
         popover: {
-          description: "Create your own room",
+          description:
+            "Create your own room (You can also make it private 🔐😄)",
         },
       },
       {
         element: "#invite-button",
         popover: {
-          description: "Invite others in your room using invitation link",
+          description:
+            "Invite your people to your room using the invitation link in the settings 🔗",
         },
       },
       {
         element: "#mic-button",
         popover: {
           description:
-            "You can communicate with others in your room using microphone",
+            "You can communicate with others in your room using microphone 🎙️",
         },
       },
       {
         element: "#chat-button",
         popover: {
-          description:
-            "You can also use chat to communicate with your room members",
+          description: "You can also chat with your room members 💬",
         },
       },
       {
@@ -293,53 +294,6 @@ export const playHBDSongInPiano = () => {
           title: "Ta Da, That's it!",
           description:
             "<img src='https://media.tenor.com/XbXW81Nb7XMAAAAi/clapping-yay.gif' style='height: 202.5px; width: 270px;' /><span style='font-size: 15px; display: block; margin-top: 10px; text-align: center;'>Practice the same keys, record it and share it with your loved ones</span>",
-        },
-      },
-    ],
-  });
-};
-
-// Guide on how to record beats
-export const howToRecord = () => {
-  return driver({
-    showProgress: true,
-    steps: [
-      {
-        popover: {
-          title: "Activate any of the instruments",
-          description:
-            "In order to record the beats, you should have atlease one instruemnt activated. If not activated, activate it and then open this guide again!",
-        },
-      },
-      {
-        element: "#record-button",
-        popover: {
-          title: "Start the recording",
-        },
-      },
-      {
-        element: "#piano-5-note",
-        popover: {
-          title: "Play notes of your choice",
-        },
-      },
-      {
-        element: "#piano-6-note",
-        popover: {
-          title: "Play notes of your choice",
-        },
-      },
-      {
-        element: "#stop-recording-button",
-        popover: {
-          title: "Stop the recording",
-          description: "",
-        },
-      },
-      {
-        element: "#play-recording-button",
-        popover: {
-          title: "Play the recording",
         },
       },
     ],
